@@ -26,6 +26,7 @@ public class Console{
 	private JTextArea display;
 	private TAdapter keylistener;
 	public enum theme{shell1,shell2,white,sea,forest,pink};
+	public static Console s=new Console();
 	public Console(){
 		frame=new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
