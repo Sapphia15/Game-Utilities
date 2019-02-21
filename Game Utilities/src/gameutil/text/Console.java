@@ -25,9 +25,28 @@ public class Console{
 	private JTextArea field;
 	private JTextArea display;
 	private TAdapter keylistener;
+	private boolean userNextLineEnabled;
 	public enum theme{shell1,shell2,white,sea,forest,pink};
 	public static Console s=new Console();
 	public Console(){
+		userNextLineEnabled=false;
+		frame=new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/2,(Toolkit.getDefaultToolkit().getScreenSize().height/3)));
+		frame.pack();
+		field=new JTextArea();
+		field.setEditable(false);
+		keylistener=new TAdapter(field);
+		field.addKeyListener(keylistener);
+		field.setBackground(Color.BLACK);
+		field.setForeground(Color.WHITE);
+		JScrollPane scrollPane=new JScrollPane(field);
+		frame.add(field);
+		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
+	}
+	public Console(boolean userNextLineEnabled){
+		this.userNextLineEnabled=userNextLineEnabled;
 		frame=new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/2,(Toolkit.getDefaultToolkit().getScreenSize().height/3)));
@@ -44,6 +63,7 @@ public class Console{
 		frame.setLocationRelativeTo(null);
 	}
 	public Console(theme t){
+		userNextLineEnabled=false;
 		frame=new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/2,(Toolkit.getDefaultToolkit().getScreenSize().height/3)));
@@ -75,6 +95,47 @@ public class Console{
 		frame.add(scrollPane);
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
+	}
+	public Console(theme t, boolean userNextLineEnabled){
+		this.userNextLineEnabled=userNextLineEnabled;
+		frame=new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width/2,(Toolkit.getDefaultToolkit().getScreenSize().height/3)));
+		frame.pack();
+		field=new JTextArea();
+		field.setEditable(false);
+		keylistener=new TAdapter(field);
+		field.addKeyListener(keylistener);
+		if (t==theme.shell1){
+			field.setBackground(Color.BLACK);
+			field.setForeground(Color.WHITE);
+		} else if (t==theme.shell2){
+			field.setBackground(Color.BLACK);
+			field.setForeground(Color.GREEN);
+		} else if (t==theme.white){
+			field.setBackground(Color.WHITE);
+			field.setForeground(Color.BLACK);
+		} else if (t==theme.sea){
+			field.setBackground(Color.CYAN);
+			field.setForeground(Color.BLUE);
+		} else if (t==theme.forest){
+			field.setBackground(Color.getHSBColor(50, 334, 60));
+			field.setForeground(Color.GREEN);
+		} else if (t==theme.pink){
+			field.setBackground(Color.PINK);
+			field.setForeground(Color.MAGENTA);
+		}
+		JScrollPane scrollPane=new JScrollPane(field);
+		frame.add(scrollPane);
+		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
+	}
+	/**Sets weather the console adds a line and continues accepting input when the user presses enter while holding shift
+	 * 
+	 * @param userNextLineEnabled
+	 */
+	public void setUserNextLineEnabled(boolean userNextLineEnabled) {
+		this.userNextLineEnabled=userNextLineEnabled;
 	}
 	/**
 	 * Prints a string to the console
@@ -239,18 +300,22 @@ public class Console{
 				readCache=readCache+print;
 			}
 			if (reading&&e.getKeyCode()==KeyEvent.VK_ENTER){
-				if (skipLineAfterRead){
+				if (!userNextLineEnabled||!e.isShiftDown()) {
+					if (skipLineAfterRead){
+						println();
+					}
+					reading=false;
+				} else {
 					println();
+					readCache=readCache+"\n";
 				}
-				reading=false;
-				System.out.println(String.valueOf(reading));
 			}
 		}
 		public void keyTyped(KeyEvent e){
 			if (reading&&!readingNumber){
 				String print="";
 				if (Character.getName(e.getKeyChar()).equals("LINE FEED (LF)")){
-					
+					//need this so that it doesn't print enter
 					return;
 				} else if (Character.getName(e.getKeyChar()).equals("BACKSPACE")||Character.getName(e.getKeyChar()).equals("DELETE")){
 					if (readCache.length()>0){
