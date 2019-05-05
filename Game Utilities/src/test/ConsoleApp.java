@@ -6,8 +6,8 @@ public class ConsoleApp {
 	public static void main(String[] argumentos){
 		Console console=new Console(theme.sea);
 		while(true){
-			//console.readLineInt();
-			//console.readLineDouble();
+			console.readLineInt();
+			console.readLineDouble();
 			console.readLine();
 		}
 		
