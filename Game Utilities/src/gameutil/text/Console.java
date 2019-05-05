@@ -23,8 +23,8 @@ public class Console{
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private JTextArea field;
-	private JTextArea display;
 	private TAdapter keylistener;
+	private static boolean init=true;
 	public enum theme{shell1,shell2,white,sea,forest,pink};
 	public static Console s=new Console();
 	public Console(){
@@ -39,9 +39,12 @@ public class Console{
 		field.setBackground(Color.BLACK);
 		field.setForeground(Color.WHITE);
 		JScrollPane scrollPane=new JScrollPane(field);
-		frame.add(field);
-		frame.setVisible(true);
+		frame.add(scrollPane);
 		frame.setLocationRelativeTo(null);
+		if (init){
+			setVisible(false);
+			init=false;
+		}
 	}
 	public Console(theme t){
 		frame=new JFrame();
@@ -243,7 +246,6 @@ public class Console{
 					println();
 				}
 				reading=false;
-				System.out.println(String.valueOf(reading));
 			}
 		}
 		public void keyTyped(KeyEvent e){

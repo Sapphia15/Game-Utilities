@@ -1,5 +1,7 @@
 package gameutil;
 
-public class Line {
+import java.awt.geom.Line2D;
 
+public class Line {
+	Line2D l;
 }
