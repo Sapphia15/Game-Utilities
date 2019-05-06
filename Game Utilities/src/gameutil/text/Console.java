@@ -145,11 +145,123 @@ public class Console{
 		field.append(s);
 	}
 	/**
+	 * Prints a double to the console
+	 * @param d
+	 */
+	public void print(double d){
+		field.append(String.valueOf(d));
+	}
+	/**
+	 * Prints a integer to the console
+	 * @param i
+	 */
+	public void print(int i){
+		field.append(String.valueOf(i));
+	}
+	/**
+	 * Prints a long to the console
+	 * @param l
+	 */
+	public void print(long l){
+		field.append(String.valueOf(l));
+	}
+	/**
+	 * Prints a character to the console
+	 * @param c
+	 */
+	public void print(char c){
+		field.append(String.valueOf(c));
+	}
+	/**
+	 * Prints a float to the console
+	 * @param f
+	 */
+	public void print(float f){
+		field.append(String.valueOf(f));
+	}
+	/**
+	 * Prints an object to the console
+	 * @param o
+	 */
+	public void print(Object o){
+		field.append(String.valueOf(o));
+	}
+	/**
+	 * Prints a boolean to the console
+	 * @param b
+	 */
+	public void print(boolean b){
+		field.append(String.valueOf(b));
+	}
+	/**
+	 * Prints a character array to the console
+	 * @param data
+	 */
+	public void print(char[] data){
+		field.append(String.valueOf(data));
+	}
+	/**
 	 * Prints a string to the console and goes to the next line
 	 * @param s
 	 */
 	public void println(String s){
 		field.append(s+"\n");
+	}
+	/**
+	 * Prints a boolean to the console and goes to the next line
+	 * @param b
+	 */
+	public void println(Boolean b){
+		field.append(b+"\n");
+	}
+	/**
+	 * Prints a integer to the console and goes to the next line
+	 * @param i
+	 */
+	public void println(int i){
+		field.append(i+"\n");
+	}
+	/**
+	 * Prints a double to the console and goes to the next line
+	 * @param d
+	 */
+	public void println(double d){
+		field.append(d+"\n");
+	}
+	/**
+	 * Prints a long to the console and goes to the next line
+	 * @param l
+	 */
+	public void println(long l){
+		field.append(l+"\n");
+	}
+	/**
+	 * Prints a character to the console and goes to the next line
+	 * @param c
+	 */
+	public void println(char c){
+		field.append(c+"\n");
+	}
+	/**
+	 * Prints a character array to the console and goes to the next line
+	 * @param data
+	 */
+	public void println(char[] data){
+		field.append(String.valueOf(data)+"\n");
+	}
+	/**
+	 * Prints an object to the console and goes to the next line
+	 * @param o
+	 */
+	public void println(Object o){
+		field.append(o+"\n");
+	}
+	/**
+	 * Prints an object to the console and goes to the next line
+	 * @param f
+	 */
+	public void println(float f){
+		field.append(f+"\n");
 	}
 	/**
 	 * Gets input from the user and goes to the next line
