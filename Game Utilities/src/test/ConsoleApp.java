@@ -12,8 +12,10 @@ class ConsoleApp {
 		Console console=new Console(theme.sea,true);
 		while(true){
 			console.readLine();
+			console.setTheme(Console.theme.forest);
 			console.setUserNextLineEnabled(false);
 			console.readLine();
+			Console.s.setTheme(Console.theme.sea);
 			console.setUserNextLineEnabled(true);
 		}
 	}

@@ -15,6 +15,7 @@ import java.util.Scanner;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultEditorKit;
 
 public class Console{
 	/**
@@ -40,6 +41,7 @@ public class Console{
 		field.addKeyListener(keylistener);
 		field.setBackground(Color.BLACK);
 		field.setForeground(Color.WHITE);
+		field.getActionMap().get(DefaultEditorKit.deletePrevCharAction).setEnabled(false);
 		JScrollPane scrollPane=new JScrollPane(field);
 		frame.add(field);
 		frame.setVisible(true);
@@ -57,6 +59,7 @@ public class Console{
 		field.addKeyListener(keylistener);
 		field.setBackground(Color.BLACK);
 		field.setForeground(Color.WHITE);
+		field.getActionMap().get(DefaultEditorKit.deletePrevCharAction).setEnabled(false);
 		JScrollPane scrollPane=new JScrollPane(field);
 		frame.add(field);
 		frame.setVisible(true);
@@ -72,25 +75,8 @@ public class Console{
 		field.setEditable(false);
 		keylistener=new TAdapter(field);
 		field.addKeyListener(keylistener);
-		if (t==theme.shell1){
-			field.setBackground(Color.BLACK);
-			field.setForeground(Color.WHITE);
-		} else if (t==theme.shell2){
-			field.setBackground(Color.BLACK);
-			field.setForeground(Color.GREEN);
-		} else if (t==theme.white){
-			field.setBackground(Color.WHITE);
-			field.setForeground(Color.BLACK);
-		} else if (t==theme.sea){
-			field.setBackground(Color.CYAN);
-			field.setForeground(Color.BLUE);
-		} else if (t==theme.forest){
-			field.setBackground(Color.getHSBColor(50, 334, 60));
-			field.setForeground(Color.GREEN);
-		} else if (t==theme.pink){
-			field.setBackground(Color.PINK);
-			field.setForeground(Color.MAGENTA);
-		}
+		setTheme(t);
+		field.getActionMap().get(DefaultEditorKit.deletePrevCharAction).setEnabled(false);
 		JScrollPane scrollPane=new JScrollPane(field);
 		frame.add(scrollPane);
 		frame.setVisible(true);
@@ -106,6 +92,15 @@ public class Console{
 		field.setEditable(false);
 		keylistener=new TAdapter(field);
 		field.addKeyListener(keylistener);
+		setTheme(t);
+		field.getActionMap().get(DefaultEditorKit.deletePrevCharAction).setEnabled(false);
+		JScrollPane scrollPane=new JScrollPane(field);
+		frame.add(scrollPane);
+		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
+	}
+	
+	public void setTheme(theme t){
 		if (t==theme.shell1){
 			field.setBackground(Color.BLACK);
 			field.setForeground(Color.WHITE);
@@ -125,10 +120,6 @@ public class Console{
 			field.setBackground(Color.PINK);
 			field.setForeground(Color.MAGENTA);
 		}
-		JScrollPane scrollPane=new JScrollPane(field);
-		frame.add(scrollPane);
-		frame.setVisible(true);
-		frame.setLocationRelativeTo(null);
 	}
 	/**Sets weather the console adds a line and continues accepting input when the user presses enter while holding shift
 	 * 
