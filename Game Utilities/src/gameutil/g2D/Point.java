@@ -1,4 +1,4 @@
-package gameutil;
+package gameutil.g2D;
 
 import java.awt.geom.Point2D;
 

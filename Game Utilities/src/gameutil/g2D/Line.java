@@ -1,5 +1,6 @@
-package gameutil;
+package gameutil.g2D;
 
+import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 
 public class Line {
@@ -81,8 +82,12 @@ public class Line {
 	public boolean intersects(Line l){
 		return Line2D.linesIntersect(x1, y1, x2, y2, l.x1, l.y1, l.x2, l.y2);
 	}
+	public boolean intersects(Rectangle r){
+		LineSeg[] segments=LineSeg.rectToLineSegs(r);
+		return (intersects(segments[0])||intersects(segments[1])||intersects(segments[2])||intersects(segments[3]));
+	}
 	
-	public boolean intersecs(LineSeg l){
+	public boolean intersects(LineSeg l){
 		return l.intersecs(this);
 	}
 	
@@ -95,5 +100,12 @@ public class Line {
 	
 	public boolean containsPoint(Point p){
 		return (Line2D.ptLineDist(x1, y1, x2, y2, p.getX(), p.getY())==0);
+	}
+	
+	public Point endPoint1(){
+		return new Point(x1,y1);
+	}
+	public Point endPoint2(){
+		return new Point(x2,y2);
 	}
 }

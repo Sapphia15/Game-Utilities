@@ -43,7 +43,7 @@ public class Console{
 		field.setForeground(Color.WHITE);
 		field.getActionMap().get(DefaultEditorKit.deletePrevCharAction).setEnabled(false);
 		JScrollPane scrollPane=new JScrollPane(field);
-		frame.add(field);
+		frame.add(scrollPane);
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
 	}

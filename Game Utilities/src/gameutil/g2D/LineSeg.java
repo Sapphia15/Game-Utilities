@@ -1,5 +1,7 @@
-package gameutil;
+package gameutil.g2D;
 
+import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 
 public class LineSeg extends Line {
@@ -26,8 +28,8 @@ public class LineSeg extends Line {
 		return false;
 	}
 	
-	public boolean intersecs(LineSeg l){
-		if (super.intersecs(l)){
+	public boolean intersects(LineSeg l){
+		if (super.intersects(l)){
 			Point intsct=null;
 			try {
 				intsct=super.intersection(l);
@@ -39,6 +41,41 @@ public class LineSeg extends Line {
 			}
 		}
 		return false;
+	}
+	
+	public boolean intersects(Rectangle r){
+		LineSeg[] segments=rectToLineSegs(r);
+		return (r.contains(x1, y1)||r.contains(x2, y2)||intersects(segments[0])||intersects(segments[1])||intersects(segments[2])||intersects(segments[3]));
+	}
+	
+	/**Converts a Rectangle to an array of line segments
+	 * 
+	 * @param r rectangle to be converted
+	 * @return returns an array of line segments that bound the input rectangle starting with the top and index 0 and going clockwise
+	 */
+	public static LineSeg[] rectToLineSegs(Rectangle r){
+		LineSeg l1;
+		LineSeg l2;
+		LineSeg l3;
+		LineSeg l4;
+		try {
+			//top line
+			l1=new LineSeg(r.getMinX(),r.getMinY(),r.getMaxX(),r.getMinY());
+			//right line
+			l2=new LineSeg(r.getMaxX(),r.getMaxY(),r.getMaxX(),r.getMinY());
+			//bottom line
+			l3=new LineSeg(r.getMinX(),r.getMaxY(),r.getMaxX(),r.getMaxY());
+			//left line
+			l4=new LineSeg(r.getMinX(),r.getMinY(),r.getMinX(),r.getMaxY());
+		} catch (Exception e){
+			System.err.println("rectToLineSegs(Rectangle r) could not produce segments from rectangle. (returning null for all indicies)");
+			l1=null;
+			l2=null;
+			l3=null;
+			l4=null;
+		}
+		LineSeg[] segments={l1,l2,l3,l4};
+		return segments;
 	}
 	
 	/*public Point intersection(Line l) throws Exception{
@@ -77,6 +114,10 @@ public class LineSeg extends Line {
 	
 	public boolean containsPoint(Point p){
 		return (Line2D.ptSegDist(x1, y1, x2, y2, p.getX(), p.getY())==0);
+	}
+	
+	public void draw(Graphics g,Point view){
+		g.drawLine((int)Math.floor(x1-view.getX()), (int)Math.floor(y1-view.getY()), (int)Math.floor(x2-view.getX()), (int)Math.floor(y2-view.getY()));
 	}
 	
 }

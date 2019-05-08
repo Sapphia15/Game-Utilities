@@ -1,6 +1,6 @@
 package test;
 
-import gameutil.LineSeg;
+import gameutil.g2D.LineSeg;
 import gameutil.text.Console;
 import static gameutil.text.Console.theme;
 
