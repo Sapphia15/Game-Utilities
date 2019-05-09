@@ -8,6 +8,10 @@ public class Vector {
 		setSpds(spds);
 	}
 	
+	public Vector(Point end) {
+		setSpds(end.tuple);
+	}
+	
 	public double magnitude(){
 		return magnitude;
 	}
