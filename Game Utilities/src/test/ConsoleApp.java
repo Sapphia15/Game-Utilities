@@ -1,6 +1,9 @@
 package test;
 
+import gameutil.geom.Line;
+import gameutil.geom.Point;
 import gameutil.geom.Tuple;
+import gameutil.geom.Vector;
 import gameutil.geom.g2D.LineSeg;
 import gameutil.text.Console;
 import static gameutil.text.Console.theme;
@@ -11,13 +14,27 @@ import java.awt.geom.Rectangle2D;
 
 class ConsoleApp {
 	public static void main(String[] argumentos) {
-		Tuple t1=new Tuple(new double[]{1.0,2.0,10});
-		Tuple t2=new Tuple(new double[]{3.0,-1.0});
-		Tuple t3=t1. $A$ (t2);
+		Vector P1=new Vector(new double[]{3.0,3.0,3});
+		Vector P2=new Vector(new double[]{1.0,1.0,-1});
+		Vector P3=new Vector(new double[]{0.0,2.0});
+		Vector P4=new Vector(new double[]{2.0,0.0});
+		Line l1=new Line(P1,P2);
+		double x1=P1.end().i(0);
+		double y1=P1.end().i(1);
+		double x2=P2.end().i(0);
+		double y2=P2.end().i(1);
+		double x3=P3.end().i(0);
+		double y3=P3.end().i(1);
+		double x4=P4.end().i(0);
+		double y4=P4.end().i(1);
+		double t=( (y1-y3)*(x3-x4) + (x3-x1)*(y3-y4))/( (y3-y4)*(x1-x2)-(y1-y2)*(x3-x4) );
+		double s=( t*(y1-y2)+y1-y3 )/( y3-y4 );
 		Console.s.setTheme(Console.theme.sea);
 		Console.s.setVisible(true);
-		Console.s.println("t1: ["+t1.i(0)+","+t1.i(1)+","+t1.i(2)+"]");
-		Console.s.println("t2: ["+t2.i(0)+","+t2.i(1)+"]");
-		Console.s.println("t3: ["+t3.i(0)+","+t3.i(1)+","+t3.i(2)+"]");
+		Console.s.println("t: "+t);
+		Console.s.println("s:"+s);
+		Console.s.println(l1.equation(17.0/2.0).getSpds().i(2));
+		Console.s.println("Contains point (-1,-1): "+l1.containsPoint(new Point(new Tuple(new double[]{20,20,20,40}))));
+		Console.s.println("Contains point (0,2): "+l1.containsPoint(new Point(new Tuple(new double[]{0,2}))));
 	}
 }

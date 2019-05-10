@@ -4,8 +4,12 @@ public class Vector {
 	private double magnitude;
 	private Tuple spds;
 	
+	public Vector(double[] end){
+		setSpds(new Tuple(end));
+	}
+	
 	public Vector(Tuple end){
-		setSpds(spds);
+		setSpds(end);
 	}
 	
 	public Vector(Point end) {
@@ -30,7 +34,7 @@ public class Vector {
 	}
 	
 	public Vector $A$(Vector v){
-		return new Vector(v.getSpds() .$A$ (spds));
+		return new Vector(spds .$A$ (v.getSpds()));
 	}
 	
 	public Vector $A$(double s){
@@ -38,7 +42,7 @@ public class Vector {
 	}
 	
 	public Vector $S$(Vector v){
-		return new Vector(v.getSpds() .$S$ (spds));
+		return new Vector(spds .$S$ (v.spds));
 	}
 	
 	public Vector $S$(double s){
@@ -46,7 +50,7 @@ public class Vector {
 	}
 	
 	public Vector $X$(Vector v){
-		return new Vector(v.getSpds() .$X$ (spds));
+		return new Vector(spds .$X$ (v.getSpds()));
 	}
 	
 	public Vector $X$(double s){
@@ -54,11 +58,23 @@ public class Vector {
 	}
 	
 	public Vector $D$(Vector v){
-		return new Vector(v.getSpds() .$D$ (spds));
+		return new Vector(spds .$D$ (v.spds));
 	}
 	
 	public Vector $D$(double s){
 		return new Vector(spds .$D$ (s));
+	}
+	
+	public Vector $E$(double exp){
+		return new Vector(spds .$E$(exp));
+	}
+	
+	public Vector sq(){
+		return $X$(this);
+	}
+	
+	public int n(){
+		return spds.n();
 	}
 	
 	

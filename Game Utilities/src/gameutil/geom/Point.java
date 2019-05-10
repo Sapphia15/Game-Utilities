@@ -22,4 +22,8 @@ public class Point {
 	public double distanceO(){
 		return distance(new Point(Tuple.origin(tuple.n())));
 	}
+	
+	public boolean equals(Point p){
+		return tuple.equals(p.tuple);
+	}
 }

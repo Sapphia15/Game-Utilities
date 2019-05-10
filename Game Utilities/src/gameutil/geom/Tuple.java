@@ -346,4 +346,44 @@ public class Tuple {
 	public static Tuple origin(int n){
 		return new Tuple(new double[n]);
 	}
+	
+	public boolean equals(Tuple t){
+		int n;
+		boolean tuplesEqual=true;
+		if (t.n>this.n){
+			n=t.n;
+			for (int i=0; i<n; i++){
+				try{
+					if (!(tuple[i]==t.tuple[i])){
+						tuplesEqual=false;
+						break;
+					}
+				} catch (IndexOutOfBoundsException e){
+					//undefined index of this tuple defaults to zero
+					if (!(t.tuple[i]==0)){
+						tuplesEqual=false;
+						break;
+					}
+				}
+			}
+		} else {
+			n=this.n;
+			for (int i=0; i<n; i++){
+				try{
+					if (!(tuple[i]==t.tuple[i])){
+						tuplesEqual=false;
+						break;
+					}
+				} catch (IndexOutOfBoundsException e){
+					//undefined index of tuple t defaults to zero
+					if (!(tuple[i]==0)){
+						tuplesEqual=false;
+						break;
+					}
+				}
+			}
+		}
+		
+		return tuplesEqual;
+	}
 }
