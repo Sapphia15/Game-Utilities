@@ -14,8 +14,8 @@ import java.awt.geom.Rectangle2D;
 
 class ConsoleApp {
 	public static void main(String[] argumentos) {
-		Vector P1=new Vector(new double[]{3.0,3.0,3});
-		Vector P2=new Vector(new double[]{1.0,1.0,-1});
+		Vector P1=new Vector(new double[]{1.0,2.0,15});
+		Vector P2=new Vector(new double[]{0.0,0.0,15});
 		Vector P3=new Vector(new double[]{0.0,2.0});
 		Vector P4=new Vector(new double[]{2.0,0.0});
 		Line l1=new Line(P1,P2);
@@ -33,8 +33,8 @@ class ConsoleApp {
 		Console.s.setVisible(true);
 		Console.s.println("t: "+t);
 		Console.s.println("s:"+s);
-		Console.s.println(l1.equation(17.0/2.0).getSpds().i(2));
-		Console.s.println("Contains point (-1,-1): "+l1.containsPoint(new Point(new Tuple(new double[]{20,20,20,40}))));
-		Console.s.println("Contains point (0,2): "+l1.containsPoint(new Point(new Tuple(new double[]{0,2}))));
+		Console.s.println(l1.equation(19).getSpds().i(2));
+		Console.s.println("Contains point (-1,-1): "+l1.containsPoint(new Point(new Tuple(new double[]{20,40,14}))));
+		Console.s.println("Contains point (0,2): "+l1.containsPoint(new Point(new Tuple(new double[]{20,40,15}))));
 	}
 }

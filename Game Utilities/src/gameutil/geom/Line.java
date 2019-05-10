@@ -17,9 +17,11 @@ public class Line {
 	}
 	
 	public boolean containsPoint(Point p){
-		double t=( new Vector(p). $S$ (P1). $D$ (v) ).getSpds().i(0);
-		return p.equals(new Point(equation(t).end()));
-		//return p.tuple.
+		Vector T=new Vector(p). $S$ (P1). $D$ (v);
+		T.getSpds().printVals("T");
+		//double t=T.getSpds().sum()/(double) T.getSpds().n();
+		//return p.equals(new Point(equation(t).end()));
+		return T.getSpds().intersects(new Tuple(T.getSpds().n(),T.getSpds().i(0)));
 	}
 	
 	public Vector equation(double t){

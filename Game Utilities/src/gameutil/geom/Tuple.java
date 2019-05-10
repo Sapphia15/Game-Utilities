@@ -386,4 +386,61 @@ public class Tuple {
 		
 		return tuplesEqual;
 	}
+	
+	public boolean intersects(Tuple t){
+		int n;
+		boolean tuplesEqual=true;
+		if (t.n>this.n){
+			n=t.n;
+			for (int i=0; i<n; i++){
+				try{
+					if (!(tuple[i]==t.tuple[i])&&(tuple[i]==Double.NaN)&&(t.tuple[i]==Double.NaN)){
+						System.out.println(tuple[i]+":"+t.tuple[i]);
+						tuplesEqual=false;
+						break;
+					}
+				} catch (IndexOutOfBoundsException e){
+					//undefined index of this tuple defaults to zero
+					if (!(t.tuple[i]==0)&&(tuple[i]==Double.NaN)&&(t.tuple[i]==Double.NaN)){
+						System.out.println(tuple[i]+":"+t.tuple[i]);
+						tuplesEqual=false;
+						break;
+					}
+				}
+			}
+		} else {
+			n=this.n;
+			for (int i=0; i<n; i++){
+				try{
+					if (!(tuple[i]==t.tuple[i])&&(tuple[i]==Double.NaN)&&(t.tuple[i]==Double.NaN)){
+						System.out.println(tuple[i]+":"+t.tuple[i]);
+						tuplesEqual=false;
+						break;
+					}
+				} catch (IndexOutOfBoundsException e){
+					//undefined index of tuple t defaults to zero
+					if (!(tuple[i]==0)&&(tuple[i]==Double.NaN)&&(t.tuple[i]==Double.NaN)){
+						System.out.println(tuple[i]+":"+t.tuple[i]);
+						tuplesEqual=false;
+						break;
+					}
+				}
+			}
+		}
+		
+		return tuplesEqual;
+	}
+	
+	public void printVals() {
+		for (int i=0;i<n;i++) {
+			System.out.println(tuple[i]);
+		}
+	}
+	
+	public void printVals(String lable) {
+		System.out.println(lable+": ");
+		for (int i=0;i<n;i++) {
+			System.out.println(tuple[i]);
+		}
+	}
 }
