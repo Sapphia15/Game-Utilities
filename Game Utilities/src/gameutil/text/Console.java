@@ -1,16 +1,23 @@
 package gameutil.text;
 
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
+import java.awt.Robot;
 import java.awt.TextArea;
 import java.awt.Toolkit;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Hashtable;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
@@ -42,6 +49,7 @@ public class Console {
 		frame.pack();
 		field = new JTextArea();
 		field.setEditable(false);
+		field.setFocusable(true);
 		keylistener = new TAdapter(field);
 		field.addKeyListener(keylistener);
 		field.setBackground(Color.BLACK);
@@ -51,6 +59,33 @@ public class Console {
 		frame.add(scrollPane);
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
+		field.addFocusListener(new FocusListener() {
+			private boolean init=true;
+			
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				if (init) {
+					Robot r=null;
+					while (r==null) {
+						try {
+							r=new Robot();
+						} catch (AWTException e) {
+							e.printStackTrace();
+						}
+					}
+					r.keyPress(KeyEvent.VK_ENTER);
+					System.out.println("A console has been initialized.");
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				// TODO Apéndice de método generado automáticamente
+				
+			}
+			
+		});
+		readInt();
 	}
 
 	public Console(boolean userNextLineEnabled) {
@@ -444,8 +479,97 @@ public class Console {
 			readCache = "";
 			skipLineAfterRead = false;
 			decimaled = false;
+			/*ScheduledExecutorService s=Executors.newScheduledThreadPool(1);
+			s.schedule(new Runnable() {public void run() {keySim(KeyEvent.VK_ENTER);}}, 500, TimeUnit.MILLISECONDS);
+			readInt();*/
+			
 		}
-
+		
+		public void keySim(int keyCode) {
+			if (readingNumber && !reading) {
+				String print = "";
+				if (keyCode == KeyEvent.VK_ENTER) {
+					readingNumber = false;
+					if (skipLineAfterRead) {
+						println();
+					}
+					return;
+				} else if (keyCode >= 48 && keyCode < 58) {
+					int no = keyCode - 48;
+					print = Integer.toString(no);
+				} else if (keyCode == KeyEvent.VK_BACK_SPACE || keyCode == KeyEvent.VK_DELETE) {
+					if (readCache.length() > 0) {
+						if (readCache.endsWith(".")) {
+							decimaled = false;
+						}
+						readCache = readCache.substring(0, readCache.length() - 1);
+						backSpace();
+					}
+				} else if (!isInt && !decimaled && keyCode == KeyEvent.VK_PERIOD) {
+					print = ".";
+					decimaled = true;
+				} else if (keyCode == KeyEvent.VK_SUBTRACT || keyCode == KeyEvent.VK_MINUS) {
+					if (readCache.equals("")) {
+						readCache = "-" + readCache;
+						print("-");
+					}
+				}
+				print(print);
+				readCache = readCache + print;
+			}
+			if (reading && keyCode == KeyEvent.VK_ENTER) {
+				if (skipLineAfterRead) {
+					println();
+				}
+				reading = false;
+			}
+		}
+		
+		public void keySim(int keyCode,boolean shiftDown) {
+			if (readingNumber && !reading) {
+				String print = "";
+				if (keyCode == KeyEvent.VK_ENTER) {
+					readingNumber = false;
+					if (skipLineAfterRead) {
+						println();
+					}
+					return;
+				} else if (keyCode >= 48 && keyCode < 58) {
+					int no = keyCode - 48;
+					print = Integer.toString(no);
+				} else if (keyCode == KeyEvent.VK_BACK_SPACE || keyCode == KeyEvent.VK_DELETE) {
+					if (readCache.length() > 0) {
+						if (readCache.endsWith(".")) {
+							decimaled = false;
+						}
+						readCache = readCache.substring(0, readCache.length() - 1);
+						backSpace();
+					}
+				} else if (!isInt && !decimaled && keyCode == KeyEvent.VK_PERIOD) {
+					print = ".";
+					decimaled = true;
+				} else if (keyCode == KeyEvent.VK_SUBTRACT || keyCode == KeyEvent.VK_MINUS) {
+					if (readCache.equals("")) {
+						readCache = "-" + readCache;
+						print("-");
+					}
+				}
+				print(print);
+				readCache = readCache + print;
+			}
+			if (reading && keyCode == KeyEvent.VK_ENTER) {
+				if (!userNextLineEnabled || !shiftDown) {
+					if (skipLineAfterRead) {
+						println();
+					}
+					reading = false;
+				} else {
+					println();
+					readCache = readCache + "\n";
+				}
+			}
+		}
+		
 		public void keyPressed(KeyEvent e) {
 			if (readingNumber && !reading) {
 				String print = "";
@@ -609,9 +733,7 @@ public class Console {
 			skipLineAfterRead = false;
 			System.out.println("Awaiting user input");
 			while (reading) {
-				if (!reading) {
-					doNothing();
-				}
+				doNothing();
 			}
 			System.out.println("User input recieved");
 			return readCache;
@@ -724,4 +846,5 @@ public class Console {
 			}
 		}
 	}
+	
 }
