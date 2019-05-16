@@ -55,16 +55,34 @@ public class Scalar {
 	}
 	
 	public Scalar $X$(Scalar s) {
+		if (this.equals(Infinity)){
+			if (s. _L_ (Zero)){
+				return Infinity;
+			} else if (s. _S_(Zero)){
+				return NegInfinity;
+			} else if (s.equals(Zero)){
+				
+			}
+		}
 		return new Scalar(valL*s.valL,valD*s.valD);
 	}
 	
 	public Scalar $D$(Scalar s) {
 		if (this .$X$ (s) .equals (Zero)) {
 			return R;
-		} else if ()
+		} else if (this.equals(Infinity))
 	}
 	
 	public boolean _L_(Scalar s) {
+		if (s.equals(Infinity)){
+			return false;
+		} else if (equals(Infinity)){
+			return true;
+		} else if (s.equals(R)){
+			return false;
+		} else if (equals(R)){
+			return true;
+		}
 		if (valL>s.valL) {
 			return true;
 		} else if (valL<s.valL) {

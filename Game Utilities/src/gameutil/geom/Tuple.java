@@ -393,15 +393,16 @@ public class Tuple {
 		if (t.n>this.n){
 			n=t.n;
 			for (int i=0; i<n; i++){
+				System.out.println(tuple[i]+":"+t.tuple[i]);
 				try{
-					if (!(tuple[i]==t.tuple[i])&&(tuple[i]==Double.NaN)&&(t.tuple[i]==Double.NaN)){
+					if ((!(tuple[i]==t.tuple[i]))&&!(tuple[i]==Double.NaN)&&!(t.tuple[i]==Double.NaN)){
 						System.out.println(tuple[i]+":"+t.tuple[i]);
 						tuplesEqual=false;
 						break;
 					}
 				} catch (IndexOutOfBoundsException e){
 					//undefined index of this tuple defaults to zero
-					if (!(t.tuple[i]==0)&&(tuple[i]==Double.NaN)&&(t.tuple[i]==Double.NaN)){
+					if (!(t.tuple[i]==0)&&!(tuple[i]==Double.NaN)&&!(t.tuple[i]==Double.NaN)){
 						System.out.println(tuple[i]+":"+t.tuple[i]);
 						tuplesEqual=false;
 						break;
@@ -411,15 +412,16 @@ public class Tuple {
 		} else {
 			n=this.n;
 			for (int i=0; i<n; i++){
+				System.out.println(tuple[i]+":"+t.tuple[i]);
 				try{
-					if (!(tuple[i]==t.tuple[i])&&(tuple[i]==Double.NaN)&&(t.tuple[i]==Double.NaN)){
+					if ((!(tuple[i]==t.tuple[i]))&&!(tuple[i]==Double.NaN)&&!(t.tuple[i]==Double.NaN)){
 						System.out.println(tuple[i]+":"+t.tuple[i]);
 						tuplesEqual=false;
 						break;
 					}
 				} catch (IndexOutOfBoundsException e){
 					//undefined index of tuple t defaults to zero
-					if (!(tuple[i]==0)&&(tuple[i]==Double.NaN)&&(t.tuple[i]==Double.NaN)){
+					if (!(tuple[i]==0)&&((tuple[i]<=0)||(tuple[i]>=0)||(t.tuple[i]==Double.POSITIVE_INFINITY)||(t.tuple)){
 						System.out.println(tuple[i]+":"+t.tuple[i]);
 						tuplesEqual=false;
 						break;
@@ -427,7 +429,6 @@ public class Tuple {
 				}
 			}
 		}
-		
 		return tuplesEqual;
 	}
 	

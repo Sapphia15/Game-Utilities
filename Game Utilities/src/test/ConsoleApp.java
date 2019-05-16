@@ -17,13 +17,14 @@ class ConsoleApp {
 		Console.s.setVisible(true);
 		//Console.s.readLineInt();
 		//Console.s.read();
-		Console.s.readLine();
+		/*Console.s.readLine();
 		Console.s.readLine();
 		Console.s.read();
 		Console.s.read();
 		Console.s.readLine();
-		
-		/*Vector P1=new Vector(new double[]{1.0,2.0,15});
+		*/
+		Console.s.println(Double.NaN<=0);
+		Vector P1=new Vector(new double[]{1.0,2.0,15});
 		Vector P2=new Vector(new double[]{0.0,0.0,15});
 		Vector P3=new Vector(new double[]{0.0,2.0});
 		Vector P4=new Vector(new double[]{2.0,0.0});
@@ -44,6 +45,6 @@ class ConsoleApp {
 		Console.s.println("s:"+s);
 		Console.s.println(l1.equation(19).getSpds().i(2));
 		Console.s.println("Contains point (-1,-1): "+l1.containsPoint(new Point(new Tuple(new double[]{20,40,14}))));
-		Console.s.println("Contains point (0,2): "+l1.containsPoint(new Point(new Tuple(new double[]{20,40,15}))));*/
+		Console.s.println("Contains point (0,2): "+l1.containsPoint(new Point(new Tuple(new double[]{20,40,15}))));
 	}
 }
