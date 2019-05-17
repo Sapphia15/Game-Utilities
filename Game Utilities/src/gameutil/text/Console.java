@@ -33,7 +33,9 @@ public class Console {
 	private JTextArea display;
 	private TAdapter keylistener;
 	private boolean userNextLineEnabled;
-
+	private JScrollBar vertical;
+	private boolean autoScroll;
+	
 	public enum theme {
 		shell1, shell2, white, sea, forest, pink
 	};
@@ -56,6 +58,74 @@ public class Console {
 		field.setForeground(Color.WHITE);
 		field.getActionMap().get(DefaultEditorKit.deletePrevCharAction).setEnabled(false);
 		JScrollPane scrollPane = new JScrollPane(field);
+		scrollPane.setAutoscrolls(true);
+		vertical = scrollPane.getVerticalScrollBar();
+		frame.add(scrollPane);
+		
+		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
+		field.addFocusListener(new FocusListener() {
+			private boolean init=true;
+			
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				if (init) {
+					Robot r=null;
+					int tries=0;
+					while (r==null) {
+						try {
+							r=new Robot();
+							r.keyPress(KeyEvent.VK_ENTER);
+							for (int i=0;i<50000;i++) {
+								println(42);
+							}
+							System.out.println("A console has been initialized.");
+						} catch (AWTException e) {
+							
+							tries++;
+							if (tries>=100) {
+								System.err.println("Failed to instantiate Robot class");
+								System.err.println("Console not properly initialized. Press enter to continue.");
+								e.printStackTrace();
+								break;
+							}
+						}
+						
+					}
+					
+				}
+					
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				// TODO Apéndice de método generado automáticamente
+				
+			}
+			
+		});
+		
+		readInt();
+		clr();
+	}
+	
+	public Console(int initializationInteger) {
+		userNextLineEnabled = false;
+		frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 2,
+				(Toolkit.getDefaultToolkit().getScreenSize().height / 3)));
+		frame.pack();
+		field = new JTextArea();
+		
+		field.setEditable(false);
+		field.setFocusable(true);
+		keylistener = new TAdapter(field);
+		field.addKeyListener(keylistener);
+		field.setBackground(Color.BLACK);
+		field.setForeground(Color.WHITE);
+		field.getActionMap().get(DefaultEditorKit.deletePrevCharAction).setEnabled(false);
+		JScrollPane scrollPane = new JScrollPane(field);
 		frame.add(scrollPane);
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
@@ -66,15 +136,28 @@ public class Console {
 			public void focusGained(FocusEvent arg0) {
 				if (init) {
 					Robot r=null;
+					int tries=0;
 					while (r==null) {
 						try {
 							r=new Robot();
+							r.keyPress(KeyEvent.VK_ENTER);
+							for (int i=0;i<50000;i++) {
+								println(42);
+							}
+							System.out.println("A console has been initialized.");
 						} catch (AWTException e) {
-							e.printStackTrace();
+							
+							tries++;
+							if (tries>=100) {
+								System.err.println("Failed to instantiate Robot class");
+								System.err.println("Console not properly initialized. Press enter to continue.");
+								e.printStackTrace();
+								break;
+							}
 						}
+						
 					}
-					r.keyPress(KeyEvent.VK_ENTER);
-					System.out.println("A console has been initialized.");
+					
 				}
 			}
 
@@ -85,7 +168,35 @@ public class Console {
 			}
 			
 		});
-		readInt();
+		int no=readInt();
+		if (no==initializationInteger) {
+			System.out.println("The correct number was entered, initialization complete.");
+		} else {
+			for (int i=0;i<50000;i++) {
+				System.out.println("FATAL CONSOLE ERROR!");
+				System.out.println("NUMBER ENTERED DID NOT MATCH INITIALIZATION REQUIREMENT!");
+				println("ERROR: Case 666 - number entered is incorrect... attempting reinitialization...");
+			}
+			
+			setTheme(theme.shell2);
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Bloque catch generado automáticamente
+				e.printStackTrace();
+			}
+			print("Reinitialization Successful");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Bloque catch generado automáticamente
+				e.printStackTrace();
+			}
+			clr();
+			
+		}
+		clr();
 	}
 
 	public Console(boolean userNextLineEnabled) {
@@ -185,6 +296,9 @@ public class Console {
 	 */
 	public void print(String s) {
 		field.append(s);
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -194,6 +308,9 @@ public class Console {
 	 */
 	public void print(double d) {
 		field.append(String.valueOf(d));
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -203,6 +320,9 @@ public class Console {
 	 */
 	public void print(int i) {
 		field.append(String.valueOf(i));
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -212,6 +332,9 @@ public class Console {
 	 */
 	public void print(long l) {
 		field.append(String.valueOf(l));
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -221,6 +344,9 @@ public class Console {
 	 */
 	public void print(char c) {
 		field.append(String.valueOf(c));
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -230,6 +356,9 @@ public class Console {
 	 */
 	public void print(float f) {
 		field.append(String.valueOf(f));
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -239,6 +368,9 @@ public class Console {
 	 */
 	public void print(Object o) {
 		field.append(String.valueOf(o));
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -248,6 +380,9 @@ public class Console {
 	 */
 	public void print(boolean b) {
 		field.append(String.valueOf(b));
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -257,6 +392,9 @@ public class Console {
 	 */
 	public void print(char[] data) {
 		field.append(String.valueOf(data));
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -266,6 +404,9 @@ public class Console {
 	 */
 	public void println(String s) {
 		field.append(s + "\n");
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -275,6 +416,9 @@ public class Console {
 	 */
 	public void println(Boolean b) {
 		field.append(b + "\n");
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -284,6 +428,9 @@ public class Console {
 	 */
 	public void println(int i) {
 		field.append(i + "\n");
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -293,6 +440,9 @@ public class Console {
 	 */
 	public void println(double d) {
 		field.append(d + "\n");
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -302,6 +452,9 @@ public class Console {
 	 */
 	public void println(long l) {
 		field.append(l + "\n");
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -311,6 +464,9 @@ public class Console {
 	 */
 	public void println(char c) {
 		field.append(c + "\n");
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -320,6 +476,9 @@ public class Console {
 	 */
 	public void println(char[] data) {
 		field.append(String.valueOf(data) + "\n");
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -329,6 +488,9 @@ public class Console {
 	 */
 	public void println(Object o) {
 		field.append(o + "\n");
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -338,6 +500,9 @@ public class Console {
 	 */
 	public void println(float f) {
 		field.append(f + "\n");
+		if (autoScroll) {
+			scrollBottom();
+		}
 	}
 
 	/**
@@ -460,6 +625,14 @@ public class Console {
 
 	public String getLine(int line) {
 		return keylistener.getLine(line);
+	}
+	
+	public void setAutoScroll(boolean as) {
+		autoScroll=true;
+	}
+	
+	public void scrollBottom() {
+		vertical.setValue(vertical.getModel().getMaximum()+vertical.getModel().getExtent());
 	}
 
 	public class TAdapter extends KeyAdapter {
@@ -723,6 +896,9 @@ public class Console {
 			while (reading) {
 				doNothing();
 			}
+			if (autoScroll) {
+				scrollBottom();
+			}
 			System.out.println("User input recieved");
 			return readCache;
 		}
@@ -734,6 +910,9 @@ public class Console {
 			System.out.println("Awaiting user input");
 			while (reading) {
 				doNothing();
+			}
+			if (autoScroll) {
+				scrollBottom();
 			}
 			System.out.println("User input recieved");
 			return readCache;
@@ -747,6 +926,9 @@ public class Console {
 			System.out.println("Awaiting user input of integer type");
 			while (readingNumber) {
 				doNothing();
+			}
+			if (autoScroll) {
+				scrollBottom();
 			}
 			System.out.println("User input recieved");
 			if (readCache.equals("")) {
@@ -779,6 +961,9 @@ public class Console {
 			System.out.println("Awaiting user input of integer type");
 			while (readingNumber) {
 				doNothing();
+			}
+			if (autoScroll) {
+				scrollBottom();
 			}
 			System.out.println("User input recieved");
 			if (readCache.equals("")) {
@@ -813,6 +998,9 @@ public class Console {
 			while (readingNumber) {
 				doNothing();
 			}
+			if (autoScroll) {
+				scrollBottom();
+			}
 			System.out.println("User input recieved");
 			if (readCache.equals("")) {
 				return 0;
@@ -830,10 +1018,14 @@ public class Console {
 			while (readingNumber) {
 				doNothing();
 			}
+			if (autoScroll) {
+				scrollBottom();
+			}
 			System.out.println("User input recieved");
 			if (readCache.equals("")) {
 				return 0;
 			}
+			
 			return Double.parseDouble(readCache);
 		}
 
@@ -844,6 +1036,10 @@ public class Console {
 			if (!reading) {
 				System.out.print("");
 			}
+		}
+		public void interrupt() {
+			readingNumber=false;
+			reading=false;
 		}
 	}
 	
