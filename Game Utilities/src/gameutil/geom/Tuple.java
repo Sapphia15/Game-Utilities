@@ -387,6 +387,34 @@ public class Tuple {
 		return tuplesEqual;
 	}
 	
+	public boolean contains(double d){
+		for (double tupDoub:tuple) {
+			if (tupDoub==d) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Tuple containsAtIndexes(double d) {
+		Tuple indexes=new Tuple(0);
+		boolean tupleIsNew=true;
+		int i=0;
+		for (double tupDoub:tuple) {
+			if (tupDoub==d) {
+				if (!tupleIsNew) {
+					indexes.set(indexes.n+1,i);
+				} else {
+					indexes.set(0,i);
+					tupleIsNew=false;
+				}
+			}
+			i++;
+			
+		}
+		return indexes;
+	}
+	
 	public void printVals() {
 		for (int i=0;i<n;i++) {
 			System.out.println(tuple[i]);
