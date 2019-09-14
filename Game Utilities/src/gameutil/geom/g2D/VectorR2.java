@@ -3,9 +3,14 @@ package gameutil.geom.g2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-public class VectorR2 extends LineSeg {
+public class VectorR2 extends LineSegR2 {
+	double mX;
+	double mY;
+	
 	public VectorR2(PointR2 base, PointR2 end) throws Exception {
 		super(base.getX(), base.getY(), end.getX(), end.getY());
+		mX=end.getX()-base.getX();
+		mY=end.getY()-base.getY();
 	}
 
 	public PointR2 base() {
@@ -21,8 +26,8 @@ public class VectorR2 extends LineSeg {
 			if (r.contains(base().getX(), base().getY()) && r.contains(end().getX(), end().getY())) {
 				return null;
 			} else if (r.contains(base().getX(), base().getY())) {
-				LineSeg[] segments = LineSeg.rectToLineSegs(r);
-				for (LineSeg l : segments) {
+				LineSegR2[] segments = LineSegR2.rectToLineSegs(r);
+				for (LineSegR2 l : segments) {
 					if (intersects(l)) {
 						try {
 							return intersection(l);
@@ -33,9 +38,9 @@ public class VectorR2 extends LineSeg {
 					}
 				}
 			} else {
-				LineSeg[] segments = LineSeg.rectToLineSegs(r);
+				LineSegR2[] segments = LineSegR2.rectToLineSegs(r);
 				ArrayList<PointR2> points = new ArrayList<>();
-				for (LineSeg l : segments) {
+				for (LineSegR2 l : segments) {
 					if (intersects(l)) {
 						try {
 							points.add(intersection(l));
@@ -56,5 +61,13 @@ public class VectorR2 extends LineSeg {
 
 		}
 		return null;
+	}
+	
+	public double getMagnetudeX() {
+		return mX;
+	}
+	
+	public double getMagnetudeY() {
+		return mY;
 	}
 }

@@ -3,7 +3,7 @@ package gameutil.geom.g1D;
 public class Vector1D {
 	private Point1D base;
 	private Point1D end;
-
+	
 	public static enum direction {
 		positive, negative
 	};
@@ -47,5 +47,9 @@ public class Vector1D {
 
 	public boolean contains(Point1D p) {
 		return (p.getX() >= base.getX() && p.getX() <= end.getX());
+	}
+	
+	public double getMagnetude() {
+		return end.getX()-base.getX();
 	}
 }

@@ -57,40 +57,84 @@ public class LineR2 {
 			b = y1 - (m * x1);
 		}
 	}
+	
+	public LineR2(double m,double b) {
+		this.x1 = 1;
+		this.y1 = m+b;
+		this.x2 = 0;
+		this.y2 = b;
+		p1 = new PointR2(x1, y1);
+		p2 = new PointR2(x2, y2);
+		if (x1 - x2 == 0) {
+			vertical = true;
+			m = 0;
+			b = x1;
+		} else {
+			vertical = false;
+			m = (y1 - y2) / (x1 - x2);
+			b = y1 - (m * x1);
+		}
+	}
 
-	public PointR2 intersection(LineR2 l) throws Exception {
+	public PointR2 intersection(LineR2 l) throws NoIntersectionException {
 		if (intersects(l)) {
 			if ((vertical && l.vertical) || (m == 0 && l.m == 0)) {
 				return null;
 			} else if (vertical) {
-				return new PointR2(b, l.equation(b));
+				try {
+					return new PointR2(b, l.equation(b));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else if (l.vertical) {
-				return new PointR2(l.b, equation(l.b));
+				try {
+					return new PointR2(l.b, equation(l.b));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else if (m==l.m){
+				return null;
 			} else {
 				double x = (l.b - b) / (m - l.m);
-				return new PointR2(x, equation(x));
+				try {
+					return new PointR2(x, equation(x));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-		} else {
-			throw new Exception("Can't find intersection point of lines that don't intersect.");
 		}
+		throw new NoIntersectionException("Can't find intersection point of lines that don't intersect.");
+
 	}
 
-	public PointR2 intersection(LineSeg l) throws Exception {
+	public PointR2 intersection(LineSegR2 l) throws NoIntersectionException {
 		return l.intersection(this);
+		
 	}
 
 	public boolean intersects(LineR2 l) {
-		return Line2D.linesIntersect(x1, y1, x2, y2, l.x1, l.y1, l.x2, l.y2);
+		if ((vertical && l.vertical) || (m == 0 && l.m == 0)) {
+			return b==l.b;
+		} else if (vertical||l.vertical) {
+			return true;
+		} else {
+			//lines are not vertical at all, if they have the same slope but different y-int they don't intersect, otherwise they do.
+			return !(m==l.m && !(b==l.b));
+		}
 	}
 
 	public boolean intersects(Rectangle r) {
-		LineSeg[] segments = LineSeg.rectToLineSegs(r);
+		LineSegR2[] segments = LineSegR2.rectToLineSegs(r);
 		return (intersects(segments[0]) || intersects(segments[1]) || intersects(segments[2])
 				|| intersects(segments[3]));
 	}
 
-	public boolean intersects(LineSeg l) {
-		return l.intersecs(this);
+	public boolean intersects(LineSegR2 l) {
+		
+		return l.intersects(this);
 	}
 
 	public double equation(double x) throws Exception {
@@ -102,6 +146,10 @@ public class LineR2 {
 
 	public boolean containsPoint(PointR2 p) {
 		return (Line2D.ptLineDist(x1, y1, x2, y2, p.getX(), p.getY()) == 0);
+	}
+	
+	public double pointDistance(PointR2 p) {
+		return Line2D.ptLineDist(x1, y1, x2, y2, p.getX(), p.getY());
 	}
 
 	public PointR2 endPoint1() {

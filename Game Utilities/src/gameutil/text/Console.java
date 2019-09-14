@@ -35,6 +35,7 @@ public class Console {
 	private boolean userNextLineEnabled;
 	private JScrollBar vertical;
 	private boolean autoScroll;
+	private boolean initialized=false;
 	
 	public enum theme {
 		shell1, shell2, white, sea, forest, pink
@@ -65,7 +66,7 @@ public class Console {
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
 		field.addFocusListener(new FocusListener() {
-			private boolean init=true;
+			private boolean init=!initialized;
 			
 			@Override
 			public void focusGained(FocusEvent arg0) {
@@ -92,6 +93,7 @@ public class Console {
 						}
 						
 					}
+					init=false;
 					
 				}
 					
@@ -107,6 +109,7 @@ public class Console {
 		
 		readInt();
 		clr();
+		
 	}
 	
 	public Console(int initializationInteger) {

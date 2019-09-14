@@ -2,6 +2,9 @@ package gameutil.geom.g2D;
 
 import java.awt.geom.Point2D;
 
+import gameutil.geom.Vector;
+import gameutil.geom.g1D.Vector1D;
+
 public class PointR2 {
 	private double x;
 	private double y;
@@ -22,6 +25,20 @@ public class PointR2 {
 	public void move(double x, double y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public void move(VectorR2 v) {
+		x+=v.mX;
+		y+=v.mY;
+	}
+	
+	public void move(Vector v) {
+		x+=v.getSpds().i(0);
+		y+=v.getSpds().i(1);
+	}
+	
+	public void move(Vector1D v) {
+		x+=v.getMagnetude();
 	}
 
 	public double getX() {

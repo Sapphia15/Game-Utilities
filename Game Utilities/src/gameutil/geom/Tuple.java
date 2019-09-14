@@ -264,7 +264,11 @@ public class Tuple {
 	 * @return
 	 */
 	public double i(int index){
-		return tuple[index];
+		try {
+			return tuple[index];
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return 0;
+		}
 	}
 	
 	/**Returns and array form of this tuple
