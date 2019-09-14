@@ -3,6 +3,11 @@ package gameutil.geom.g2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+/*TO DO:
+ *  -Make functions for adding and subtracting other vectors
+ *  
+ */
+
 public class VectorR2 extends LineSegR2 {
 	double mX;
 	double mY;

@@ -1,5 +1,9 @@
 package gameutil.geom.g2D;
 
+/*To Do:
+ * Make all the circle maths...
+ * 
+ */
 public class Circle {
 	protected PointR2 center;
 	protected double r;

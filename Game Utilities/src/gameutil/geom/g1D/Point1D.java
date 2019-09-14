@@ -1,6 +1,10 @@
 package gameutil.geom.g1D;
 
 public class Point1D {
+	/*TO DO:
+	 *  -Make functions for adding and subtracting other vectors
+	 *  
+	 */
 	private double x;
 
 	public Point1D(double x) {
