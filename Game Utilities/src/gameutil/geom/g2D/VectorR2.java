@@ -3,10 +3,10 @@ package gameutil.geom.g2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-/*TO DO:
- *  -Make functions for adding and subtracting other vectors
- *  
- */
+import gameutil.geom.Tuple;
+import gameutil.geom.Vector;
+
+
 
 public class VectorR2 extends LineSegR2 {
 	double mX;
@@ -16,6 +16,12 @@ public class VectorR2 extends LineSegR2 {
 		super(base.getX(), base.getY(), end.getX(), end.getY());
 		mX=end.getX()-base.getX();
 		mY=end.getY()-base.getY();
+	}
+	
+	public VectorR2(Vector v) throws Exception {
+		super(0, 0, v.getSpds().i(0), v.getSpds().i(1));
+		mX=v.getSpds().i(0);
+		mY=v.getSpds().i(1);
 	}
 
 	public PointR2 base() {
@@ -74,5 +80,109 @@ public class VectorR2 extends LineSegR2 {
 	
 	public double getMagnetudeY() {
 		return mY;
+	}
+	
+	public VectorR2 $A$(VectorR2 v){
+		try {
+			return new VectorR2(toVector() .$A$ (v.toVector()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public VectorR2 $A$(double s){
+		try {
+			return new VectorR2(toVector() .$A$ (s));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public VectorR2 $S$(VectorR2 v){
+		try {
+			return new VectorR2(toVector() .$S$ (v.toVector()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public VectorR2 $S$(double s){
+		try {
+			return new VectorR2(toVector() .$S$ (s));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public VectorR2 $X$(VectorR2 v){
+		try {
+			return new VectorR2(toVector() .$X$ (v.toVector()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public VectorR2 $X$(double s){
+		try {
+			return new VectorR2(toVector() .$X$ (s));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public VectorR2 $D$(VectorR2 v){
+		try {
+			return new VectorR2(toVector() .$D$ (v.toVector()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public VectorR2 $D$(double s){
+		try {
+			return new VectorR2(toVector() .$D$ (s));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public VectorR2 $E$(double s){
+		try {
+			return new VectorR2(toVector() .$E$ (s));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public VectorR2 sq(){
+		try {
+			return new VectorR2(toVector() .sq ());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Vector toVector() {
+		return new Vector(new Tuple(new double[] {mX,mY}));
 	}
 }
