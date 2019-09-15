@@ -5,13 +5,30 @@ import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 
 public class LineSegR2 extends LineR2 {
+	
+	/**Constructs a new line segment existing in 2 dimensions.
+	 * 
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @throws Exception It's a lie.
+	 */
 	public LineSegR2(double x1, double y1, double x2, double y2) throws Exception {
-		super(x1, y1, x2, y2);
+		super(new PointR2(x1, y1),new PointR2(x2, y2),true);
 	}
 
+	/**Constructs a new line segment existing in 2 dimensions.
+	 * 
+	 * @param p1
+	 * @param p2
+	 * @throws Exception It's a lie.
+	 */
 	public LineSegR2(PointR2 p1, PointR2 p2) throws Exception {
-		super(p1, p2);
+		super(p1, p2,true);
 	}
+	
+	
 
 	public boolean intersects(LineR2 l) {
 		System.out.println("Line seg intersects line?");
@@ -157,6 +174,24 @@ public class LineSegR2 extends LineR2 {
 			return y1;
 		} else {
 			return y2;
+		}
+	}
+	
+	public static LineSegR2 New(double x1, double y1, double x2, double y2) {
+		try {
+			return new LineSegR2(x1, y1, x2, y2);
+		} catch (Exception e) {
+			//this will never happen
+			return null;
+		}
+	}
+	
+	public static LineSegR2 New(PointR2 p1, PointR2 p2) {
+		try {
+			return new LineSegR2(p1, p2);
+		} catch (Exception e) {
+			//this will never happen
+			return null;
 		}
 	}
 }

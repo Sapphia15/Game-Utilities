@@ -185,4 +185,22 @@ public class VectorR2 extends LineSegR2 {
 	public Vector toVector() {
 		return new Vector(new Tuple(new double[] {mX,mY}));
 	}
+	
+	public static VectorR2 New(PointR2 base, PointR2 end) {
+		try {
+			return new VectorR2(base,end);
+		} catch (Exception e) {
+			//this will never happen
+			return null;
+		}
+	}
+	
+	public static VectorR2 New(Vector v){
+		try {
+			return new VectorR2(v);
+		} catch (Exception e){
+			//this will never happen
+			return null;
+		}
+	}
 }

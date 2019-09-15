@@ -58,6 +58,46 @@ public class LineR2 {
 		}
 	}
 	
+	/**Give the option of making a point-line for special cases...
+	 * 
+	 * @param p1
+	 * @param p2
+	 * @param overridePointLineException if this is true, then try catch and ignore exception. Otherwise handle it normally.
+	 * @throws Exception
+	 */
+	
+	protected LineR2(PointR2 p1, PointR2 p2,boolean overridePointLineException) throws Exception{
+		x1 = p1.getX();
+		y1 = p1.getY();
+		x2 = p2.getX();
+		y2 = p2.getY();
+		this.p1 = p1;
+		this.p2 = p2;
+		if (x1 == x2 && y1 == y2) {
+			m=0;
+			if (x1==0) {
+				b=y1;
+			} else {
+				b=0;
+			}
+			vertical = false;
+			if (!overridePointLineException) {
+				throw new Exception("Can't make a line out of one point.");
+			} else {
+				return;
+			}
+		}
+		if (x1 - x2 == 0) {
+			vertical = true;
+			m = 0;
+			b = x1;
+		} else {
+			vertical = false;
+			m = (y1 - y2) / (x1 - x2);
+			b = y1 - (m * x1);
+		}
+	}
+	
 	public LineR2(double m,double b) {
 		this.x1 = 1;
 		this.y1 = m+b;
