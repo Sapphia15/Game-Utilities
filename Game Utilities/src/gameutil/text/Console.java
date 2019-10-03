@@ -80,7 +80,7 @@ public class Console {
 							for (int i=0;i<50000;i++) {
 								println(42);
 							}
-							System.out.println("A console has been initialized.");
+							//System.out.println("A console has been initialized.");
 						} catch (AWTException e) {
 							
 							tries++;
@@ -145,9 +145,9 @@ public class Console {
 							r=new Robot();
 							r.keyPress(KeyEvent.VK_ENTER);
 							for (int i=0;i<50000;i++) {
-								println(42);
+								//println(42);
 							}
-							System.out.println("A console has been initialized.");
+							//System.out.println("A console has been initialized.");
 						} catch (AWTException e) {
 							
 							tries++;
@@ -172,7 +172,7 @@ public class Console {
 			
 		});
 		int no=readInt();
-		if (no==initializationInteger) {
+		/*if (no==initializationInteger) {
 			System.out.println("The correct number was entered, initialization complete.");
 		} else {
 			for (int i=0;i<50000;i++) {
@@ -198,10 +198,12 @@ public class Console {
 			}
 			clr();
 			
-		}
+		}*/
 		clr();
+		
 	}
-
+	
+	@Deprecated
 	public Console(boolean userNextLineEnabled) {
 		this.userNextLineEnabled = userNextLineEnabled;
 		frame = new JFrame();
@@ -222,6 +224,7 @@ public class Console {
 		frame.setLocationRelativeTo(null);
 	}
 
+	@Deprecated
 	public Console(theme t) {
 		userNextLineEnabled = false;
 		frame = new JFrame();
@@ -240,7 +243,9 @@ public class Console {
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
 	}
-
+	
+	
+	@Deprecated
 	public Console(theme t, boolean userNextLineEnabled) {
 		this.userNextLineEnabled = userNextLineEnabled;
 		frame = new JFrame();
@@ -902,7 +907,7 @@ public class Console {
 			if (autoScroll) {
 				scrollBottom();
 			}
-			System.out.println("User input recieved");
+			//System.out.println("User input recieved");
 			return readCache;
 		}
 
@@ -910,14 +915,14 @@ public class Console {
 			reading = true;
 			readCache = "";
 			skipLineAfterRead = false;
-			System.out.println("Awaiting user input");
+			//System.out.println("Awaiting user input");
 			while (reading) {
 				doNothing();
 			}
 			if (autoScroll) {
 				scrollBottom();
 			}
-			System.out.println("User input recieved");
+			//System.out.println("User input recieved");
 			return readCache;
 		}
 
@@ -926,14 +931,14 @@ public class Console {
 			readCache = "";
 			skipLineAfterRead = false;
 			isInt = true;
-			System.out.println("Awaiting user input of integer type");
+			//System.out.println("Awaiting user input of integer type");
 			while (readingNumber) {
 				doNothing();
 			}
 			if (autoScroll) {
 				scrollBottom();
 			}
-			System.out.println("User input recieved");
+			//System.out.println("User input recieved");
 			if (readCache.equals("")) {
 				return 0;
 			}
@@ -961,14 +966,14 @@ public class Console {
 			readCache = "";
 			skipLineAfterRead = true;
 			isInt = true;
-			System.out.println("Awaiting user input of integer type");
+			//System.out.println("Awaiting user input of integer type");
 			while (readingNumber) {
 				doNothing();
 			}
 			if (autoScroll) {
 				scrollBottom();
 			}
-			System.out.println("User input recieved");
+			//System.out.println("User input recieved");
 			if (readCache.equals("")) {
 				return 0;
 			}
@@ -997,14 +1002,14 @@ public class Console {
 			skipLineAfterRead = false;
 			isInt = false;
 			decimaled = false;
-			System.out.println("Awaiting user input of double type");
+			//System.out.println("Awaiting user input of double type");
 			while (readingNumber) {
 				doNothing();
 			}
 			if (autoScroll) {
 				scrollBottom();
 			}
-			System.out.println("User input recieved");
+			//System.out.println("User input recieved");
 			if (readCache.equals("")) {
 				return 0;
 			}
@@ -1017,14 +1022,14 @@ public class Console {
 			skipLineAfterRead = true;
 			isInt = false;
 			decimaled = false;
-			System.out.println("Awaiting user input of double type");
+			//System.out.println("Awaiting user input of double type");
 			while (readingNumber) {
 				doNothing();
 			}
 			if (autoScroll) {
 				scrollBottom();
 			}
-			System.out.println("User input recieved");
+			//System.out.println("User input recieved");
 			if (readCache.equals("")) {
 				return 0;
 			}
