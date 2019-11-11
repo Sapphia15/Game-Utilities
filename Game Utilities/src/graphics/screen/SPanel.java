@@ -12,16 +12,19 @@ public class SPanel extends JPanel implements ActionListener{
 	    
 
 	    public SPanel(){
-
 	        setFocusable(true);
 	        screens=new Hashtable<>();
-
-	        
-
 	        t=new Timer(TIMER_DELAY,this);
-	        t.start();
 	        setDoubleBuffered(true);
 	        setBackground(Color.BLACK);
+	    }
+	    
+	    /**Call to start loop
+	     * Note that there must be a current screen before this is called
+	     * 
+	     */
+	    protected final void start() {
+	    	t.start();
 	    }
 
 	    public void paintComponent(Graphics g){
