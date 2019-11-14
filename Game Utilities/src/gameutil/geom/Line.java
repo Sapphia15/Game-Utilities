@@ -3,6 +3,7 @@ package gameutil.geom;
 import java.awt.geom.Line2D;
 
 import gameutil.geom.g2D.LineR2;
+import gameutil.geom.g2D.NoIntersectionException;
 
 public class Line {
 	private Vector P1;
@@ -24,8 +25,8 @@ public class Line {
 	public boolean intersects(Line l) {
 		
 		int dims;
-		System.out.println("v.n: "+v.n());
-		System.out.println("l.v.n: "+l.v.n());
+		//System.out.println("v.n: "+v.n());
+		//System.out.println("l.v.n: "+l.v.n());
 		if (l.v.n()>v.n()) {
 			//if the other line has more dimensions set number of dimensions to the dimensions that the other line exists in.
 			dims=l.v.n();
@@ -44,7 +45,7 @@ public class Line {
 		//create a list of all dimensional velocities for the other line
 		LineR2[] dimVsl=new LineR2[dims];
 		
-		System.out.println(dimVsl.length);
+		//System.out.println(dimVsl.length);
 		for (int i=0; i<dimVsl.length;i++) {
 			dimVsl[i]=new LineR2(l.v.getSpds().i(i),l.P2.getSpds().i(i));
 		}
@@ -54,7 +55,7 @@ public class Line {
 				//lines don't intersect
 				return false;
 			}
-			System.out.println(dimVs[i].intersects(dimVsl[i]));
+			//System.out.println(dimVs[i].intersects(dimVsl[i]));
 		}
 		
 		//all tests passed successfully so return true

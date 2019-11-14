@@ -106,17 +106,11 @@ public class LineR2 {
 		System.out.println("m:"+m+" b:"+b);
 		p1 = new PointR2(x1, y1);
 		p2 = new PointR2(x2, y2);
-		if (x1 - x2 == 0) {
-			vertical = true;
-			m = 0;
-			b = x1;
-		} else {
-			vertical = false;
-			m = (y1 - y2) / (x1 - x2);
-			b = y1 - (m * x1);
-		}
+		this.m=m;
+		this.b=b;
 	}
 
+	//functional
 	public PointR2 intersection(LineR2 l) throws NoIntersectionException {
 		if (intersects(l)) {
 			if ((vertical && l.vertical) || (m == 0 && l.m == 0)) {
