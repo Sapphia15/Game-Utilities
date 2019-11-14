@@ -9,7 +9,7 @@ public class SPanel extends JPanel implements ActionListener{
 	    protected final int TIMER_DELAY=10;
 	    protected Hashtable<String,Screen>screens;
 	    protected Screen currentScreen;
-	    
+	     
 
 	    public SPanel(){
 	        setFocusable(true);

@@ -38,7 +38,7 @@ public class Line {
 		LineR2[] dimVs=new LineR2[dims];
 				
 		for (int i=0; i<dimVs.length;i++) {
-			dimVs[i]=new LineR2(v.getSpds().i(i),P1.getSpds().i(i));
+			dimVs[i]=new LineR2(v.getSpds().i(i),P2.getSpds().i(i));
 		}
 		
 		//create a list of all dimensional velocities for the other line
@@ -46,7 +46,7 @@ public class Line {
 		
 		System.out.println(dimVsl.length);
 		for (int i=0; i<dimVsl.length;i++) {
-			dimVsl[i]=new LineR2(l.v.getSpds().i(i),l.P1.getSpds().i(i));
+			dimVsl[i]=new LineR2(l.v.getSpds().i(i),l.P2.getSpds().i(i));
 		}
 		
 		for (int i=0; i<dimVs.length;i++) {
@@ -54,15 +54,19 @@ public class Line {
 				//lines don't intersect
 				return false;
 			}
+			System.out.println(dimVs[i].intersects(dimVsl[i]));
 		}
 		
 		//all tests passed successfully so return true
 		return true;
 	}
 	
-	public boolean getIntersectionPoint() {
+	public Point getIntersectionPoint(Line l) throws NoIntersectionException {
+		if (!intersects(l)) {
+			throw new NoIntersectionException();
+		}
 		
-		return false;
+		return null;
 	}
 	
 	//Working on this

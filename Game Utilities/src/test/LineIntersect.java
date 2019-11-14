@@ -19,26 +19,26 @@ class LineIntersect {
 		Console.s.setVisible(true);
 		
 		//rN test
-		Vector P1=new Vector(new double[]{1.0,1.0});
-		Vector P2=new Vector(new double[]{0.0,0.0});
-		Vector P3=new Vector(new double[]{1.0,2.0});
-		Vector P4=new Vector(new double[]{0.0,1.0});
+		/*Vector P1=new Vector(new double[]{0.0,0.0}); //current test does not pass
+		Vector P2=new Vector(new double[]{0.0,2.0});
+		Vector P3=new Vector(new double[]{5.0,-3.0});
+		Vector P4=new Vector(new double[]{5.0,30.0});
 		Line l1=new Line(P1,P2);
-		Line l2=new Line(P3,P2);
-		Console.s.println(l1.intersects(l2));
+		Line l2=new Line(P3,P4);
+		Console.s.println(l1.intersects(l2)); //
+		*/
 		
-		
-		//r2 Works!
-		/*PointR2 p1=new PointR2(0,0);
+		//r2 Works?
+		PointR2 p1=new PointR2(0,0);
 		PointR2 p2=new PointR2(1,1);
 		PointR2 p3=new PointR2(1,2);
 		PointR2 p4=new PointR2(0,1);
 		
 		try {
-			//LineR2 l1=new LineR2(p1,p2);
-			//LineR2 l2=new LineR2(p3,p4);
-			LineSegR2 l1=new LineSegR2(p1,p2);
-			LineSegR2 l2=new LineSegR2(p3,p4);
+			LineR2 l1=new LineR2(p1,p2);
+			LineR2 l2=new LineR2(p3,p4);
+			//LineSegR2 l1=new LineSegR2(p1,p2);
+			//LineSegR2 l2=new LineSegR2(p3,p4);
 			Console.s.println(l1.intersects(l2));
 			if (l1.intersects(l2)) {
 				Console.s.println(l1.intersection(l2).getX());
@@ -46,7 +46,7 @@ class LineIntersect {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		
 	}
 }

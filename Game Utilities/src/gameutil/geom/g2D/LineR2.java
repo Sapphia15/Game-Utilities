@@ -103,6 +103,7 @@ public class LineR2 {
 		this.y1 = m+b;
 		this.x2 = 0;
 		this.y2 = b;
+		System.out.println("m:"+m+" b:"+b);
 		p1 = new PointR2(x1, y1);
 		p2 = new PointR2(x2, y2);
 		if (x1 - x2 == 0) {
