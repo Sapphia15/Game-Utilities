@@ -111,10 +111,10 @@ public class LineR2 {
 	}
 
 	//functional
-	public PointR2 intersection(LineR2 l) throws NoIntersectionException {
+	public PointR2 intersection(LineR2 l) throws NoIntersectionException, LineOverlapException {
 		if (intersects(l)) {
 			if ((vertical && l.vertical) || (m == 0 && l.m == 0)) {
-				return null;
+				throw new LineOverlapException();
 			} else if (vertical) {
 				try {
 					return new PointR2(b, l.equation(b));
@@ -130,7 +130,7 @@ public class LineR2 {
 					e.printStackTrace();
 				}
 			} else if (m==l.m){
-				return null;
+				throw new LineOverlapException();
 			} else {
 				double x = (l.b - b) / (m - l.m);
 				try {
@@ -145,7 +145,7 @@ public class LineR2 {
 
 	}
 
-	public PointR2 intersection(LineSegR2 l) throws NoIntersectionException {
+	public PointR2 intersection(LineSegR2 l) throws NoIntersectionException, LineOverlapException {
 		return l.intersection(this);
 		
 	}

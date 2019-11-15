@@ -26,4 +26,12 @@ public class Point {
 	public boolean equals(Point p){
 		return tuple.equals(p.tuple);
 	}
+	
+	public void printVals() {
+		tuple.printVals();
+	}
+	
+	public void printVals(String lable) {
+		tuple.printVals(lable);
+	}
 }

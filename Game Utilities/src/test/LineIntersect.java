@@ -4,8 +4,10 @@ import gameutil.geom.Line;
 import gameutil.geom.Point;
 import gameutil.geom.Tuple;
 import gameutil.geom.Vector;
+import gameutil.geom.g2D.LineOverlapException;
 import gameutil.geom.g2D.LineR2;
 import gameutil.geom.g2D.LineSegR2;
+import gameutil.geom.g2D.NoIntersectionException;
 import gameutil.geom.g2D.PointR2;
 import gameutil.text.Console;
 import static gameutil.text.Console.theme;
@@ -19,13 +21,25 @@ class LineIntersect {
 		Console.s.setVisible(true);
 		
 		//rN test
-		Vector P1=new Vector(new double[]{7.0,0.0}); //current test does not pass
-		Vector P2=new Vector(new double[]{7.0,-8.0});
-		Vector P3=new Vector(new double[]{7.0,5.0});
-		Vector P4=new Vector(new double[]{7.0,38.0});
+		Vector P1=new Vector(new double[]{0.0,0.0});
+		Vector P2=new Vector(new double[]{0.0,-2.0});//test failed because of -2?
+		Vector P3=new Vector(new double[]{0.0,2.0});
+		Vector P4=new Vector(new double[]{2.0,0.0});
 		Line l1=new Line(P1,P2);
 		Line l2=new Line(P3,P4);
 		Console.s.println(l1.intersects(l2)); //
+		if (l1.intersects(l2)) {
+			try {
+				//l1.getIntersectionPoint(l2).printVals();
+				Console.s.println(l1.getIntersectionPoint(l2).tuple.i(0));//get intersection point not working
+			} catch (NoIntersectionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (LineOverlapException e) {
+				// TODO Auto-generated catch block
+				Console.s.println("Lines overlap.");
+			}
+		}
 		
 		
 		//r2 Works!

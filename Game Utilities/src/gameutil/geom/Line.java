@@ -2,6 +2,7 @@ package gameutil.geom;
 
 import java.awt.geom.Line2D;
 
+import gameutil.geom.g2D.LineOverlapException;
 import gameutil.geom.g2D.LineR2;
 import gameutil.geom.g2D.NoIntersectionException;
 
@@ -62,12 +63,41 @@ public class Line {
 		return true;
 	}
 	
-	public Point getIntersectionPoint(Line l) throws NoIntersectionException {
-		if (!intersects(l)) {
-			throw new NoIntersectionException();
+	public Point getIntersectionPoint(Line l) throws NoIntersectionException, LineOverlapException {
+		int dims;
+		//System.out.println("v.n: "+v.n());
+		//System.out.println("l.v.n: "+l.v.n());
+		if (l.v.n()>v.n()) {
+			//if the other line has more dimensions set number of dimensions to the dimensions that the other line exists in.
+			dims=l.v.n();
+		} else {
+			//other wise set the number of dimensions to the dimension that the vector parallel to this line exists in (if v.n>p.n then v has higher dimensions and if v.n==p.n then they have equal dimensions)
+			dims=v.n();
 		}
 		
-		return null;
+		//create a list of all dimensional velocities for this line
+		LineR2[] dimVs=new LineR2[dims];
+				
+		for (int i=0; i<dimVs.length;i++) {
+			dimVs[i]=new LineR2(v.getSpds().i(i),P2.getSpds().i(i));
+		}
+		
+		//create a list of all dimensional velocities for the other line
+		LineR2[] dimVsl=new LineR2[dims];
+		
+		//System.out.println(dimVsl.length);
+		for (int i=0; i<dimVsl.length;i++) {
+			dimVsl[i]=new LineR2(l.v.getSpds().i(i),l.P2.getSpds().i(i));
+		}
+		
+		//Make a variable for the return coords
+		double[] coords=new double[dims];
+		
+		for (int i=0; i<dimVs.length;i++) {
+			coords[i]=dimVs[i].intersection(dimVsl[i]).getY()+dimVs[i].intersection(dimVsl[i]).getX();
+			//System.out.println(dimVs[i].intersects(dimVsl[i]));
+		}
+		return new Point(new Tuple(coords));
 	}
 	
 	//Working on this
