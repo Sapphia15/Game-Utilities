@@ -43,7 +43,11 @@ public class SPanel extends JPanel implements ActionListener{
 	    }
 
 	    public void setScreen(String name){
-	        currentScreen.setDeinit();
+	    	try {
+	    		currentScreen.setDeinit();
+	    	} catch (NullPointerException e) {
+	    		//this must be the first screen being set.
+	    	}
 	        currentScreen=screens.get(name);
 	        currentScreen.setInit();
 	    }
