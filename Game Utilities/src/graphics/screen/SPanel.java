@@ -17,6 +17,7 @@ public class SPanel extends JPanel implements ActionListener{
 	        t=new Timer(TIMER_DELAY,this);
 	        setDoubleBuffered(true);
 	        setBackground(Color.BLACK);
+	        
 	    }
 	    
 	    /**Call to start loop
@@ -25,6 +26,8 @@ public class SPanel extends JPanel implements ActionListener{
 	     */
 	    protected final void start() {
 	    	t.start();
+	    	addMouseListener(new MAdapter());
+	    	addKeyListener(new TAdapter());
 	    }
 
 	    public void paintComponent(Graphics g){
