@@ -32,7 +32,7 @@ public class Line {
 			//if the other line has more dimensions set number of dimensions to the dimensions that the other line exists in.
 			dims=l.v.n();
 		} else {
-			//other wise set the number of dimensions to the dimension that the vector parallel to this line exists in (if v.n>p.n then v has higher dimensions and if v.n==p.n then they have equal dimensions)
+			//other wise set the number of dimensions to the dimensions that the vector parallel to this line exists in (if v.n>p.n then v has higher dimensions and if v.n==p.n then they have equal dimensions)
 			dims=v.n();
 		}
 		
