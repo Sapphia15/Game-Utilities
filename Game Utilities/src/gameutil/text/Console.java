@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.Robot;
 import java.awt.TextArea;
@@ -47,12 +48,14 @@ public class Console {
 		userNextLineEnabled = false;
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 2,
-				(Toolkit.getDefaultToolkit().getScreenSize().height / 3)));
+		//frame.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 2,(Toolkit.getDefaultToolkit().getScreenSize().height / 3)));
+		frame.setTitle("ASCII World");
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.pack();
 		field = new JTextArea();
 		field.setEditable(false);
 		field.setFocusable(true);
+		field.setFont(field.getFont().deriveFont(18f));
 		keylistener = new TAdapter(field);
 		field.addKeyListener(keylistener);
 		field.setBackground(Color.BLACK);
@@ -64,7 +67,7 @@ public class Console {
 		frame.add(scrollPane);
 		
 		frame.setVisible(true);
-		frame.setLocationRelativeTo(null);
+		//frame.setLocationRelativeTo(null);
 		field.addFocusListener(new FocusListener() {
 			private boolean init=!initialized;
 			
@@ -101,7 +104,7 @@ public class Console {
 
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				// TODO Apéndice de método generado automáticamente
+				// TODO ApÃ©ndice de mÃ©todo generado automÃ¡ticamente
 				
 			}
 			
@@ -166,7 +169,7 @@ public class Console {
 
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				// TODO Apéndice de método generado automáticamente
+				// TODO ApÃ©ndice de mÃ©todo generado automÃ¡ticamente
 				
 			}
 			
@@ -186,14 +189,14 @@ public class Console {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			}
 			print("Reinitialization Successful");
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			}
 			clr();
@@ -642,11 +645,17 @@ public class Console {
 	public void scrollBottom() {
 		vertical.setValue(vertical.getModel().getMaximum()+vertical.getModel().getExtent());
 	}
+	
+	public void pause() {
+		println("Press any key to continue...");// wasn't going to include this but got some feedback about people not knowing what to do
+		keylistener.Pause();
+	}
 
 	public class TAdapter extends KeyAdapter {
 		private JTextArea field;
 		private boolean reading;
 		private boolean readingNumber;
+		private boolean paused;
 		private boolean isInt;
 		private boolean decimaled;
 		private String readCache;
@@ -752,7 +761,11 @@ public class Console {
 		}
 		
 		public void keyPressed(KeyEvent e) {
-			if (readingNumber && !reading) {
+			if (paused) {
+				//unpause but don't interfere with reading actions
+				paused=false;
+				return;
+			} else if (readingNumber && !reading) {
 				String print = "";
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					readingNumber = false;
@@ -797,7 +810,7 @@ public class Console {
 		}
 
 		public void keyTyped(KeyEvent e) {
-			if (reading && !readingNumber) {
+			if (reading && !readingNumber && !paused) {
 				String print = "";
 				if (Character.getName(e.getKeyChar()).equals("LINE FEED (LF)")) {
 					// need this so that it doesn't print enter
@@ -831,18 +844,18 @@ public class Console {
 				try {
 					s.nextLine();
 				} catch (NoSuchElementException e) {
-					println("\n◄════ERROR════►");
+					println("\nâ—„â•�â•�â•�â•�ERRORâ•�â•�â•�â•�â–º");
 					println("Line " + line + " not found!");
-					println("◄════════════►");
+					println("â—„â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â–º");
 					return null;
 				}
 			}
 			try {
 				return s.nextLine();
 			} catch (NoSuchElementException e) {
-				println("\n◄════ERROR════►");
+				println("\nâ—„â•�â•�â•�â•�ERRORâ•�â•�â•�â•�â–º");
 				println("Line " + line + " not found!");
-				println("◄════════════►");
+				println("â—„â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â–º");
 				return null;
 			}
 
@@ -854,18 +867,18 @@ public class Console {
 				try {
 					s.nextLine();
 				} catch (NoSuchElementException e) {
-					println("\n◄════ERROR════►");
+					println("\nâ—„â•�â•�â•�â•�ERRORâ•�â•�â•�â•�â–º");
 					println("Line " + line + " not found!");
-					println("◄════════════►");
+					println("â—„â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â–º");
 					return null;
 				}
 			}
 			try {
 				return s.nextLine();
 			} catch (NoSuchElementException e) {
-				println("\n◄════ERROR════►");
+				println("\nâ—„â•�â•�â•�â•�ERRORâ•�â•�â•�â•�â–º");
 				println("Line " + line + " not found!");
-				println("◄════════════►");
+				println("â—„â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â–º");
 				return null;
 			}
 
@@ -910,7 +923,14 @@ public class Console {
 			//System.out.println("User input recieved");
 			return readCache;
 		}
-
+		
+		public void Pause() {
+			paused=true;
+			while (paused) {
+				doNothing();
+			}
+		}
+		
 		public String read() {
 			reading = true;
 			readCache = "";
@@ -948,14 +968,14 @@ public class Console {
 			} catch (NumberFormatException e) {
 				if (Long.parseLong(readCache) > 2147483647) {
 					val = 2147483647;
-					println("\n◄════ERROR════►");
+					println("\nâ—„â•�â•�â•�â•�ERRORâ•�â•�â•�â•�â–º");
 					println("Number entered is too large!");
-					println("◄════════════►");
+					println("â—„â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â–º");
 				} else {
 					val = -2147483648;
-					println("\n◄════ERROR════►");
+					println("\nâ—„â•�â•�â•�â•�ERRORâ•�â•�â•�â•�â–º");
 					println("Number entered is too small!");
-					println("◄════════════►");
+					println("â—„â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â–º");
 				}
 			}
 			return val;
@@ -983,14 +1003,14 @@ public class Console {
 			} catch (NumberFormatException e) {
 				if (Long.parseLong(readCache) > 2147483647) {
 					val = 2147483647;
-					println("◄═══ERROR═══►");
+					println("â—„â•�â•�â•�ERRORâ•�â•�â•�â–º");
 					println("Number entered is too large!");
-					println("◄═══════════►");
+					println("â—„â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â–º");
 				} else {
 					val = -2147483648;
-					println("◄═══ERROR═══►");
+					println("â—„â•�â•�â•�ERRORâ•�â•�â•�â–º");
 					println("Number entered is too small!");
-					println("◄═══════════►");
+					println("â—„â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â–º");
 				}
 			}
 			return val;
@@ -1050,5 +1070,7 @@ public class Console {
 			reading=false;
 		}
 	}
+
+	
 	
 }

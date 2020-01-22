@@ -5,7 +5,7 @@ import java.awt.geom.Point2D;
 import gameutil.geom.Vector;
 import gameutil.geom.g1D.Vector1D;
 
-public class PointR2 {
+public class PointR2 implements Cloneable {
 	private double x;
 	private double y;
 
@@ -47,5 +47,9 @@ public class PointR2 {
 
 	public double getY() {
 		return y;
+	}
+	
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 }
