@@ -51,6 +51,33 @@ public class Rectangle2D {
 		}
 	}
 	
+	public boolean contains(PointR2 p) {
+		return p.getX()>=getMinX()&&p.getX()<=getMaxX()&&p.getY()>=getMinY()&&p.getY()<=getMaxY();
+	}
 	
+	public boolean intersects(Rectangle r) {
+		if (getMaxX()<r.getMinX()) {
+			return true;
+		}
+		//finish this
+	}
+	
+	
+	
+	public double getMaxX() {
+		return center.getX()+width/2;
+	}
+	
+	public double getMinX() {
+		return center.getX()-width/2;
+	}
+	
+	public double getMaxY() {
+		return center.getY()+height/2;
+	}
+	
+	public double getMinY() {
+		return center.getY()-height/2;
+	}
 
 }
