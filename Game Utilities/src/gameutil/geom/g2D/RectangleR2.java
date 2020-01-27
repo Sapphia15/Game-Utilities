@@ -30,6 +30,13 @@ public class RectangleR2 extends ShapeR2{
 	}
 	
 	//make an intersection rectangle function
+	public RectangleR2 intersection(Rectangle r) throws Exception {
+		if (intersects(r)) {
+			return new RectangleR2(10,10,10,10);
+		} else {
+			throw new Exception();
+		}
+	}
 	
 	//intersects line function
 	
