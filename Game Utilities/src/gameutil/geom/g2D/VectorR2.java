@@ -74,6 +74,48 @@ public class VectorR2 extends LineSegR2 {
 		return null;
 	}
 	
+	public PointR2 intersection(RectangleR2 r) {
+		if (intersects(r)) {
+			if (r.contains(base()) && r.contains(end())) {
+				return null;
+			} else if (r.contains(base())) {
+				LineSegR2[] segments = LineSegR2.rectToLineSegs(r);
+				for (LineSegR2 l : segments) {
+					if (intersects(l)) {
+						try {
+							return intersection(l);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			} else {
+				LineSegR2[] segments = LineSegR2.rectToLineSegs(r);
+				ArrayList<PointR2> points = new ArrayList<>();
+				for (LineSegR2 l : segments) {
+					if (intersects(l)) {
+						try {
+							points.add(intersection(l));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+				PointR2 closest = points.get(0);
+				for (PointR2 p : points) {
+					if (p.distance(base()) > closest.distance(base())) {
+						closest = p;
+					}
+				}
+				return closest;
+			}
+
+		}
+		return null;
+	}
+	
 	public double getMagnetudeX() {
 		return mX;
 	}

@@ -166,6 +166,12 @@ public class LineR2 {
 		return (intersects(segments[0]) || intersects(segments[1]) || intersects(segments[2])
 				|| intersects(segments[3]));
 	}
+	
+	public boolean intersects(RectangleR2 r) {
+		LineSegR2[] segments = LineSegR2.rectToLineSegs(r);
+		return (intersects(segments[0]) || intersects(segments[1]) || intersects(segments[2])
+				|| intersects(segments[3]));
+	}
 
 	public boolean intersects(LineSegR2 l) {
 		
