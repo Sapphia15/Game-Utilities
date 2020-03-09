@@ -1,7 +1,7 @@
 package map;
 
-import ascii.sprites.Block;
-import ascii.sprites.Sprite;
+
+import Sprite.Sprite;
 import gameutil.text.*;
 import gameutil.text.Console;
 

@@ -1,8 +1,9 @@
 package gameutil.geom;
 
-public class Point {
+public class Point extends Brane{
 	public Tuple tuple;
 	public Point(Tuple t){
+		super(0,0,t);
 		tuple=t;
 	}
 	

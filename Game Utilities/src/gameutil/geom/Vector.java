@@ -1,18 +1,21 @@
 package gameutil.geom;
 
-public class Vector {
+public class Vector extends Figure{
 	private double magnitude;
 	private Tuple spds;
 	
 	public Vector(double[] end){
+		//super(end.length);
 		setSpds(new Tuple(end));
 	}
 	
 	public Vector(Tuple end){
+		//super(end.n());
 		setSpds(end);
 	}
 	
 	public Vector(Point end) {
+		//super(end.tuple.n());
 		setSpds(end.tuple);
 	}
 	
@@ -76,6 +79,5 @@ public class Vector {
 	public int n(){
 		return spds.n();
 	}
-	
 	
 }

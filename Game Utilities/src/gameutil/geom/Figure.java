@@ -1,16 +1,20 @@
 package gameutil.geom;
 
 public abstract class Figure {
-	int p; //dimensionality
+	//protected int p; //dimensionality
+	//empty space
+	public static final Figure SPACE=new Figure() {};
 	
-	public Figure(int p) {
-		if (p>=0) {
+	public Figure(/*int p*/) {
+		/*if (p<0) {
 			p=0;//dimensionality is always positive
 		}
-		this.p=p;
+		this.p=p;*/
 		// TODO Auto-generated constructor stub
 	}
 	
-	public abstract Figure intersection(Figure f);
+	public final Figure intersection(Figure f) {return SPACE;}
+	
+	public final boolean instersects(Figure f) {return false;}
 
 }
