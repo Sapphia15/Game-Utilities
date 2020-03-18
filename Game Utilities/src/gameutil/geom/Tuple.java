@@ -1,6 +1,6 @@
 package gameutil.geom;
 
-public class Tuple {
+public class Tuple implements Cloneable{
 	
 	
 	
@@ -429,6 +429,17 @@ public class Tuple {
 		System.out.println(lable+": ");
 		for (int i=0;i<n;i++) {
 			System.out.println(tuple[i]);
+		}
+	}
+	
+	@Override
+	public Tuple clone() {
+		try {
+			return (Tuple) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
 	}
 }

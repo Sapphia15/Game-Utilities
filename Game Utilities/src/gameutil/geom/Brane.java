@@ -5,7 +5,7 @@ import gameutil.geom.g2D.PointR2;
 public abstract class Brane extends Figure{
 	protected double iSpace; //inner space (e.g. area, volume, content)
 	protected double sSpace; //surrounding space (e.g. perimeter, surface area)
-	protected Tuple center; //the center of the object (the same as position)
+	private Tuple center; //the center of the object (the same as position)
 	
 	
 	protected Brane(/*int p,*/double iSpace,double sSpace,Tuple center) {
@@ -24,6 +24,10 @@ public abstract class Brane extends Figure{
 	
 	public Point getCenter() {
 		return new Point(center);
+	}
+	
+	protected void setCenter(Point newCenter) {
+		center=newCenter.tuple;
 	}
 	
 }

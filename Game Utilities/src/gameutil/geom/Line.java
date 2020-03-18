@@ -5,6 +5,7 @@ import java.awt.geom.Line2D;
 import gameutil.geom.g2D.LineOverlapException;
 import gameutil.geom.g2D.LineR2;
 import gameutil.geom.g2D.NoIntersectionException;
+import gameutil.geom.g2D.OutsideOfDomainOrRangeException;
 
 public class Line extends Figure{
 	private Vector P1;
@@ -20,6 +21,10 @@ public class Line extends Figure{
 		this.P1=v1;
 		this.P2=v2;
 		v=P1. $S$ (P2);
+	}
+	
+	public boolean intersects(Point p) {
+		return contains(p);
 	}
 	
 	//Test this
@@ -100,8 +105,8 @@ public class Line extends Figure{
 		return new Point(new Tuple(coords));
 	}
 	
-	//Working on this
-	public boolean containsPoint(Point p){
+	//Functional!
+	public boolean contains(Point p){
 		
 		
 		int dims;
@@ -115,28 +120,45 @@ public class Line extends Figure{
 		
 		//create a list of all dimensional velocities
 		LineR2[] dimVs=new LineR2[dims];
-		
+		double tValue = 0;
 		for (int i=0; i<dimVs.length;i++) {
 			dimVs[i]=new LineR2(v.getSpds().i(i),P1.getSpds().i(i));
 		}
 		
+		int state=0;
 		//check if a line that contains the specified point intersects this line at that point
 		boolean intersects=true;
 		for (int i=0; i<dimVs.length;i++) {
-			//if (dimVs[i].in) {
-				
-			//}
+			switch(state) {
+				case 0://find tValue
+					try {
+						tValue=dimVs[i].xFromY(p.tuple.i(i));
+						state++;
+					} catch (OutsideOfDomainOrRangeException e) {
+						return false; //value of p[i] not contained on line
+					} catch (Exception e) {
+						
+					}
+				break;
+				case 1://check the rest of the dimensional velocities to see that they match the t value or contain the t value
+					try {
+						double tToCheck=dimVs[i].xFromY(p.tuple.i(i));
+						if (tToCheck!=tValue) {
+							return false; //dimensional velocity does not have the same t value as the rest so does not contain the point
+						}
+					} catch (OutsideOfDomainOrRangeException e) {
+						return false; //value of p[i] not contained on line
+					} catch (Exception e) {
+						//dimensional velocity contains t value
+					}
+				break;
+			}
 		}
 		
-		
-		Vector T=new Vector(p). $S$ (P1). $D$ (v);
-		
-		if (T.end().equals(new Tuple(T.end().n(),T.end().i(1)))) {
-			return true;
-		}
-		
-		return false;
+		return intersects;
 	}
+	
+	
 	
 	public Vector equation(double t){
 		return (v. $X$ (t)). $A$ (P1);
@@ -146,6 +168,11 @@ public class Line extends Figure{
 		int dims;
 		//System.out.println("v.n: "+v.n());
 		//System.out.println("l.v.n: "+l.v.n());
+		
+		if (l.v.equals(v)&&l.P1.equals(P1)) {
+			return clone();//lines are the same so return
+		}
+		
 		if (l.v.n()>v.n()) {
 			//if the other line has more dimensions set number of dimensions to the dimensions that the other line exists in.
 			dims=l.v.n();
@@ -186,5 +213,9 @@ public class Line extends Figure{
 			//System.out.println(dimVs[i].intersects(dimVsl[i]));
 		}
 		return new Point(new Tuple(coords));
+	}
+	
+	public Line clone() {
+		return new Line(P1.clone(),P2.clone());
 	}
 }

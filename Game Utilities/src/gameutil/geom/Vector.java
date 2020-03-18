@@ -80,4 +80,8 @@ public class Vector extends Figure{
 		return spds.n();
 	}
 	
+	public Vector clone() {
+		return new Vector(spds.clone());
+	}
+	
 }

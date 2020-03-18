@@ -17,14 +17,8 @@ class ConsoleApp {
 		Console.s.setVisible(true);
 		//Console.s.readLineInt();
 		//Console.s.read();
-		Console.s.print("Write something.");
-		Console.s.readLine();
-		Console.s.readLine();
-		Console.s.read();
-		Console.s.read();
-		Console.s.readLine();
 		//*/
-		/*Console.s.println(Double.NaN<=0);
+		/*Console.s.println(Double.NaN<=0);*/
 		Vector P1=new Vector(new double[]{1.0,2.0,15});
 		Vector P2=new Vector(new double[]{0.0,0.0,15});
 		Vector P3=new Vector(new double[]{0.0,2.0});
@@ -42,10 +36,24 @@ class ConsoleApp {
 		double s=( t*(y1-y2)+y1-y3 )/( y3-y4 );
 		Console.s.setTheme(Console.theme.sea);
 		Console.s.setVisible(true);
-		Console.s.println("t: "+t);
-		Console.s.println("s:"+s);
-		Console.s.println(l1.equation(19).getSpds().i(2));
-		Console.s.println("Contains point (-1,-1): "+l1.containsPoint(new Point(new Tuple(new double[]{20,40,14}))));
-		Console.s.println("Contains point (0,2): "+l1.containsPoint(new Point(new Tuple(new double[]{20,40,15}))));*/
+		//Console.s.println("t: "+t);
+		//Console.s.println("s:"+s);
+		Vector result=l1.equation(0);
+		Console.s.println(result.getSpds().i(0));
+		Console.s.println(result.getSpds().i(1));
+		Console.s.println(result.getSpds().i(2));
+		new Point(P1).printVals("P1");
+		new Point(P2).printVals("P2");
+		while (true) {
+			Console.s.print("X: ");
+			double x=Console.s.readLineDouble();
+			Console.s.print("Y: ");
+			double y=Console.s.readLineDouble();
+			Console.s.print("Z: ");
+			double z=Console.s.readLineDouble();
+			Console.s.println("Contains point ("+x+","+y+","+z+"): "+l1.contains(new Point(new Tuple(new double[]{x,y,z}))));
+		}
+		//Console.s.println("Contains point (-1,-1): "+l1.containsPoint(new Point(new Tuple(new double[]{1,2,14}))));
+		//Console.s.println("Contains point (0,2): "+l1.containsPoint(new Point(new Tuple(new double[]{20,,15}))));
 	}
 }

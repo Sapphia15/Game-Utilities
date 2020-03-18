@@ -7,6 +7,16 @@ public class Point extends Brane{
 		tuple=t;
 	}
 	
+	public Point(Vector v) {
+		super(0,0,v.getSpds());
+		tuple=v.getSpds();
+	}
+	
+	private Point(Point p) {
+		super(0,0,new Tuple(p.tuple.a()));
+		tuple=getCenter().tuple;
+	}
+	
 	/**Returns the distance between this point and a point <code>p</code>
 	 * 
 	 * @param p
@@ -28,11 +38,32 @@ public class Point extends Brane{
 		return tuple.equals(p.tuple);
 	}
 	
+	public boolean intersects(Line l) {
+		return l.contains(this);
+	}
+	
+	public boolean intersects(Point p) {
+		return p.equals(this);
+	}
+	
+	public Figure intersection(Point p) {
+		if (p.equals(this)) {
+			return new Point(this);
+		} else {
+			return Figure.SPACE;
+		}
+	}
+	
 	public void printVals() {
 		tuple.printVals();
 	}
 	
 	public void printVals(String lable) {
 		tuple.printVals(lable);
+	}
+	
+	@Override
+	public Point clone() {
+		return new Point(this);
 	}
 }

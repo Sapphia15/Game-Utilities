@@ -178,11 +178,26 @@ public class LineR2 {
 		return l.intersects(this);
 	}
 
-	public double equation(double x) throws Exception {
+	public double equation(double x) throws OutsideOfDomainOrRangeException,Exception {
 		if (vertical) {
-			throw new Exception("Cannot give one value for y on a vertical line.");
+			if (x==b) {
+				throw new Exception("Cannot give one value for y on a vertical line.");
+			} else {
+				throw new OutsideOfDomainOrRangeException();
+			}
 		}
 		return m * x + b;
+	}
+	
+	public double xFromY(double y) throws OutsideOfDomainOrRangeException,Exception{
+		if (m==0) {
+			if (y==b) {
+				throw new Exception("Cannot give one value for x on a horizontal line.");
+			} else {
+				throw new OutsideOfDomainOrRangeException();
+			}
+		}
+		return (y-b)/m;
 	}
 
 	public boolean containsPoint(PointR2 p) {
