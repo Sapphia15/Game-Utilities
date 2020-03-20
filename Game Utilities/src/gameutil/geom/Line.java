@@ -23,6 +23,28 @@ public class Line extends Figure{
 		v=P1. $S$ (P2);
 	}
 	
+	/**initializes a line that intersects the specified points
+	 * 
+	 * @param v1
+	 * @param v2
+	 */
+	public Line(Point v1,Point v2){
+		this.P1=new Vector(v1);
+		this.P2=new Vector(v2);
+		v=P1. $S$ (P2);
+	}
+	
+	/**initializes a line that contains point <code> p </code> and has a unit direction vector <code> v </code>
+	 * 
+	 * @param v
+	 * @param p
+	 */
+	public Line(Vector v, Point p) {
+		this.P1=new Vector(p);
+		this.v=v;
+		P2=P1.$S$(v);
+	}
+	
 	public boolean intersects(Point p) {
 		return contains(p);
 	}
@@ -66,6 +88,12 @@ public class Line extends Figure{
 		
 		//all tests passed successfully so return true
 		return true;
+	}
+	
+	public void translateAlongLine(Line l,double t) {
+		Vector movementVector=l.v.$X$(t);
+		P1=P1.$A$(movementVector);
+		P2=P2.$A$(movementVector);
 	}
 	
 	public Point getIntersectionPoint(Line l) throws NoIntersectionException, LineOverlapException {
@@ -213,6 +241,14 @@ public class Line extends Figure{
 			//System.out.println(dimVs[i].intersects(dimVsl[i]));
 		}
 		return new Point(new Tuple(coords));
+	}
+	
+	public Figure intersection(Point p) {
+		if (instersects(p)) {
+			return p.clone();
+		} else {
+			return Figure.SPACE;
+		}
 	}
 	
 	public Line clone() {

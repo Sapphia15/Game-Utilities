@@ -232,6 +232,20 @@ public class Tuple implements Cloneable{
 		return $X$(this);
 	}
 	
+	public double $DOT$(Tuple t) {
+		double val=0;
+		int n=this.n;
+		if (t.n>n) {
+			n=t.n;
+		}
+		for (int i=0;i<n;i++) {
+			val+=i(i)*t.i(i);
+		}
+		return val;
+	}
+	
+	//TODO create cross product function
+	
 	/**Returns this tuple to the power of <code>(exp)</code>.
 	 * 
 	 * @param exp

@@ -49,7 +49,6 @@ public class Console {
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 2,(Toolkit.getDefaultToolkit().getScreenSize().height / 3)));
-		frame.setTitle("ASCII World");
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.pack();
 		field = new JTextArea();
@@ -288,6 +287,14 @@ public class Console {
 			field.setBackground(Color.PINK);
 			field.setForeground(Color.MAGENTA);
 		}
+	}
+	
+	public void setTitle(String title) {
+		frame.setTitle(title);
+	}
+	
+	public void setFont(Font f) {
+		field.setFont(f);
 	}
 
 	/**

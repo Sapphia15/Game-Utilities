@@ -19,6 +19,10 @@ public class Vector extends Figure{
 		setSpds(end.tuple);
 	}
 	
+	public Vector(Point stem,Point end) {
+		setSpds(end.tuple. $S$ (stem.tuple));
+	}
+	
 	public double magnitude(){
 		return magnitude;
 	}
@@ -70,6 +74,14 @@ public class Vector extends Figure{
 	
 	public Vector $E$(double exp){
 		return new Vector(spds .$E$(exp));
+	}
+	
+	public double $DOT$(Vector v) {
+		return spds.$DOT$(v.spds);
+	}
+	
+	public Vector project(Vector v) {
+		return v. $X$ (this. $DOT$ (v) / v. $DOT$ (v));
 	}
 	
 	public Vector sq(){

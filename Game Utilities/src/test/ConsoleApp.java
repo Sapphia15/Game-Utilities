@@ -14,6 +14,7 @@ import java.awt.geom.Rectangle2D;
 
 class ConsoleApp {
 	public static void main(String[] argumentos) {
+		Console.s.setTitle("Geometry Tester");
 		Console.s.setVisible(true);
 		//Console.s.readLineInt();
 		//Console.s.read();
@@ -24,6 +25,7 @@ class ConsoleApp {
 		Vector P3=new Vector(new double[]{0.0,2.0});
 		Vector P4=new Vector(new double[]{2.0,0.0});
 		Line l1=new Line(P1,P2);
+		Line l2=new Line(P3,P4);
 		double x1=P1.end().i(0);
 		double y1=P1.end().i(1);
 		double x2=P2.end().i(0);
@@ -44,14 +46,56 @@ class ConsoleApp {
 		Console.s.println(result.getSpds().i(2));
 		new Point(P1).printVals("P1");
 		new Point(P2).printVals("P2");
+		String cmd="";
 		while (true) {
-			Console.s.print("X: ");
-			double x=Console.s.readLineDouble();
-			Console.s.print("Y: ");
-			double y=Console.s.readLineDouble();
-			Console.s.print("Z: ");
-			double z=Console.s.readLineDouble();
-			Console.s.println("Contains point ("+x+","+y+","+z+"): "+l1.contains(new Point(new Tuple(new double[]{x,y,z}))));
+			cmd=Console.s.readLine();
+			switch (cmd) {
+				case "l i p": 
+					Console.s.print("X: ");
+					double x=Console.s.readLineDouble();
+					Console.s.print("Y: ");
+					double y=Console.s.readLineDouble();
+					Console.s.print("Z: ");
+					double z=Console.s.readLineDouble();
+					Console.s.println("Contains point ("+x+","+y+","+z+"): "+l1.contains(new Point(new Tuple(new double[]{x,y,z}))));
+				break;
+				case "l i l":
+					Console.s.print("aX1: ");
+					double mx1=Console.s.readLineDouble();
+					Console.s.print("aY1: ");
+					double my1=Console.s.readLineDouble();
+					Console.s.print("aZ1: ");
+					double mz1=Console.s.readLineDouble();
+					Console.s.print("bX1: ");
+					double bx1=Console.s.readLineDouble();
+					Console.s.print("bY1: ");
+					double by1=Console.s.readLineDouble();
+					Console.s.print("bZ1: ");
+					double bz1=Console.s.readLineDouble();
+					
+					Console.s.print("aX2: ");
+					double mx2=Console.s.readLineDouble();
+					Console.s.print("aY2: ");
+					double my2=Console.s.readLineDouble();
+					Console.s.print("aZ2: ");
+					double mz2=Console.s.readLineDouble();
+					Console.s.print("bX2: ");
+					double bx2=Console.s.readLineDouble();
+					Console.s.print("bY2: ");
+					double by2=Console.s.readLineDouble();
+					Console.s.print("bZ2: ");
+					double bz2=Console.s.readLineDouble();
+					
+					
+					l1=new Line(new Point(new Tuple(new double[] {mx1,my1,mz1})), new Point(new Tuple(new double[] {mx1,my1,mz1})));
+					l2=new Line(new Point(new Tuple(new double[] {mx2,my2,mz2})), new Point(new Tuple(new double[] {mx2,my2,mz2})));
+					Console.s.println("Lines intersect: "+l1.intersects(l2));
+				break;
+				case "?":
+					Console.s.println("l i l - check if two lines intersect");
+					Console.s.println("l i p - check if a line intersects/contains a point");
+				break;
+			}
 		}
 		//Console.s.println("Contains point (-1,-1): "+l1.containsPoint(new Point(new Tuple(new double[]{1,2,14}))));
 		//Console.s.println("Contains point (0,2): "+l1.containsPoint(new Point(new Tuple(new double[]{20,,15}))));

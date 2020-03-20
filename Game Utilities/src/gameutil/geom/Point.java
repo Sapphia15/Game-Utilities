@@ -46,12 +46,20 @@ public class Point extends Brane{
 		return p.equals(this);
 	}
 	
+	public boolean contains(Point p) {
+		return p.equals(this);
+	}
+	
 	public Figure intersection(Point p) {
 		if (p.equals(this)) {
 			return new Point(this);
 		} else {
 			return Figure.SPACE;
 		}
+	}
+	
+	public Figure intersection(Line l) {
+		return l.intersection(this);
 	}
 	
 	public void printVals() {
