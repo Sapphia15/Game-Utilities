@@ -3,7 +3,11 @@ package gameutil.geom;
 public abstract class Figure implements Cloneable{
 	//protected int p; //dimensionality
 	//empty space
-	public static final Figure SPACE=new Figure() {};
+	public static final Figure SPACE=new Figure() {
+		public int ID() {
+			return 0;
+		}
+	};
 	
 	public Figure(/*int p*/) {
 		/*if (p<0) {
@@ -29,5 +33,7 @@ public abstract class Figure implements Cloneable{
 		}
 		return SPACE;
 	}
+	
+	
 
 }

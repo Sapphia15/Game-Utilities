@@ -6,6 +6,16 @@ import java.awt.geom.Line2D;
 
 public class LineSegR2 extends LineR2 {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	
+	public static final int ID=4;
+	
+	
 	/**Constructs a new line segment existing in 2 dimensions.
 	 * 
 	 * @param x1
@@ -35,16 +45,16 @@ public class LineSegR2 extends LineR2 {
 		try {
 			if (new LineR2(p1,p2).intersects(l)) {
 				System.out.println(new LineR2(p1,p2).intersects(l));
-				PointR2 intsct = null;
-				try {
-					intsct = new LineR2(p1,p2).intersection(l);
-				} catch (Exception e) {
+				FigureR2 intsct = null;
+				intsct = new LineR2(p1,p2).intersection(l);
+				if (intsct.equals(SPACE)) {
 					return false;
 				}
-				System.out.println(intsct.getX()+", "+intsct.getY());
-				if (intsct == null && b==l.b) {
+				
+				if (intsct.equals(l) && b==l.b) {
 					return true;
-				} else if (containsPoint(intsct)&&l.containsPoint(intsct)) {
+				} else if (contains((PointR2)intsct)&&l.contains((PointR2)intsct)) {
+					System.out.println(((PointR2)intsct).getX()+", "+((PointR2)intsct).getY());
 					return true;
 				}
 			}
@@ -59,17 +69,17 @@ public class LineSegR2 extends LineR2 {
 		System.out.println("Line seg intersects line seg?");
 		try {
 			if (new LineR2(p1,p2).intersects(l)) {
-				PointR2 intsct = null;
+				FigureR2 intsct = null;
 				try {
 					intsct = new LineR2(p1,p2).intersection(l);
 				} catch (Exception e) {
 					return false;
 				}
-				if (intsct == null && (l.containsPoint(p1) || l.containsPoint(p2) || containsPoint(l.p1) || containsPoint(l.p2))) {
-					System.out.println(l.containsPoint(p1) || l.containsPoint(p2) || containsPoint(l.p1) || containsPoint(l.p2));
+				if (intsct.equals(l) && (l.contains(p1) || l.contains(p2) || contains(l.p1) || contains(l.p2))) {
+					System.out.println(l.contains(p1) || l.contains(p2) || contains(l.p1) || contains(l.p2));
 					System.out.println(" P1: "+p1.getX()+","+p1.getY()+" P2: "+p2.getX()+","+p2.getY()+" P3: "+l.p1.getX()+","+l.p1.getY()+" P4: "+l.p2.getX()+","+l.p2.getY());
 					return true;
-				} else if (containsPoint(intsct) && l.containsPoint(intsct)) {
+				} else if (contains((PointR2)intsct) && l.contains((PointR2)intsct)) {
 					return true;
 				}
 			}
@@ -113,8 +123,7 @@ public class LineSegR2 extends LineR2 {
 			// left line
 			l4 = new LineSegR2(r.getMinX(), r.getMinY(), r.getMinX(), r.getMaxY());
 		} catch (Exception e) {
-			System.err.println(
-					"rectToLineSegs(Rectangle r) could not produce segments from rectangle. (returning null for all indicies)");
+			System.err.println("rectToLineSegs(Rectangle r) could not produce segments from rectangle. (returning null for all indicies)");
 			l1 = null;
 			l2 = null;
 			l3 = null;
@@ -166,9 +175,9 @@ public class LineSegR2 extends LineR2 {
 	 * "Can't find intersection point of lines that don't intersect."); } }
 	 */
 
-	public boolean containsPoint(PointR2 p) {
+	public boolean contains(PointR2 p) {
 		//return (Line2D.ptSegDist(x1, y1, x2, y2, p.getX(), p.getY()) == 0);
-		if (super.containsPoint(p)) {
+		if (super.contains(p)) {
 			if (p.getX()>=getMinX()&&p.getX()<=getMaxX()&&p.getY()>=getMinY()&&p.getY()<=getMaxY()) {
 				return true;
 			}
@@ -224,5 +233,25 @@ public class LineSegR2 extends LineR2 {
 			//this will never happen
 			return null;
 		}
+	}
+	
+	public FigureR2 intersection(LineR2 l) {
+		FigureR2 intsct=super.intersection(l);
+		if (intsct.equals(FigureR2.SPACE)) {
+			return SPACE;
+		} else if (intsct.equals(l)) {
+			return clone();
+		} else {
+			return (PointR2) intsct;
+		}
+	}
+	
+	public LineSegR2 clone() {
+		return New(p1.clone(),p2.clone());
+	}
+	
+	@Override
+	public int ID() {
+		return ID;
 	}
 }

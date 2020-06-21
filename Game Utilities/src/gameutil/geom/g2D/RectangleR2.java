@@ -5,6 +5,16 @@ import java.awt.*;
 import gameutil.geom.Vector;
 
 public class RectangleR2 extends ShapeR2{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	
+	public static final int ID=3;
+	
 	private double width;
 	private double height;
 	
@@ -90,6 +100,16 @@ public class RectangleR2 extends ShapeR2{
 	
 	public double getMinY() {
 		return center.getY()-height/2;
+	}
+	
+	@Override
+	public RectangleR2 clone() {
+		return new RectangleR2(center.getX(),center.getY(),width,height);
+	}
+	
+	@Override
+	public int ID() {
+		return ID;
 	}
 
 }

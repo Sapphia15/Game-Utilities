@@ -2,7 +2,16 @@ package gameutil.geom.g2D;
 
 import gameutil.geom.Vector;
 
-public class ShapeR2 {
+public abstract class ShapeR2 extends FigureR2{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	
+	
 	protected double area;
 	protected double perimeter;
 	protected PointR2 center;
@@ -14,24 +23,11 @@ public class ShapeR2 {
 	}
 	
 	public PointR2 getCenter() {
-		try {
-			return (PointR2) center.clone();
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+		return (PointR2) center.clone();
 	}
 	
-	public boolean setPos(PointR2 p) {
-		try {
-			center=(PointR2) p.clone();
-			return true;
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
+	public void setPos(PointR2 p) {
+		center=(PointR2) p.clone();
 	}
 	
 	public void move(VectorR2 v) {

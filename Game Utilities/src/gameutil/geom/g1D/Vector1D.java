@@ -4,9 +4,7 @@ public class Vector1D {
 	private Point1D base;
 	private Point1D end;
 	
-	public static enum direction {
-		positive, negative
-	};
+	public static enum direction {positive, negative};
 
 	private direction d;
 

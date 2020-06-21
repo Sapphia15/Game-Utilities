@@ -5,13 +5,28 @@ import java.awt.geom.Point2D;
 import gameutil.geom.Vector;
 import gameutil.geom.g1D.Vector1D;
 
-public class PointR2 implements Cloneable {
+public class PointR2 extends FigureR2{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	
+	public static final int ID=2;
+	
 	private double x;
 	private double y;
-
+	
 	public PointR2(double x, double y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public PointR2(VectorR2 v) {
+		x=v.mX;
+		y=v.mY;
 	}
 
 	public double distance(PointR2 p) {
@@ -49,7 +64,12 @@ public class PointR2 implements Cloneable {
 		return y;
 	}
 	
-	protected Object clone() throws CloneNotSupportedException {
-		return super.clone();
+	public PointR2 clone() {
+		return new PointR2(x,y);
+	}
+	
+	@Override
+	public int ID() {
+		return ID;
 	}
 }

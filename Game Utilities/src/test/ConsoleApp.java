@@ -1,5 +1,6 @@
 package test;
 
+import gameutil.geom.Figure;
 import gameutil.geom.Line;
 import gameutil.geom.Point;
 import gameutil.geom.Tuple;
@@ -20,10 +21,10 @@ class ConsoleApp {
 		//Console.s.read();
 		//*/
 		/*Console.s.println(Double.NaN<=0);*/
-		Vector P1=new Vector(new double[]{1.0,2.0,15});
-		Vector P2=new Vector(new double[]{0.0,0.0,15});
-		Vector P3=new Vector(new double[]{0.0,2.0});
-		Vector P4=new Vector(new double[]{2.0,0.0});
+		Vector P1=new Vector(new double[]{1.0,4.0,14.5,10});
+		Vector P2=new Vector(new double[]{0.0,4.0,14.5,10});
+		Vector P3=new Vector(new double[]{2.0,8.0,14.5,10});
+		Vector P4=new Vector(new double[]{-1.0,2.0,14.5,10});
 		Line l1=new Line(P1,P2);
 		Line l2=new Line(P3,P4);
 		double x1=P1.end().i(0);
@@ -44,6 +45,24 @@ class ConsoleApp {
 		Console.s.println(result.getSpds().i(0));
 		Console.s.println(result.getSpds().i(1));
 		Console.s.println(result.getSpds().i(2));
+		Console.s.println(l1.intersects(l2));
+		Figure intersection=l2.intersection(l1);
+		if (intersection.getClass().equals(Line.class)) {
+			Console.s.println("Lines are congruent");
+		} else if (intersection.getClass().equals(Point.class)) {
+			((Point)intersection).printVals("Intersection point:");
+		} else {
+			Console.s.println("Lines do not intersect");
+		}
+		Console.s.println("");
+		/*Console.s.println(l1.contains(new Point(P1)));//t
+		Console.s.println(l1.contains(new Point(P2)));//t
+		Console.s.println(l1.contains(new Point(P3)));//t
+		Console.s.println(l1.contains(new Point(P4)));//f
+		Console.s.println(l2.contains(new Point(P1)));//f
+		Console.s.println(l2.contains(new Point(P2)));//f
+		Console.s.println(l2.contains(new Point(P3)));//t
+		Console.s.println(l2.contains(new Point(P4)));//t*/
 		new Point(P1).printVals("P1");
 		new Point(P2).printVals("P2");
 		String cmd="";

@@ -3,7 +3,17 @@ package gameutil.geom.g2D;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 
-public class LineR2 {
+public class LineR2 extends FigureR2{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	
+	public static final int ID=1;
+	
 	// ana ++ **cardinal directions of 4th dimension points
 	// kata--
 	protected double m;
@@ -103,7 +113,7 @@ public class LineR2 {
 		this.y1 = m+b;
 		this.x2 = 0;
 		this.y2 = b;
-		System.out.println("m:"+m+" b:"+b);
+		//System.out.println("m:"+m+" b:"+b);
 		p1 = new PointR2(x1, y1);
 		p2 = new PointR2(x2, y2);
 		this.m=m;
@@ -111,10 +121,11 @@ public class LineR2 {
 	}
 
 	//functional
-	public PointR2 intersection(LineR2 l) throws NoIntersectionException, LineOverlapException {
+	public FigureR2 intersection(LineR2 l) {// throws NoIntersectionException, LineOverlapException {
 		if (intersects(l)) {
 			if ((vertical && l.vertical) || (m == 0 && l.m == 0)) {
-				throw new LineOverlapException();
+				return clone();
+				//throw new LineOverlapException();
 			} else if (vertical) {
 				try {
 					return new PointR2(b, l.equation(b));
@@ -130,7 +141,8 @@ public class LineR2 {
 					e.printStackTrace();
 				}
 			} else if (m==l.m){
-				throw new LineOverlapException();
+				return clone();
+				//throw new LineOverlapException();
 			} else {
 				double x = (l.b - b) / (m - l.m);
 				try {
@@ -141,11 +153,11 @@ public class LineR2 {
 				}
 			}
 		}
-		throw new NoIntersectionException("Can't find intersection point of lines that don't intersect.");
-
+		//throw new NoIntersectionException("Can't find intersection point of lines that don't intersect.");
+		return FigureR2.SPACE;
 	}
 
-	public PointR2 intersection(LineSegR2 l) throws NoIntersectionException, LineOverlapException {
+	public FigureR2 intersection(LineSegR2 l) throws NoIntersectionException, LineOverlapException {
 		return l.intersection(this);
 		
 	}
@@ -163,19 +175,20 @@ public class LineR2 {
 
 	public boolean intersects(Rectangle r) {
 		LineSegR2[] segments = LineSegR2.rectToLineSegs(r);
-		return (intersects(segments[0]) || intersects(segments[1]) || intersects(segments[2])
-				|| intersects(segments[3]));
+		return (intersects(segments[0]) || intersects(segments[1]) || intersects(segments[2])|| intersects(segments[3]));
 	}
 	
 	public boolean intersects(RectangleR2 r) {
 		LineSegR2[] segments = LineSegR2.rectToLineSegs(r);
-		return (intersects(segments[0]) || intersects(segments[1]) || intersects(segments[2])
-				|| intersects(segments[3]));
+		return (intersects(segments[0]) || intersects(segments[1]) || intersects(segments[2])|| intersects(segments[3]));
 	}
 
 	public boolean intersects(LineSegR2 l) {
-		
 		return l.intersects(this);
+	}
+	
+	public boolean intersects(PointR2 p) {
+		return contains(p);
 	}
 
 	public double equation(double x) throws OutsideOfDomainOrRangeException,Exception {
@@ -200,7 +213,7 @@ public class LineR2 {
 		return (y-b)/m;
 	}
 
-	public boolean containsPoint(PointR2 p) {
+	public boolean contains(PointR2 p) {
 		return (Line2D.ptLineDist(x1, y1, x2, y2, p.getX(), p.getY()) == 0);
 	}
 	
@@ -209,10 +222,39 @@ public class LineR2 {
 	}
 
 	public PointR2 endPoint1() {
-		return new PointR2(x1, y1);
+		return p1.clone();
 	}
 
 	public PointR2 endPoint2() {
-		return new PointR2(x2, y2);
+		return p2.clone();
+	}
+	
+	public LineR2 clone() {
+		try {
+			return new LineR2(p1.clone(),p2.clone(),true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();//will never happens
+			return null;
+		}
+	}
+	
+	public double getM() {
+		return m;
+	}
+	
+	public double getB() {
+		return b;
+	}
+	
+	public boolean isVertical() {
+		return vertical;
+	}
+	
+	
+	
+	@Override
+	public int ID() {
+		return ID;
 	}
 }

@@ -4,11 +4,13 @@ import java.awt.geom.Line2D;
 
 import gameutil.geom.g2D.LineOverlapException;
 import gameutil.geom.g2D.LineR2;
+import gameutil.geom.g2D.PointR2;
+import gameutil.text.Console;
 import gameutil.geom.g2D.NoIntersectionException;
 import gameutil.geom.g2D.OutsideOfDomainOrRangeException;
 
 public class Line extends Figure{
-	private Vector P1;
+	private Vector P1;//used as b vector
 	private Vector P2;
 	private Vector v;//the vector parallel to the line
 	
@@ -20,7 +22,7 @@ public class Line extends Figure{
 	public Line(Vector v1,Vector v2){
 		this.P1=v1;
 		this.P2=v2;
-		v=P1. $S$ (P2);
+		v=P2. $S$ (P1);
 	}
 	
 	/**initializes a line that intersects the specified points
@@ -31,7 +33,7 @@ public class Line extends Figure{
 	public Line(Point v1,Point v2){
 		this.P1=new Vector(v1);
 		this.P2=new Vector(v2);
-		v=P1. $S$ (P2);
+		v=P2. $S$ (P1);
 	}
 	
 	/**initializes a line that contains point <code> p </code> and has a unit direction vector <code> v </code>
@@ -42,52 +44,22 @@ public class Line extends Figure{
 	public Line(Vector v, Point p) {
 		this.P1=new Vector(p);
 		this.v=v;
-		P2=P1.$S$(v);
+		P2=P1.$A$(v);
 	}
 	
 	public boolean intersects(Point p) {
 		return contains(p);
 	}
 	
-	//Test this
+	//functional
 	public boolean intersects(Line l) {
 		
-		int dims;
-		//System.out.println("v.n: "+v.n());
-		//System.out.println("l.v.n: "+l.v.n());
-		if (l.v.n()>v.n()) {
-			//if the other line has more dimensions set number of dimensions to the dimensions that the other line exists in.
-			dims=l.v.n();
+		
+		if (intersection(l).equals(Figure.SPACE)) {
+			return false;
 		} else {
-			//other wise set the number of dimensions to the dimensions that the vector parallel to this line exists in (if v.n>p.n then v has higher dimensions and if v.n==p.n then they have equal dimensions)
-			dims=v.n();
+			return true;
 		}
-		
-		//create a list of all dimensional velocities for this line
-		LineR2[] dimVs=new LineR2[dims];
-				
-		for (int i=0; i<dimVs.length;i++) {
-			dimVs[i]=new LineR2(v.getSpds().i(i),P2.getSpds().i(i));
-		}
-		
-		//create a list of all dimensional velocities for the other line
-		LineR2[] dimVsl=new LineR2[dims];
-		
-		//System.out.println(dimVsl.length);
-		for (int i=0; i<dimVsl.length;i++) {
-			dimVsl[i]=new LineR2(l.v.getSpds().i(i),l.P2.getSpds().i(i));
-		}
-		
-		for (int i=0; i<dimVs.length;i++) {
-			if (!dimVs[i].intersects(dimVsl[i])) {
-				//lines don't intersect
-				return false;
-			}
-			//System.out.println(dimVs[i].intersects(dimVsl[i]));
-		}
-		
-		//all tests passed successfully so return true
-		return true;
 	}
 	
 	public void translateAlongLine(Line l,double t) {
@@ -96,46 +68,10 @@ public class Line extends Figure{
 		P2=P2.$A$(movementVector);
 	}
 	
-	public Point getIntersectionPoint(Line l) throws NoIntersectionException, LineOverlapException {
-		int dims;
-		//System.out.println("v.n: "+v.n());
-		//System.out.println("l.v.n: "+l.v.n());
-		if (l.v.n()>v.n()) {
-			//if the other line has more dimensions set number of dimensions to the dimensions that the other line exists in.
-			dims=l.v.n();
-		} else {
-			//other wise set the number of dimensions to the dimension that the vector parallel to this line exists in (if v.n>p.n then v has higher dimensions and if v.n==p.n then they have equal dimensions)
-			dims=v.n();
-		}
-		
-		//create a list of all dimensional velocities for this line
-		LineR2[] dimVs=new LineR2[dims];
-				
-		for (int i=0; i<dimVs.length;i++) {
-			dimVs[i]=new LineR2(v.getSpds().i(i),P2.getSpds().i(i));
-		}
-		
-		//create a list of all dimensional velocities for the other line
-		LineR2[] dimVsl=new LineR2[dims];
-		
-		//System.out.println(dimVsl.length);
-		for (int i=0; i<dimVsl.length;i++) {
-			dimVsl[i]=new LineR2(l.v.getSpds().i(i),l.P2.getSpds().i(i));
-		}
-		
-		//Make a variable for the return coords
-		double[] coords=new double[dims];
-		
-		for (int i=0; i<dimVs.length;i++) {
-			coords[i]=dimVs[i].intersection(dimVsl[i]).getY()+dimVs[i].intersection(dimVsl[i]).getX();
-			//System.out.println(dimVs[i].intersects(dimVsl[i]));
-		}
-		return new Point(new Tuple(coords));
-	}
+	
 	
 	//Functional!
 	public boolean contains(Point p){
-		
 		
 		int dims;
 		if (p.tuple.n()>v.n()) {
@@ -144,6 +80,9 @@ public class Line extends Figure{
 		} else {
 			//other wise set the number of dimensions to the dimension that the vector parallel to this line exists in (if v.n>p.n then v has higher dimensions and if v.n==p.n then they have equal dimensions)
 			dims=v.n();
+			if (dims<=1) {//a line in 1 dimension will always intersect any point in the same dimension
+				return true;
+			}
 		}
 		
 		//create a list of all dimensional velocities
@@ -192,55 +131,134 @@ public class Line extends Figure{
 		return (v. $X$ (t)). $A$ (P1);
 	}
 	
+	//Functional
 	public Figure intersection(Line l) {
-		int dims;
-		//System.out.println("v.n: "+v.n());
-		//System.out.println("l.v.n: "+l.v.n());
-		
-		if (l.v.equals(v)&&l.P1.equals(P1)) {
-			return clone();//lines are the same so return
-		}
-		
-		if (l.v.n()>v.n()) {
-			//if the other line has more dimensions set number of dimensions to the dimensions that the other line exists in.
-			dims=l.v.n();
-		} else {
-			//other wise set the number of dimensions to the dimension that the vector parallel to this line exists in (if v.n>p.n then v has higher dimensions and if v.n==p.n then they have equal dimensions)
-			dims=v.n();
-		}
-		
-		//create a list of all dimensional velocities for this line
-		LineR2[] dimVs=new LineR2[dims];
+		//If l contains two points on this line then l is congruent to this line
+				if(l.contains(new Point(P1))&&l.contains(new Point(P2))) {
+					//Console.s.println("Congruent");
+					return l.clone();
+				}
 				
-		for (int i=0; i<dimVs.length;i++) {
-			dimVs[i]=new LineR2(v.getSpds().i(i),P2.getSpds().i(i));
-		}
-		
-		//create a list of all dimensional velocities for the other line
-		LineR2[] dimVsl=new LineR2[dims];
-		
-		//System.out.println(dimVsl.length);
-		for (int i=0; i<dimVsl.length;i++) {
-			dimVsl[i]=new LineR2(l.v.getSpds().i(i),l.P2.getSpds().i(i));
-		}
-		
-		//Make a variable for the return coords
-		double[] coords=new double[dims];
-		
-		for (int i=0; i<dimVs.length;i++) {
-			try {
-				coords[i]=dimVs[i].intersection(dimVsl[i]).getY()+dimVs[i].intersection(dimVsl[i]).getX();
-			} catch (NoIntersectionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return Figure.SPACE;
-			} catch (LineOverlapException e) {
-				//NEED TO FIGURE THIS PART OUT
-				e.printStackTrace();
-			}
-			//System.out.println(dimVs[i].intersects(dimVsl[i]));
-		}
-		return new Point(new Tuple(coords));
+				int dims;
+				//System.out.println("v.n: "+v.n());
+				//System.out.println("l.v.n: "+l.v.n());
+				if (l.v.n()>v.n()) {
+					//if the other line has more dimensions set number of dimensions to the dimensions that the other line exists in.
+					dims=l.v.n();
+				} else {
+					//other wise set the number of dimensions to the dimensions that the vector parallel to this line exists in (if v.n>p.n then v has higher dimensions and if v.n==p.n then they have equal dimensions)
+					dims=v.n();
+				}
+				//Console.s.println("Dims: "+dims);
+				
+				//System.out.println("dimVs");
+				//create a list of all dimensional velocities for this line
+				LineR2[] dimVs=new LineR2[dims];	
+				for (int i=0; i<dims;i++) {
+					dimVs[i]=new LineR2(v.getSpds().i(i),P1.getSpds().i(i));
+				}
+				//System.out.println("dimVs'");
+				//create a list of all dimensional velocities for the other line
+				LineR2[] dimVsl=new LineR2[dims];
+				
+				//System.out.println(dimVsl.length);
+				for (int i=0; i<dims;i++) {
+					dimVsl[i]=new LineR2(l.v.getSpds().i(i),l.P1.getSpds().i(i));
+				}
+				
+				
+				
+				//CASES:
+				/*
+				 * Case 0:
+				 *		mi==0 && mi'==0
+				 * 
+				 * Case 1:
+				 * 		mi'!=0 
+				 * 
+				 * Case 2:
+				 * 		mi!=0 && mi'==0
+				 * 
+				 * Case 3:
+				 * 		mi==0 && m
+				 * 		
+				 * 
+				 * 
+				 */
+				
+				int state=0;
+				LineR2 v1=null;//vq
+				LineR2 vl1=null;//vq'
+				double t=0;
+				for (int i=0; i<dims;i++) {
+					LineR2 vl=dimVsl[i];//vi'
+					LineR2 v=dimVs[i];//vi
+					//Console.s.println("i = "+i);
+					//Console.s.println("Ms: "+v.getM()+"; "+vl.getM());
+					//set v1 and vl1 to be substituted into later
+					if (state==0) {
+						v1=v;
+						vl1=vl;
+						if (vl.getM()==0&&v.getM()==0&&vl.getB()!=v.getB()) {
+							//if slopes are zero and bs are different then lines can't intersect
+							//Console.s.println("Zero slope velocities with differing bs");
+							return SPACE;
+						} else if (v.getM()!=0||vl.getM()!=0) {
+							if (i==dims-1) {
+								i=0;
+							}
+							state++;//<<<FIX>>>
+						}
+						//Console.s.println("state = "+state);
+					//find t or determine that lines do not intersect
+					} else if (state==1) {
+						if (vl.getM()==0&&v.getM()==0) {
+							if (vl.getB()!=v.getB()) {
+								//if slopes are zero and bs are different then lines can't intersect
+								//Console.s.println("Zero slope velocities with differing bs");
+								return SPACE;
+							}
+							Console.s.println("Same slope same bs");
+							
+						} else if (vl.getM()==0&&v.getM()!=0) {
+							t=(vl.getB()-v.getB())/v.getM();
+							//new Point(equation(t)).printVals("intersection t");
+							//Console.s.println("May intersect (one m 0):"+l.contains(new Point(equation(t))));
+							Point intersection=new Point(equation(t));
+							if (l.contains(intersection)) {
+								return intersection;
+							} else {
+								return SPACE;
+							}
+							
+						} else if (v.getM()==0&&vl.getM()!=0) {
+							//t'
+							t=(v.getB()-vl.getB())/vl.getM();
+							//new Point(l.equation(t)).printVals("intersection t' = "+t);
+							//Console.s.println("May intersect (one m 0):"+contains(new Point(l.equation(t))));
+							Point intersection=new Point(l.equation(t));
+							if (contains(intersection)) {
+								return intersection;
+							} else {
+								return SPACE;
+							}
+						} else if ((v1.getM()-(vl1.getM()*v.getM())/vl.getM())!=0){
+							t=(-v1.getB()+(vl1.getM()*(v.getB()-vl.getB())/vl.getM())+vl1.getB())/(v1.getM()-(vl1.getM()*v.getM())/vl.getM());
+							//new Point(equation(t)).printVals("intersection t = "+t);
+							//Console.s.println("May intersect:"+l.contains(new Point(equation(t))));
+							Point intersection=new Point(equation(t));
+							if (l.contains(intersection)) {
+								return intersection;
+							} else {
+								return SPACE;
+							}
+						}
+					
+					//System.out.println(dimVs[i].intersects(dimVsl[i]));
+					}
+				}
+				
+				return SPACE;
 	}
 	
 	public Figure intersection(Point p) {
@@ -251,7 +269,16 @@ public class Line extends Figure{
 		}
 	}
 	
+	public boolean equals(Line l) {
+		//if the line to compare to contains two points that also lie on this line then the lines are coincident
+		return l.contains(new Point(equation(0)))&&l.contains(new Point(equation(1)));
+	}
+	
 	public Line clone() {
 		return new Line(P1.clone(),P2.clone());
 	}
+	
+	//<INTERSECTION METHODS>
+	
+	
 }

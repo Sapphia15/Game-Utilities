@@ -44,8 +44,13 @@ public class Vector extends Figure{
 		return new Vector(spds .$A$ (v.getSpds()));
 	}
 	
+	/**Adds a scalar to the vector. *not currently functional
+	 * 
+	 * @param s
+	 * @return
+	 */
 	public Vector $A$(double s){
-		return new Vector(spds .$X$ (s));
+		return new Vector(spds .$A$ (s));
 	}
 	
 	public Vector $S$(Vector v){
@@ -60,6 +65,7 @@ public class Vector extends Figure{
 		return new Vector(spds .$X$ (v.getSpds()));
 	}
 	
+	//Functional
 	public Vector $X$(double s){
 		return new Vector(spds .$X$ (s));
 	}

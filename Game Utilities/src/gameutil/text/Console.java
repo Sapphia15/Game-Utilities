@@ -9,6 +9,9 @@ import java.awt.GridBagConstraints;
 import java.awt.Robot;
 import java.awt.TextArea;
 import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -49,6 +52,7 @@ public class Console {
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 2,(Toolkit.getDefaultToolkit().getScreenSize().height / 3)));
+		frame.setPreferredSize(new Dimension(800,600));
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.pack();
 		field = new JTextArea();
@@ -79,9 +83,6 @@ public class Console {
 						try {
 							r=new Robot();
 							r.keyPress(KeyEvent.VK_ENTER);
-							for (int i=0;i<50000;i++) {
-								println(42);
-							}
 							//System.out.println("A console has been initialized.");
 						} catch (AWTException e) {
 							
@@ -538,6 +539,7 @@ public class Console {
 	 * @return input
 	 */
 	public String read() {
+		
 		return keylistener.read();
 	}
 
@@ -548,6 +550,7 @@ public class Console {
 	 */
 	public int readInt() {
 		return keylistener.readInt();
+		
 	}
 
 	/**
@@ -575,6 +578,7 @@ public class Console {
 	 */
 	public double readLineDouble() {
 		return keylistener.readLineDouble();
+		
 	}
 
 	/**
@@ -643,6 +647,10 @@ public class Console {
 
 	public String getLine(int line) {
 		return keylistener.getLine(line);
+	}
+	
+	public long getTotalLines() {
+		return keylistener.getNoOfLines();
 	}
 	
 	public void setAutoScroll(boolean as) {
@@ -803,15 +811,35 @@ public class Console {
 				print(print);
 				readCache = readCache + print;
 			}
-			if (reading && e.getKeyCode() == KeyEvent.VK_ENTER) {
-				if (!userNextLineEnabled || !e.isShiftDown()) {
-					if (skipLineAfterRead) {
+			if (reading) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (!userNextLineEnabled || !e.isShiftDown()) {
+						if (skipLineAfterRead) {
+							println();
+						}
+						reading = false;
+					} else {
 						println();
+						readCache = readCache + "\n";
 					}
-					reading = false;
-				} else {
-					println();
-					readCache = readCache + "\n";
+				} else if (e.isControlDown()) {
+					if (e.getKeyCode()==KeyEvent.VK_V) {
+						//paste
+						System.out.println("control v");
+						Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
+						String print="";
+					    Transferable t = c.getContents(this);
+					    if (t != null) {
+					    	try {
+					        	print=(String) t.getTransferData(DataFlavor.stringFlavor);
+					    	} catch (Exception e1){
+					        	e1.printStackTrace();
+					    	}
+					    }
+					    print(print);
+						readCache = readCache + print;
+					}
+					
 				}
 			}
 		}
@@ -830,7 +858,7 @@ public class Console {
 					}
 					return;
 				} else if (!(e.getKeyCode() == KeyEvent.VK_CONTROL || e.getKeyCode() == KeyEvent.VK_SHIFT
-						|| e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_ENTER)) {
+						|| e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_ENTER||e.isControlDown())) {
 					print = String.valueOf(e.getKeyChar());
 					if (!e.isShiftDown()) {
 						print = print.toLowerCase();

@@ -8,31 +8,36 @@ import gameutil.geom.Vector;
 
 
 
-public class VectorR2 extends LineSegR2 {
+public class VectorR2 extends FigureR2{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	
+	public static final int ID=5;
+	
 	double mX;
 	double mY;
 	
-	public VectorR2(PointR2 base, PointR2 end) throws Exception {
-		super(base.getX(), base.getY(), end.getX(), end.getY());
+	public VectorR2(PointR2 base, PointR2 end) {
 		mX=end.getX()-base.getX();
 		mY=end.getY()-base.getY();
 	}
 	
-	public VectorR2(Vector v) throws Exception {
-		super(0, 0, v.getSpds().i(0), v.getSpds().i(1));
+	public VectorR2(Vector v){
 		mX=v.getSpds().i(0);
 		mY=v.getSpds().i(1);
 	}
-
-	public PointR2 base() {
-		return new PointR2(x1, y1);
+	
+	public VectorR2(double mX,double mY) {
+		this.mX=mX;
+		this.mY=mY;
 	}
 
-	public PointR2 end() {
-		return new PointR2(x2, y2);
-	}
-
-	public PointR2 intersection(Rectangle r) {
+	/*public PointR2 intersection(Rectangle r) {
 		if (intersects(r)) {
 			if (r.contains(base().getX(), base().getY()) && r.contains(end().getX(), end().getY())) {
 				return null;
@@ -114,7 +119,7 @@ public class VectorR2 extends LineSegR2 {
 
 		}
 		return null;
-	}
+	}*/
 	
 	public double getMagnetudeX() {
 		return mX;
@@ -244,5 +249,10 @@ public class VectorR2 extends LineSegR2 {
 			//this will never happen
 			return null;
 		}
+	}
+	
+	@Override
+	public int ID() {
+		return ID;
 	}
 }
