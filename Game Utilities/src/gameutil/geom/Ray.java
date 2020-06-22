@@ -4,12 +4,22 @@ public class Ray extends Line{
 	
 	enum AXIOM {negative,zero,positive};
 	
-	/**initializes a ray that extends from the position vector <code>v1</code> and has a unit direction vector
+	/**initializes a ray that extends from the position vector <code>v1</code> and has a unit direction vector <code>v2</code>
 	 * 
 	 * @param v1
 	 * @param v2
 	 */
 	public Ray(Point v1, Point v2) {
+		super(v1, v2);
+		// TODO Auto-generated constructor stub
+	}
+	
+	/**initializes a ray that extends from the position vector <code>v1</code> and has a unit direction vector <code>v2</code>
+	 * 
+	 * @param v1
+	 * @param v2
+	 */
+	public Ray(Vector v1, Vector v2) {
 		super(v1, v2);
 		// TODO Auto-generated constructor stub
 	}
@@ -23,7 +33,7 @@ public class Ray extends Line{
 		super(p,new Point(v));
 	}
 	
-	//need to test
+	//Functional
 	public boolean contains(Point p) {
 		if (super.contains(p)) {
 			AXIOM[] axioms=getAxioms();
@@ -69,11 +79,11 @@ public class Ray extends Line{
 		AXIOM[] axioms=new AXIOM[dims];
 		
 		for (int i=0; i<dims; i++) {
-			double start=P2.getSpds().i(i);
-			double slope=v.getSpds().i(i);
-			if (slope<start) {
+			double start=P1.getSpds().i(i);
+			double secondPoint=P2.getSpds().i(i);
+			if (secondPoint<start) {
 				axioms[i]=AXIOM.negative;
-			} else if (slope>start) {
+			} else if (secondPoint>start) {
 				axioms[i]=AXIOM.positive;
 			} else {
 				axioms[i]=AXIOM.zero;
@@ -81,6 +91,20 @@ public class Ray extends Line{
 		}
 		
 		return axioms;
+	}
+	
+	public boolean intersects(Point p) {
+		return contains(p);
+	}
+	
+	public Figure intersection(Point p) {
+		System.out.println(contains(p));
+		if (contains(p)) {
+			return p.clone();
+		} else {
+			System.out.println("Space");
+			return Figure.SPACE;
+		}
 	}
 
 }
