@@ -10,9 +10,9 @@ import gameutil.geom.g2D.NoIntersectionException;
 import gameutil.geom.g2D.OutsideOfDomainOrRangeException;
 
 public class Line extends Figure{
-	private Vector P1;//used as b vector
-	private Vector P2;
-	private Vector v;//the vector parallel to the line
+	protected Vector P1;//used as b vector
+	protected Vector P2;
+	protected Vector v;//the vector parallel to the line
 	
 	/**initializes a line that intersects the tails of the input vectors
 	 * 
