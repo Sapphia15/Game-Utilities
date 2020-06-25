@@ -51,6 +51,10 @@ public class Line extends Figure{
 		return contains(p);
 	}
 	
+	public boolean intersects(Ray r) {
+		return r.instersects(this);
+	}
+	
 	//functional
 	public boolean intersects(Line l) {
 		
@@ -125,7 +129,13 @@ public class Line extends Figure{
 		return intersects;
 	}
 	
-	
+	public boolean contains(Ray r) {
+		//if the intersection is a ray then the ray is contained within the line
+		if (intersection(r) instanceof Ray) {
+			return true;
+		}
+		return false;
+	}
 	
 	public Vector equation(double t){
 		return (v. $X$ (t)). $A$ (P1);
@@ -267,6 +277,10 @@ public class Line extends Figure{
 		} else {
 			return Figure.SPACE;
 		}
+	}
+	
+	public Figure intersection(Ray r) {
+		return r.intersection(this);
 	}
 	
 	public boolean equals(Line l) {

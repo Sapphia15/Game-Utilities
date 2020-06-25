@@ -64,6 +64,8 @@ public class Ray extends Line{
 		}
 	}
 	
+	
+	//Funtional
 	public AXIOM[] getAxioms() {
 		int dims;
 		//System.out.println("v.n: "+v.n());
@@ -93,18 +95,87 @@ public class Ray extends Line{
 		return axioms;
 	}
 	
+	//Functional
 	public boolean intersects(Point p) {
 		return contains(p);
 	}
 	
+	//To be tested
+	public boolean intersects(Ray r) {
+		//intersects if the intersection is not SPACE
+		return !(intersection(r).equals(SPACE));
+	}
+	
+	//To be tested
+	public boolean intersects(Line l) {
+		//intersects if the intersection is not SPACE
+		return !(intersection(l).equals(SPACE));
+	}
+	
+	
+	//Functional
 	public Figure intersection(Point p) {
-		System.out.println(contains(p));
 		if (contains(p)) {
 			return p.clone();
 		} else {
-			System.out.println("Space");
-			return Figure.SPACE;
+			return SPACE;
 		}
+	}
+	
+	//To be tested
+	public Figure intersection(Line l) {
+		Figure intersection=super.intersection(l);
+		if (intersection instanceof Point&&contains((Point) intersection)) {
+			return intersection;
+		} else if (intersection instanceof Line){
+			return clone();
+		} else {
+			return SPACE;
+		}
+	}
+	
+	//To be tested
+	public Figure intersection(Ray r) {
+		//get the intersection of this ray and the line that the other ray is contained by
+		Figure intersection=intersection((Line) r);
+		if (intersection instanceof Ray) {
+			if (r.contains(P1)&&contains(r.P1)) {
+				//rays must point away from each other but intersect so return a line segment
+				return new LineSeg(P1,r.P1);//a line segment consisting of the bases
+			} else if (r.contains(P1)) {
+				//if the other ray contains the origin of this ray but this ray doesn't contain the origin of the other ray
+				//the rays must be pointing the same direction. In this case return this ray.
+				return clone();
+			} else if (contains(r.P1)) {
+				//if this ray contains the origin of the other ray but that ray doesn't contain the origin of this ray
+				//the rays must be pointing the same direction. In this case return the other ray.
+				return r.clone();
+			} else {
+				//the rays point away from each other and the bases do not touch so 
+				return SPACE;
+			}
+		} else if (intersection instanceof Point && r.contains((Point) intersection)) {
+			//if the intersection is a point and the other ray contains that point then
+			return intersection;
+		} else {
+			return SPACE;
+		}
+	}
+	
+	//finish
+	public Figure intersection(LineSeg ls) {
+		Figure intersection=intersection((Line) ls.ray1);
+		if (intersection instanceof Point&&contains((Point) intersection)&&ls.contains((Point) intersection)) {
+			return intersection;
+		} else if (intersection instanceof Ray) {
+			
+		}
+		return SPACE;
+	}
+	
+	//functional
+	public Ray clone() {
+		return new Ray(P1,P2);
 	}
 
 }

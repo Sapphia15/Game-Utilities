@@ -38,6 +38,10 @@ public class Point extends Brane{
 		return tuple.equals(p.tuple);
 	}
 	
+	public boolean intersects(Ray r) {
+		return r.contains(this);
+	}
+	
 	public boolean intersects(Line l) {
 		return l.contains(this);
 	}
@@ -60,6 +64,10 @@ public class Point extends Brane{
 	
 	public Figure intersection(Line l) {
 		return l.intersection(this);
+	}
+	
+	public Figure intersection(Ray r) {
+		return r.intersection(this);
 	}
 	
 	public void printVals() {
