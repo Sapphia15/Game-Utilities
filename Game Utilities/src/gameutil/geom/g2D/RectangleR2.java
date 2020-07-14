@@ -33,6 +33,37 @@ public class RectangleR2 extends ShapeR2{
 		this.height=Math.abs(height);
 	}
 	
+	/**not tested...
+	 * 
+	 * 
+	 * @param p1
+	 * @param p2
+	 */
+	public RectangleR2(PointR2 p1,PointR2 p2) {
+		super(0,0,null);
+		width=p1.getX()-p2.getX();
+		height=p1.getY()-p2.getY();
+		width=Math.abs(width);
+		height=Math.abs(height);
+		double x;
+		if (p2.getX()>p1.getX()) {
+			x=p2.getX()-width/2;
+		} else {
+			x=p1.getX()-width/2;
+		}
+		double y;
+		if (p2.getY()>p1.getY()) {
+			y=p2.getY()-height/2;
+		} else {
+			y=p1.getY()-height/2;
+		}
+		center = new PointR2(x,y);
+		
+		this.area=Math.abs(width)*Math.abs(height);
+		this.perimeter=2*Math.abs(width)+2*Math.abs(height);
+		center=new PointR2(x,y);
+	}
+	
 	public RectangleR2(Rectangle r) {
 		super(Math.abs(r.width)*Math.abs(r.height),2*Math.abs(r.width)+2*Math.abs(r.height),new PointR2(r.getCenterX(),r.getCenterY()));
 		width=r.getWidth();

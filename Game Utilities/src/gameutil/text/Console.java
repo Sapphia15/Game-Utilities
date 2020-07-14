@@ -658,6 +658,13 @@ public class Console {
 	}
 	
 	public void scrollBottom() {
+		try {
+			//time to register?
+			Thread.sleep(5);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		vertical.setValue(vertical.getModel().getMaximum()+vertical.getModel().getExtent());
 	}
 	
@@ -784,7 +791,7 @@ public class Console {
 				String print = "";
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					readingNumber = false;
-					if (skipLineAfterRead) {
+					if (skipLineAfterRead) { 
 						println();
 					}
 					return;
