@@ -1,6 +1,6 @@
 package Sprite;
 
-import gameutil.geom.Vector;
+import gameutil.math.geom.Vector;
 
 public class Sprite {
 	private boolean inWorld=true;

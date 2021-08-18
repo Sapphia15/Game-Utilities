@@ -1,13 +1,10 @@
 package graphics.screen;
 import javax.swing.*;
-
-import graphics.KPanel;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Hashtable;
 
-public class SPanel extends KPanel{
+public class SJPanel extends JPanel implements ActionListener{
 	    /**
 	 * 
 	 */
@@ -18,25 +15,37 @@ public class SPanel extends KPanel{
 	    protected Screen currentScreen;
 	     
 
-	    public SPanel(Frame observer){
-	    	super(observer);
+	    public SJPanel(){
 	        setFocusable(true);
 	        screens=new Hashtable<>();
+	        t=new Timer(TIMER_DELAY,this);
+	        setDoubleBuffered(true);
 	        setBackground(Color.BLACK);
-	        MAdapter mAdapter=new MAdapter();
-	        addMouseListener(mAdapter);
-	        addMouseMotionListener(mAdapter);
+	        
+	    }
+	    
+	    /**Call to start loop
+	     * Note that there must be a current screen before this is called
+	     * 
+	     */
+	    protected final void start() {
+	    	t.start();
+	    	addMouseListener(new MAdapter());
 	    	addKeyListener(new TAdapter());
 	    }
 
 	    public void paintComponent(Graphics g){
+	        //draw background color
+	        g.setColor(getBackground());
+	        g.fillRect(0,0,getWidth(),getHeight());
 	        currentScreen.paint(g);
 	    }
 
 
 
 	    @Override
-	    public void update() {
+	    public void actionPerformed(ActionEvent e) {
+	        repaint();
 	        currentScreen.update();
 	    }
 
@@ -76,9 +85,6 @@ public class SPanel extends KPanel{
 
 	        public void mouseMoved(MouseEvent e){
 	            currentScreen.mouseMoved(e);
-	        }
-	        public void mouseDragged(MouseEvent e) {
-	        	currentScreen.mouseDragged(e);
 	        }
 
 	    }

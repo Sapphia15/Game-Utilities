@@ -44,6 +44,14 @@ public abstract class Screen {
     public void mouseMoved(MouseEvent e){
 
     }
+    
+    /**Called when mouse is dragged (moved with mouse button down)
+    *
+    * @param e
+    */
+    public void mouseDragged(MouseEvent e) {
+    	
+    }
 
     /**Called when a key is pressed
      *

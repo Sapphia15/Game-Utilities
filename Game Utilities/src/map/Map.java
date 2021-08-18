@@ -2,7 +2,7 @@ package map;
 
 
 import Sprite.Sprite;
-import gameutil.geom.g2D.PointR2;
+import gameutil.math.geom.g2D.PointR2;
 import gameutil.text.Console;
 
 import javax.swing.*;

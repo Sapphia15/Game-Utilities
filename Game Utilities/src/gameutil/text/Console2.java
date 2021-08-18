@@ -28,7 +28,7 @@ import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultEditorKit;
 
-public class Console {
+public class Console2 {
 	/**
 	 * 
 	 */
@@ -48,9 +48,9 @@ public class Console {
 		shell1, shell2, white, sea, forest, pink
 	};
 
-	public static Console s = new Console();
+	public static Console2 s = new Console2();
 
-	public Console() {
+	public Console2() {
 		userNextLineEnabled = false;
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -119,7 +119,7 @@ public class Console {
 		
 	}
 	
-	public Console(int initializationInteger) {
+	public Console2(int initializationInteger) {
 		userNextLineEnabled = false;
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -212,7 +212,7 @@ public class Console {
 	}
 	
 	@Deprecated
-	public Console(boolean userNextLineEnabled) {
+	public Console2(boolean userNextLineEnabled) {
 		this.userNextLineEnabled = userNextLineEnabled;
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -234,7 +234,7 @@ public class Console {
 	}
 
 	@Deprecated
-	public Console(theme t) {
+	public Console2(theme t) {
 		userNextLineEnabled = false;
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -256,7 +256,7 @@ public class Console {
 	
 	
 	@Deprecated
-	public Console(theme t, boolean userNextLineEnabled) {
+	public Console2(theme t, boolean userNextLineEnabled) {
 		this.userNextLineEnabled = userNextLineEnabled;
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

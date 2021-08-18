@@ -1,15 +1,15 @@
 package test;
 
-import gameutil.geom.Figure;
-import gameutil.geom.Line;
-import gameutil.geom.Point;
-import gameutil.geom.Tuple;
-import gameutil.geom.Vector;
-import gameutil.geom.g2D.LineOverlapException;
-import gameutil.geom.g2D.LineR2;
-import gameutil.geom.g2D.LineSegR2;
-import gameutil.geom.g2D.NoIntersectionException;
-import gameutil.geom.g2D.PointR2;
+import gameutil.math.geom.Figure;
+import gameutil.math.geom.Line;
+import gameutil.math.geom.Point;
+import gameutil.math.geom.Tuple;
+import gameutil.math.geom.Vector;
+import gameutil.math.geom.g2D.LineOverlapException;
+import gameutil.math.geom.g2D.LineR2;
+import gameutil.math.geom.g2D.LineSegR2;
+import gameutil.math.geom.g2D.NoIntersectionException;
+import gameutil.math.geom.g2D.PointR2;
 import gameutil.text.Console;
 import static gameutil.text.Console.theme;
 

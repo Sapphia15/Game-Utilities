@@ -3,7 +3,7 @@ package map;
 
 import javax.swing.*;
 
-import gameutil.geom.g2D.PointR2;
+import gameutil.math.geom.g2D.PointR2;
 
 import java.awt.*;
 import java.util.Observer;
