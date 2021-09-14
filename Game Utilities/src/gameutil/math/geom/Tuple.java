@@ -178,9 +178,9 @@ public class Tuple implements Cloneable{
 		return new Tuple(quo);
 	}
 	
-	/**Adds together two tuples. If the tuples are different sizes a tuple the size of the larger will be returned.
+	/**Adds <code>d</code> to all significant basis magnitudes (e.g [1 2 7] + 6 = [7 9 14] = [7 9 14 0 0 0 0 0 ...] and not [7 9 14 7 7 7 7 7 7 ...] 
 	 * 
-	 * @param t
+	 * @param d
 	 * @return
 	 */
 	public Tuple $A$(double d){

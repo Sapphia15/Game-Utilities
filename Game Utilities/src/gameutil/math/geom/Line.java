@@ -287,6 +287,15 @@ public class Line extends Figure{
 		//if the line to compare to contains two points that also lie on this line then the lines are coincident
 		return l.contains(new Point(equation(0)))&&l.contains(new Point(equation(1)));
 	}
+	public double distance(Point p) {
+		//TODO make this
+		return 0;
+	}
+	
+	public Figure closestPoints(Point p) {
+		//TODO make this and then use it to find line to orthotope intersections
+		return Figure.SPACE;
+	}
 	
 	public Line clone() {
 		return new Line(P1.clone(),P2.clone());

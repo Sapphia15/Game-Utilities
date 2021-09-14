@@ -102,4 +102,14 @@ public class Vector extends Figure{
 		return new Vector(spds.clone());
 	}
 	
+	/**Returns the unit vector that is colinear with the dimension <code>n</code>
+	 * 
+	 * @param n
+	 */
+	public static Vector getUnitVector(int n) {
+		Tuple t=new Tuple(n);
+		t.set(n,1);
+		return new Vector(t);
+	}
+	
 }
