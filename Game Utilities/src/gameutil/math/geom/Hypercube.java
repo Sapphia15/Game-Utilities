@@ -37,7 +37,7 @@ public class Hypercube extends Orthotope {
 			//kind of like rectangle or voxel checks for containing points but in however many dimensions the hypercube is in
 			//this criteria must be met for the point to be contained in the hypercube so return false if it is not met.
 			//also nice and easy because it's not oriented
-			if (!(p1val<pval&&pval<p1val+length)) {
+			if (!(p1val<=pval&&pval<=p1val+length)) {
 				return false;
 			}
 		}

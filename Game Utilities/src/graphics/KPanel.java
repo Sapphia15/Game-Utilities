@@ -108,7 +108,8 @@ public class KPanel extends Canvas{
 			while (panel.paintThreadActive.get()) {
 				update();
 				currentTime=System.currentTimeMillis();
-				repaint();
+				panel.drawFrame(panel.getBufferStrategy().getDrawGraphics());
+				panel.getBufferStrategy().show();
 				//p loop to control sleep time in order to achieve target fps
 				double error =(double)(getTargetTime()-(currentTime-lastTime));
 				sleepTime=sleepTime+Math.round(error*panel.P);

@@ -102,14 +102,21 @@ public class Vector extends Figure{
 		return new Vector(spds.clone());
 	}
 	
+	public Vector normalize() {
+		return new Vector(spds.$D$(magnitude));
+	}
+	
 	/**Returns the unit vector that is colinear with the dimension <code>n</code>
 	 * 
 	 * @param n
 	 */
 	public static Vector getUnitVector(int n) {
 		Tuple t=new Tuple(n);
-		t.set(n,1);
+		t.set(n-1,1);
 		return new Vector(t);
+	}
+	public boolean equals(Vector v) {
+		return this.spds.equals(v.spds);
 	}
 	
 }

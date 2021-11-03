@@ -52,7 +52,7 @@ public class Line extends Figure{
 	}
 	
 	public boolean intersects(Ray r) {
-		return r.instersects(this);
+		return r.intersects(this);
 	}
 	
 	//functional
@@ -272,7 +272,7 @@ public class Line extends Figure{
 	}
 	
 	public Figure intersection(Point p) {
-		if (instersects(p)) {
+		if (intersects(p)) {
 			return p.clone();
 		} else {
 			return Figure.SPACE;

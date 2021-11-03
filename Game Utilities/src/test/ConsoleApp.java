@@ -20,7 +20,7 @@ class ConsoleApp {
 		Console.s.setTitle("Geometry Tester");
 		Console.s.setVisible(true);
 		Console.s.rememberCommand(true);
-		Console.s.readLine();
+		/*Console.s.readLine();
 		Console.s.readLine();
 		Console.s.readLine();
 		Console.s.readLine();
@@ -31,6 +31,12 @@ class ConsoleApp {
 		//*/
 		/*Console.s.println(Double.NaN<=0);*/
 		Vector P1=new Vector(new double[]{4.0,4.0});
+		Console.s.println("Unnormallized magnitude: "+P1.magnitude());
+		Console.s.println("Normallized magnitude: "+P1.normalize().magnitude());
+		P1.normalize().getSpds().printVals("normalized");
+		P1.getSpds().printVals("not normalized");
+		Console.s.pause();
+		System.exit(0);
 		Vector P2=new Vector(new double[]{2.0,2.0});
 		Vector P3=new Vector(new double[]{3.0,3.0});
 		Vector P4=new Vector(new double[]{2.0,2.0});

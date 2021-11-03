@@ -19,9 +19,9 @@ public abstract class Figure implements Cloneable{
 	
 	public final Figure intersection(Figure f) {return SPACE;}
 	
-	public final boolean instersects(Figure f) {return false;}
+	public boolean intersects(Figure f) {return false;}
 	
-	public final boolean contains(Figure f) {return false;}
+	public boolean contains(Figure f) {return false;}
 	
 	@Override
 	public Figure clone() {
