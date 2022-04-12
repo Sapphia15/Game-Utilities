@@ -14,39 +14,39 @@ public class ComplexDouble {
 		this.b=imaginary;
 	}
 	
-	public ComplexDouble plus(ComplexDouble d) {
+	public ComplexDouble $A$(ComplexDouble d) {
 		return new ComplexDouble(d.a+this.a,d.b+this.b);
 	}
 	
-	public ComplexDouble plus(double d) {
+	public ComplexDouble $A$(double d) {
 		return new ComplexDouble(d+this.a,this.b);
 	}
 	
-	public ComplexDouble minus(ComplexDouble d) {
+	public ComplexDouble $S$(ComplexDouble d) {
 		return new ComplexDouble(this.a-d.a,this.b-d.b);
 	}
 	
-	public ComplexDouble minus(double d) {
+	public ComplexDouble $S$(double d) {
 		return new ComplexDouble(this.a-d,this.b);
 	}
 	
-	public ComplexDouble times(ComplexDouble d) {
+	public ComplexDouble $X$(ComplexDouble d) {
 		return new ComplexDouble(d.a*this.a-d.b*this.b,d.b*this.a+d.a*this.b);
 	}
 	
-	public ComplexDouble times(double d) {
+	public ComplexDouble $X$(double d) {
 		return new ComplexDouble(d*this.a,d*this.b);
 	}
 	
 	public ComplexDouble $D$(ComplexDouble d) {
-		return this.times(new ComplexDouble(d.a,-1*d.b)). $D$ (Math.pow(d.a, 2)+Math.pow(d.b, 2));
+		return this.$X$(new ComplexDouble(d.a,-1*d.b)). $D$ (Math.pow(d.a, 2)+Math.pow(d.b, 2));
 	}
 	
 	public ComplexDouble $D$(double d) {
 		return new ComplexDouble(this.a/d,this.b/d);
 	}
 	
-	public ComplexDouble pow(int pow) {//double powers coming soon!
+	public ComplexDouble $E$(int pow) {//double powers coming soon!
 		ComplexDouble answer=this;
 		boolean negativePow=false;
 		if (pow==0) {
@@ -56,7 +56,7 @@ public class ComplexDouble {
 			pow=-pow;
 		}
 		for (int i=1; i<pow;i++) {
-			answer=answer.times(answer);
+			answer=answer.$X$(answer);
 		}
 		if (negativePow) {
 			answer=new ComplexDouble(1,0). $D$ (answer);
@@ -64,8 +64,12 @@ public class ComplexDouble {
 		return answer;
 	}
 	
-	public ComplexDouble pow(ComplexDouble d) {
-		
+	public ComplexDouble $E$(ComplexDouble d) {
+		return d.$X$(ln()).exp();
+	}
+	
+	public ComplexDouble ln() {
+		return new ComplexDouble(Math.log(a*a+b*b)/2,Math.atan(b/a));
 	}
 	
 	public ComplexDouble exp() {

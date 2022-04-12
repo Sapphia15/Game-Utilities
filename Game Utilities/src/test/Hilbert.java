@@ -9,6 +9,7 @@ import gameutil.text.Console;
 
 public class Hilbert {
 	public static void main(String[] unicorns) {
-		
+		ComplexDouble d=new ComplexDouble(Math.E,0).$E$(new ComplexDouble(0,Math.PI));
+		Console.s.println(d.R()+" + "+d.I()+"i");
 	}
 }
