@@ -1,9 +1,17 @@
 package gameutil.math.geom;
 
-public class Tuple implements Cloneable{
+import java.io.Serializable;
+
+import gameutil.text.Console;
+
+public class Tuple implements Cloneable,Serializable{
 	
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2653121865707299910L;
 	private double[] tuple;
 	private int n;
 	
@@ -284,6 +292,17 @@ public class Tuple implements Cloneable{
 		return new Tuple(pow);
 	}
 	
+	public Tuple $TENSOR$(Tuple t) {
+		double[] d=new double[this.n+t.n];
+		for (int i=0;i<this.n;i++) {
+			d[i]=this.i(i);
+		}
+		for (int i=0;i<t.n;i++) {
+			d[this.n+i]=t.i(i);
+		}
+		return new Tuple(d);
+	}
+	
 	/**Returns the value at the specified index of this tuple
 	 * 
 	 * @param index
@@ -329,7 +348,7 @@ public class Tuple implements Cloneable{
 	 */
 	public boolean set(int index,double val){
 		if (index>tuple.length-1){
-			double[] d=new double[index];
+			double[] d=new double[index+1];
 			d[index]=val;
 			tuple=this .$A$ (new Tuple(d)).a();
 			n=tuple.length;

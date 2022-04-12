@@ -108,7 +108,7 @@ public class Console {
 
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				// TODO ApÃ©ndice de mÃ©todo generado automÃ¡ticamente
+				
 				
 			}
 			

@@ -42,4 +42,8 @@ public class LineSeg extends Figure{
 		return new Point[] {new Point(ray1.P1),new Point(ray2.P1)};
 	}
 	
+	public Point midPoint() {
+		return new Point(ray1.P1.$S$(ray2.P1).$X$(.5).$A$(ray2.P1));
+	}
+	
 }

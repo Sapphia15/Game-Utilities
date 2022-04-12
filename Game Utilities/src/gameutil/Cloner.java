@@ -1,5 +1,7 @@
 package gameutil;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -18,11 +20,12 @@ public final class Cloner {
 	 * @param o
 	 */
 	public static Object Clone(Object o) {
-		CloneOutputStream out=new CloneOutputStream();
+		//CloneOutputStream out=new CloneOutputStream();
+		ByteArrayOutputStream out=new ByteArrayOutputStream();
 		try {
 			ObjectOutputStream oout=new ObjectOutputStream(out);
 			oout.writeObject(o);
-			CloneInputStream in=out.toInputStream();
+			ByteArrayInputStream in=new ByteArrayInputStream(out.toByteArray());
 			ObjectInputStream oin=new ObjectInputStream(in);
 			Object clone=oin.readObject();
 			oout.close();
@@ -39,7 +42,7 @@ public final class Cloner {
 		}
 		return null;
 	}
-	
+	/*
 	private static class CloneOutputStream extends OutputStream {
 
 		ArrayList<Byte> bytes=new ArrayList<Byte>();
@@ -66,11 +69,17 @@ public final class Cloner {
 
 		@Override
 		public int read() throws IOException {
-			// TODO Auto-generated method stub
+			//return -1 if the end of the stream was reached
+			if (place>=bytes.size()) {
+				return -1;
+			}
+			//otherwise return the next byte and advance the read position by one step
 			int bt=bytes.get(place);
 			place++;
+			
 			return bt;
 		}
 
 	}
+	*/
 }

@@ -1,6 +1,12 @@
 package gameutil.math.geom;
 
-public abstract class Figure implements Cloneable{
+import java.io.Serializable;
+
+public abstract class Figure implements Cloneable,Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1728904949813261040L;
 	//protected int p; //dimensionality
 	//empty space
 	public static final Figure SPACE=new Figure() {

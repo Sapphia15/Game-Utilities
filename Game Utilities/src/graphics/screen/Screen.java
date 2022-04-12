@@ -3,6 +3,7 @@ package graphics.screen;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.ImageObserver;
 
 /**
  * Created by kb9200 on 10/3/2019.
@@ -78,5 +79,35 @@ public abstract class Screen {
      *
      */
     public void setDeinit(){}
+    
+    public void drawHorizontalRepeatingImage(Graphics g,Image im,int xOffset,double scale,int x,int y,int width,int height,ImageObserver observer) {
+		int imageWidth=(int)(im.getWidth(null));
+		int imageHeight=(int)(im.getHeight(null));
+		
+		int srcY2=(int)(imageHeight);
+		/*if (srcY2>imageHeight) {
+			srcY2=imageHeight;
+		}*/
+		int srcY1=(int) (0);
+		/*if (srcY1<0) {
+			srcY1=0;
+		}*/
+		//System.out.println("Src ys: ("+srcY1+", "+srcY2+")");
+		
+		for (int i=0;i<width;) {
+			int drawWidth=(int)(imageWidth*scale);
+			if (i+drawWidth>width) {
+				drawWidth=width-i;
+			}
+			
+			int srcX1=(int)((xOffset+i)/scale)%imageWidth;
+			if (srcX1+drawWidth/scale>imageWidth) {
+				drawWidth=(int)(imageWidth*scale-srcX1*scale);
+			}
+			g.drawImage(im, i+x,height-(int)(imageHeight*scale)+y , i+drawWidth+x,height+y , srcX1, srcY1, srcX1+(int)(drawWidth/scale), srcY2, observer);
+			i+=drawWidth;
+		}
+	}
 
+	protected abstract void keyDown(int key);
 }

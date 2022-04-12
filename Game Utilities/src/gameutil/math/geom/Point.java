@@ -1,5 +1,7 @@
 package gameutil.math.geom;
 
+import gameutil.math.geom.g2D.PointR2;
+
 public class Point extends Brane{
 	
 	public Tuple tuple;
@@ -15,11 +17,21 @@ public class Point extends Brane{
 		tuple=v.getSpds();
 	}
 	
+	public Point(PointR2 p) {
+		super(0,0,new Tuple(new double[] {p.getX(),p.getY()}));
+		tuple=getCenter().tuple;
+	}
+	
 	private Point(Point p) {
 		super(0,0,new Tuple(p.tuple.a()));
 		tuple=getCenter().tuple;
 	}
 	
+	public Point(double[] coords) {
+		super(0,0,new Tuple(coords));
+		tuple=getCenter().tuple;
+	}
+
 	/**Returns the distance between this point and a point <code>p</code>
 	 * 
 	 * @param p
@@ -81,6 +93,10 @@ public class Point extends Brane{
 		tuple.printVals(lable);
 	}
 	
+	public void move(Vector v) {
+		tuple=tuple.$A$(v.getSpds());
+	}
+	
 	@Override
 	public Point clone() {
 		return new Point(this);
@@ -89,4 +105,15 @@ public class Point extends Brane{
 	public static Point origin(int n) {
 		return new Point(Tuple.origin(n));
 	}
+	
+	public static Point lerp(Point p1, Point p2,double t) {
+		return new Point(p1.tuple.$X$((1-t)).$A$(p2.tuple.$X$(t)));
+	}
+	
+	public Point lerp(Point p2,double t) {
+		return new Point(tuple.$X$((1-t)).$A$(p2.tuple.$X$(t)));
+	}
+
 }
+
+

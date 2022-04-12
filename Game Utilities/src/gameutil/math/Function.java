@@ -28,4 +28,12 @@ public class Function {
 			return new Function(value);
 		}
 	}
+	
+	public Function apply(Function func) {
+		return this.apply(new Function[] {func});
+	}
+	
+	public Function apply(double d) {
+		return this.apply(new Function(d));
+	}
 }

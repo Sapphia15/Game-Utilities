@@ -19,15 +19,25 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
 
+import gameutil.text.Console;
+
 public class IruConsole extends JPanel implements ActionListener{
 	private boolean userNextLineEnabled=false;
 	private TAdapter keylistener;
-	String text="";
+	Str text=new Str();
 	private int y=0;
 	private int maxY=0;
+	private int speed=1;
+	private int cx=-1;
+	private int cy=-1;
 	private Timer t;
+	private long lastBlink=System.currentTimeMillis();
+	private boolean showCursor=true;
+	private boolean showCursorOver=false;
+	private boolean overrideRead=false;
+	private final long cursorBlinkTime=500;
 	private boolean autoScroll=true;
-	private boolean scrollToBottom=false;
+	private int scrollToBottom=0;
 	JFrame f;
 	
 	public IruConsole() {
@@ -57,7 +67,24 @@ public class IruConsole extends JPanel implements ActionListener{
 		int maxY=this.getHeight()+16;
 		int x=0;
 		int y=0;
-		Letter[] letters=Letter.lettersFromString(text);
+		Str text=this.text.clone();
+		try {
+		if (((keylistener.reading&&!overrideRead)||(overrideRead&&showCursorOver))&&showCursor) {
+			if (cx<0&&cy<0) {
+				text=text.cat("|");
+			} else if (cx<0) {
+				text.replace(cy, 0, "|");
+			} else if (cy<0) {
+				text.replace(text.getNoOfLines()-1, cx, "|");
+			} else {
+				text.replace(cy, cx, "|");
+			}
+		}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Text: "+text);
+		}
+		Letter[] letters=text.getLetters();
 		for (int i=0;i<letters.length;i++) {
 			Letter l=letters[i];
 			if (l.value().equals("/n")) {
@@ -88,6 +115,17 @@ public class IruConsole extends JPanel implements ActionListener{
 	
 	public void print(String s) {
 		keylistener.print(s);
+		if (autoScroll) {
+			scrollToBottom++;
+		}
+	}
+	
+	
+	public void print(Str s) {
+		keylistener.print(s);
+		if (autoScroll) {
+			scrollToBottom++;
+		}
 	}
 	public void setTitle(String s) {
 		f.setTitle(s);
@@ -99,10 +137,23 @@ public class IruConsole extends JPanel implements ActionListener{
 			s=s+l[i].value();
 		}
 		keylistener.print(s);
+		if (autoScroll) {
+			scrollToBottom++;
+		}
 	}
 	
 	public void printLine(String s) {
 		keylistener.print(s+"/n");
+		if (autoScroll) {
+			scrollToBottom++;
+		}
+	}
+	
+	public void printLine(Str s) {
+		keylistener.println(s);
+		if (autoScroll) {
+			scrollToBottom++;
+		}
 	}
 	
 	public void printLine(Letter[] l) {
@@ -111,10 +162,16 @@ public class IruConsole extends JPanel implements ActionListener{
 			s=s+l[i].value();
 		}
 		keylistener.print(s+"/n");
+		if (autoScroll) {
+			scrollToBottom++;
+		}
 	}
 	
 	public void printLine() {
 		keylistener.print("/n");
+		if (autoScroll) {
+			scrollToBottom++;
+		}
 	}
 	
 	/**
@@ -123,7 +180,24 @@ public class IruConsole extends JPanel implements ActionListener{
 	 * @return input
 	 */
 	public String readLine() {
+		if (autoScroll) {
+			scrollToBottom++;
+		}
 		return keylistener.readLine();
+	}
+	
+	public Int readInt() {
+		if (autoScroll) {
+			scrollToBottom++;
+		}
+		return keylistener.readInt();
+	}
+	
+	public Int readLineInt() {
+		if (autoScroll) {
+			scrollToBottom++;
+		}
+		return keylistener.readLineInt();
 	}
 	
 	/**
@@ -132,6 +206,9 @@ public class IruConsole extends JPanel implements ActionListener{
 	 * @return input
 	 */
 	public String read() {
+		if (autoScroll) {
+			scrollToBottom++;
+		}
 		return keylistener.read();
 	}
 	
@@ -283,10 +360,10 @@ public class IruConsole extends JPanel implements ActionListener{
 				accent=!accent;
 				return;
 			} else if (e.getKeyCode()==KeyEvent.VK_DOWN) {
-				scroll(y+1);
+				scroll(y+18);
 				return;
 			} else if (e.getKeyCode()==KeyEvent.VK_UP) {
-				scroll(y-1);
+				scroll(y-18);
 				return;
 			}
 			if (paused) {
@@ -307,6 +384,10 @@ public class IruConsole extends JPanel implements ActionListener{
 				} else if (e.getKeyCode() >= 48 && e.getKeyCode() < 58) {
 					int no = e.getKeyCode() - 48;
 					print = Integer.toString(no);
+					if (no<8&&no>0&&accent) {
+						print="/"+print;
+						accent=false;
+					}
 				} else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_DELETE) {
 					if (readCache.length() > 0) {
 						if (readCache.endsWith(".")) {
@@ -740,8 +821,24 @@ public class IruConsole extends JPanel implements ActionListener{
 							print="]";
 						}
 					break;
+					case KeyEvent.VK_NUMPAD8:
+						cy=cy-1;
+						System.out.println("("+cx+", "+cy+")");
+					break;
+					case KeyEvent.VK_NUMPAD6:
+						cx=cx+1;
+						System.out.println("("+cx+", "+cy+")");
+					break;
+					case KeyEvent.VK_NUMPAD2:
+						cy=cy+1;
+						System.out.println("("+cx+", "+cy+")");
+					break;
+					case KeyEvent.VK_NUMPAD4:
+						cx=cx-1;
+						System.out.println("("+cx+", "+cy+")");
+					break;
 				}
-				System.out.println(print);			
+				//System.out.println(print);			
 				if (accent) {
 					accent=false;
 				}
@@ -773,7 +870,7 @@ public class IruConsole extends JPanel implements ActionListener{
 							readCache = readCache.substring(0, readCache.length() - 1);
 							text=text.substring(0, text.length() - 1);
 						}
-						scrollToBottom=true;
+						scrollToBottom++;
 					}
 					return;
 				}
@@ -784,79 +881,59 @@ public class IruConsole extends JPanel implements ActionListener{
 			text=(text.substring(0, text.length() - 1));
 		}
 
-		public String getLine(int line) {
-			Scanner s = new Scanner(text);
-			for (int x = 0; x < line - 1; x++) {
-				try {
-					s.nextLine();
-				} catch (NoSuchElementException e) {
-					println("\nâ—„â•�â•�â•�â•�ERRORâ•�â•�â•�â•�â–º");
-					println("Line " + line + " not found!");
-					println("â—„â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â–º");
-					return null;
-				}
-			}
-			try {
-				return s.nextLine();
-			} catch (NoSuchElementException e) {
-				println("\nâ—„â•�â•�â•�â•�ERRORâ•�â•�â•�â•�â–º");
-				println("Line " + line + " not found!");
-				println("â—„â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â–º");
-				return null;
-			}
-
+		public Str getLine(long line) {
+			return text.getLine((int)line);
+		}
+		
+		public void setLine(long line,Str s) {
+			text.setLine((int)line, s);
+		}
+		
+		public void insert(int line,int index,Str s) {
+			text.insert(line,index,s);
 		}
 
-		public String getLine(long line) {
-			Scanner s = new Scanner(text);
-			for (long x = 0; x < line - 1; x++) {
-				try {
-					s.nextLine();
-				} catch (NoSuchElementException e) {
-					println("\nâ—„â•�â•�â•�â•�ERRORâ•�â•�â•�â•�â–º");
-					println("Line " + line + " not found!");
-					println("â—„â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â–º");
-					return null;
-				}
-			}
-			try {
-				return s.nextLine();
-			} catch (NoSuchElementException e) {
-				println("\nâ—„â•�â•�â•�â•�ERRORâ•�â•�â•�â•�â–º");
-				println("Line " + line + " not found!");
-				println("â—„â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â–º");
-				return null;
-			}
-
-		}
-
-		public long getNoOfLines() {
-			Scanner s = new Scanner(text);
-			long line = 0;
-			while (true) {
-				try {
-					s.nextLine();
-				} catch (NoSuchElementException e) {
-					return line;
-				}
-				line++;
-			}
+		public int getNoOfLines() {
+			return text.getNoOfLines();
 		}
 
 		public void print(String s) {
-			text=text+s;
+			text=text.cat(s);
+			if (autoScroll) {
+				scrollToBottom++;
+			}
+		}
+		
+		public void print(Str s) {
+			text=text.cat(s);
+			if (autoScroll) {
+				scrollToBottom++;
+			}
 		}
 
 		public void println(String s) {
-			text+=(s + "/n");
+			text=text.cat(s).cat(Letter.NEWLINE);
+			if (autoScroll) {
+				scrollToBottom++;
+			}
 		}
 
+		public void println(Str s) {
+			text=text.cat(s).cat(Letter.NEWLINE);
+			if (autoScroll) {
+				scrollToBottom++;
+			}
+		}
+		
 		public void println() {
-			text+=("/n");
+			text=text.cat(Letter.NEWLINE);
+			if (autoScroll) {
+				scrollToBottom++;
+			}
 		}
 
 		public String readLine() {
-			System.out.println("Awaiting user input");
+			//System.out.println("Awaiting user input");
 			skipLineAfterRead = true;
 			readCache = "";
 			reading = true;
@@ -864,7 +941,7 @@ public class IruConsole extends JPanel implements ActionListener{
 				doNothing();
 			}
 			if (autoScroll) {
-				scrollToBottom();
+				scrollToBottom++;
 			}
 			//System.out.println("User input recieved");
 			return readCache;
@@ -886,13 +963,13 @@ public class IruConsole extends JPanel implements ActionListener{
 				doNothing();
 			}
 			if (autoScroll) {
-				scrollToBottom();
+				scrollToBottom++;
 			}
 			//System.out.println("User input recieved");
 			return readCache;
 		}
 
-		public int readInt() {
+		public Int readInt() {
 			readingNumber = true;
 			readCache = "";
 			skipLineAfterRead = false;
@@ -902,15 +979,15 @@ public class IruConsole extends JPanel implements ActionListener{
 				doNothing();
 			}
 			if (autoScroll) {
-				scrollToBottom();
+				scrollToBottom++;
 			}
 			//System.out.println("User input recieved");
 			if (readCache.equals("")) {
-				return 0;
+				return new Int(0);
 			}
 			int val;
 			try {
-				val = Integer.parseInt(readCache);
+				val = new Int(readCache).val();;
 			} catch (NumberFormatException e) {
 				if (Long.parseLong(readCache) > 2147483647) {
 					val = 2147483647;
@@ -924,10 +1001,10 @@ public class IruConsole extends JPanel implements ActionListener{
 					println("â—„â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â–º");
 				}
 			}
-			return val;
+			return new Int(val);
 		}
 
-		public int readLineInt() {
+		public Int readLineInt() {
 			readingNumber = true;
 			readCache = "";
 			skipLineAfterRead = true;
@@ -937,15 +1014,15 @@ public class IruConsole extends JPanel implements ActionListener{
 				doNothing();
 			}
 			if (autoScroll) {
-				scrollToBottom();
+				scrollToBottom++;
 			}
 			//System.out.println("User input recieved");
 			if (readCache.equals("")) {
-				return 0;
+				return new Int(0);
 			}
 			int val;
 			try {
-				val = Integer.parseInt(readCache);
+				val = new Int(readCache).val();
 			} catch (NumberFormatException e) {
 				if (Long.parseLong(readCache) > 2147483647) {
 					val = 2147483647;
@@ -959,7 +1036,7 @@ public class IruConsole extends JPanel implements ActionListener{
 					println("â—„â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â–º");
 				}
 			}
-			return val;
+			return new Int(val);
 		}
 
 		public double readDouble() {
@@ -973,7 +1050,7 @@ public class IruConsole extends JPanel implements ActionListener{
 				doNothing();
 			}
 			if (autoScroll) {
-				scrollToBottom();
+				scrollToBottom++;
 			}
 			//System.out.println("User input recieved");
 			if (readCache.equals("")) {
@@ -993,7 +1070,7 @@ public class IruConsole extends JPanel implements ActionListener{
 				doNothing();
 			}
 			if (autoScroll) {
-				scrollToBottom();
+				scrollToBottom++;
 			}
 			//System.out.println("User input recieved");
 			if (readCache.equals("")) {
@@ -1022,10 +1099,18 @@ public class IruConsole extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		if (System.currentTimeMillis()-lastBlink>cursorBlinkTime) {
+			lastBlink=System.currentTimeMillis();
+			showCursor=!showCursor;
+		}
 		repaint();
-		if (scrollToBottom) {
+		if (scrollToBottom>0) {
 			scrollToBottom();
-			scrollToBottom=false;
+			
+			scrollToBottom--;
+			if (scrollToBottom>10) {//this should prevent more than 110 milliseconds of forced scrolling to the bottom without an influx of scroll ops
+				scrollToBottom=10;
+			}
 		}
 	}
 }

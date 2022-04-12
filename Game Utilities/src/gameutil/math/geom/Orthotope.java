@@ -1,8 +1,11 @@
 package gameutil.math.geom;
 
+import gameutil.math.geom.g2D.PointR2;
+import gameutil.math.geom.g1D.*;
+
 public class Orthotope extends Figure{
-	Point p1;
-	Point p2;
+	protected Point p1;
+	protected Point p2;
 	
 	/**Creates an orthotope that goes from p1 to p2 (the p1 and p2 properties will be set to the points with the lowest x,y,z,w,... values and largest x,y,z,w,... values respectively)
 	 * 
@@ -40,10 +43,8 @@ public class Orthotope extends Figure{
 			v2.$A$(new Vector(t2));
 		}
 		//set p1 to the most left, most low, most inner, most kata, etc. point on the hypercube (also a vertex)
-		//in other words, the point on the hypercube closest to the origin
 		this.p1=new Point(v1);
 		//set p2 to the most right, most high, most outer, most ana, etc. point on the hypercube (which is also a vertex)
-		//in other words, the point on the hypercube farthest from the origin
 		this.p2=new Point(v2);
 		
 	}
@@ -90,14 +91,88 @@ public class Orthotope extends Figure{
 		return contains(p);
 	}
 	
+	@Deprecated
 	/**NOT FUNCTIONAL!
 	 * 
 	 * @param l
 	 * @return
 	 */
-	public Figure intersects(Line l) {
+	public Figure intersection(Line l) {
 		//TODO
+		
 		//intersection could be a line segment or a point
 		return Figure.SPACE;
+	}
+	
+	public boolean intersects(Orthotope o) {
+		int dims=p1.tuple.n();
+		if (p2.tuple.n()>dims) {
+			dims=p2.tuple.n();
+		}
+		if (o.p1.tuple.n()>dims) {
+			dims=o.p1.tuple.n();
+		}
+		if (o.p2.tuple.n()>dims) {
+			dims=o.p2.tuple.n();
+		}
+		
+		for (int i=0;i<dims;i++) {
+			if (!new LineSeg1D(p1.tuple.i(i),p2.tuple.i(i)).intersects(new LineSeg1D(o.p1.tuple.i(i),o.p2.tuple.i(i)))) {
+				//if any of the one dimensional line segments don't intersect then the orthotopes don't intersect
+				return false;
+			}
+		}
+		
+		//all of the one dimensional line segments intersect so the orthotopes intersect note that this algorithm only works for non oriented orthotopes (which is what this class is)
+		return true;
+	}
+	
+	public boolean contains(Orthotope o) {
+		int dims=p1.tuple.n();
+		if (p2.tuple.n()>dims) {
+			dims=p2.tuple.n();
+		}
+		if (o.p1.tuple.n()>dims) {
+			dims=o.p1.tuple.n();
+		}
+		if (o.p2.tuple.n()>dims) {
+			dims=o.p2.tuple.n();
+		}
+		
+		for (int i=0;i<dims;i++) {
+			if (!new LineSeg1D(p1.tuple.i(i),p2.tuple.i(i)).contains(new LineSeg1D(o.p1.tuple.i(i),o.p2.tuple.i(i)))) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	/**returns the corner with the lowest individual components (e.g. the lower left corner for a 2D orthotope and the lower left bottom corner for a 3D orthope etc.)
+	 * 
+	 * @return
+	 */
+	public Point getPos() {
+		return p1.clone();
+	}
+	
+	/**Moves the lower, leftmost, bottom, katamost, etc. vertex to the specified point
+	 * 
+	 * @param p
+	 */
+	public void setPos(Point p) {
+		Tuple delta=p2.tuple.$S$(p1.tuple);//side lengths
+		p1=p;
+		p2=new Point(p.tuple.$A$(delta));
+	}
+	
+	/**Sets the center to the specified point
+	 * 
+	 * @param p
+	 */
+	public void setCenter(Point p) {
+		Tuple delta=p2.tuple.$S$(p1.tuple).$D$(2);//half the side lengths
+		p1=new Point(p.tuple.$S$(delta));
+		p2=new Point(p.tuple.$A$(delta));
 	}
 }

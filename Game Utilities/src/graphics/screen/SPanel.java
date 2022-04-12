@@ -1,11 +1,13 @@
 package graphics.screen;
 import javax.swing.*;
 
+import gameutil.math.geom.g2D.PointR2;
 import graphics.KPanel;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Hashtable;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SPanel extends KPanel{
 	    /**
@@ -16,6 +18,7 @@ public class SPanel extends KPanel{
 	    protected final int TIMER_DELAY=10;
 	    protected Hashtable<String,Screen>screens;
 	    protected Screen currentScreen;
+	    protected TAdapter keyAdapter;
 	     
 
 	    public SPanel(Frame observer){
@@ -26,11 +29,13 @@ public class SPanel extends KPanel{
 	        MAdapter mAdapter=new MAdapter();
 	        addMouseListener(mAdapter);
 	        addMouseMotionListener(mAdapter);
-	    	addKeyListener(new TAdapter());
+	        keyAdapter=new TAdapter();
+	    	addKeyListener(keyAdapter);
 	    }
 
 	    public void paintComponent(Graphics g){
 	        currentScreen.paint(g);
+	        keyAdapter.update();
 	    }
 
 
@@ -55,12 +60,35 @@ public class SPanel extends KPanel{
 	    }
 
 	    protected class TAdapter extends KeyAdapter{
+	    	CopyOnWriteArrayList<Integer> keysDown=new CopyOnWriteArrayList<>();
+	    	
 	        public void keyPressed(KeyEvent e){
 	            currentScreen.keyPressed(e);
+	            if (!keysDown.contains(e.getKeyCode())) {
+	            	keysDown.add(e.getKeyCode());
+	            }
+	        }
+	        
+	        public void update() {
+	        	for (int key:keysDown) {
+	        		keyDown(key);
+	        	}
+	        }
+	        
+	        
+	        public void keyDown(int key) {
+	        	currentScreen.keyDown(key);
 	        }
 
+	        public boolean isKeyDown(int key) {
+	        	return keysDown.contains(key);
+	        }
+	        
 	        public void keyReleased(KeyEvent e) {
 	            currentScreen.keyReleased(e);
+	            if (keysDown.contains(e.getKeyCode())) {
+	            	keysDown.remove((Integer)e.getKeyCode());
+	            }
 	        }
 	    }
 
@@ -81,6 +109,22 @@ public class SPanel extends KPanel{
 	        	currentScreen.mouseDragged(e);
 	        }
 
+	    }
+	    
+	    public boolean isKeyDown(int key) {
+	    	return keyAdapter.isKeyDown(key);
+	    }
+	    
+	    public int getCenterX() {
+	    	return this.getWidth()/2;
+	    }
+	    
+	    public int getCenterY() {
+	    	return this.getHeight()/2;
+	    }
+	    
+	    public PointR2 getCenter() {
+	    	return new PointR2(getCenterX(),getCenterY());
 	    }
 
 }

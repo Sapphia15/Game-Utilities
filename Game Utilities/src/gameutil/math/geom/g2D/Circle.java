@@ -32,6 +32,10 @@ public class Circle extends ShapeR2{
 		return new Circle(center.clone(),r);
 	}
 	
+	public boolean containsPoint(PointR2 p) {
+		return p.distance(center)<=r;
+	}
+	
 	@Override
 	public int ID() {
 		return ID;

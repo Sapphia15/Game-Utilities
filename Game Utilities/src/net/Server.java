@@ -25,6 +25,7 @@ public abstract class Server extends Thread{
 			try {
 				Socket client=server.accept();
 				clients.add(client);
+				prepareNewClient(client);
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

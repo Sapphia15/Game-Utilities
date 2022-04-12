@@ -9,6 +9,8 @@ public class Request implements Serializable{
 	
 	public Request(String type,String route) {
 		data=new Hashtable<>();
+		data.put("type",type);
+		data.put("route",route);
 	}
 	
 	public Request(Hashtable<String,Object> data) {

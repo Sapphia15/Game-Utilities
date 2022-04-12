@@ -9,9 +9,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import net.Request;
 
 public abstract class Controller extends Thread{
-	ObjectOutputStream out;
-	Socket s;
-	CopyOnWriteArrayList<Request> requests;
+	protected ObjectOutputStream out;
+	protected Socket s;
+	protected CopyOnWriteArrayList<Request> requests;
 	public Controller(Socket s,ObjectOutputStream out) {
 		this.out=out;
 		this.s=s;
@@ -37,30 +37,37 @@ public abstract class Controller extends Thread{
 		Reciever reciever=new Reciever(s,in);
 		reciever.start();
 		//process requests
-		while (s.isConnected()) {
+		boolean connected=true;
+		while (!s.isClosed()&&connected) {
 			for (Request r:requests) {
 				String type=(String) r.get("type");
 				String route=(String) r.get("route");
 				switch (type){
 					case "get":
-						this.get(r,type);
+						this.get(r,route);
 					break;
 					case "post":
 						try {
+							r.set("type","get");
 							out.writeObject(r);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+							disconnect();
+							connected=false;
 						}
 						
 					break;
 				}
+				requests.remove(r);
 			}
+			
 		}
+		
 		
 	}
 	
-	public abstract void get(Request r,String type);
+	public abstract void get(Request r,String route);
 	
 	private class Reciever extends Thread{
 		
@@ -71,18 +78,36 @@ public abstract class Controller extends Thread{
 		}
 		
 		public void run() {
-			while (s.isConnected()) {
+			while ((!s.isInputShutdown()&&!s.isClosed())) {
 				Request r;
 				try {
 					r = (Request) in.readObject();
 					queueProcessRequest(r);
-				} catch (ClassNotFoundException | IOException e) {
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (IOException e2) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					e2.printStackTrace();
+					onDisconnect();
+					break;
 				}
 				
 			}
 		}
+		
+		
+	}
+	
+	public void disconnect() {
+		try {
+			s.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void onDisconnect() {
 		
 	}
 }

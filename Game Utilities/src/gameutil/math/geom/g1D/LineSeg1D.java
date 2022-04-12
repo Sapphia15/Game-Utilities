@@ -6,17 +6,25 @@ public class LineSeg1D extends Figure1D{
 	public static final int ID=1;
 	
 	public LineSeg1D(Point1D p1,Point1D p2) {
-		if (p1.getX()>p2.getX()) {
-			minX=p2.getX();
-			maxX=p1.getX();
+		this(p1.getX(),p2.getX());
+	}
+	
+	public LineSeg1D(double p1,double p2) {
+		if (p1>p2) {
+			minX=p2;
+			maxX=p1;
 		} else {
-			minX=p1.getX();
-			maxX=p2.getX();
+			minX=p1;
+			maxX=p2;
 		}
 	}
 	
 	public boolean contains(Point1D p) {
 		return p.getX()>=minX && p.getX()<=maxX;
+	}
+	
+	public boolean contains(LineSeg1D l) {
+		return contains(new Point1D(l.minX))&&contains(new Point1D(l.maxX));
 	}
 	
 	public double getMinX() {

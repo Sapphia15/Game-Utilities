@@ -95,6 +95,11 @@ public class RectangleR2 extends ShapeR2{
 		return true;
 	}
 	
+	public boolean setUpperLeftPos(double x,double y) {
+		center.move(x+width/2, y+height/2);
+		return true;
+	}
+	
 	/**Checks if the specified point is contained within this rectangle
 	 * 
 	 * @param p
@@ -110,6 +115,20 @@ public class RectangleR2 extends ShapeR2{
 	 * @return
 	 */
 	public boolean intersects(Rectangle r) {
+		//if to the left of, to the right of, above, or below the other rectangle then they don't intersect
+		if (getMaxX()<=r.getMinX()||getMinX()>=r.getMaxX()||getMinY()>=r.getMaxY()||getMaxY()<=r.getMinY()) {
+			return false;
+		}
+		//otherwise they do.
+		return true;
+	}
+	
+	/**checks if this rectangle intersects another specified rectangle
+	 * 
+	 * @param r
+	 * @return
+	 */
+	public boolean intersects(RectangleR2 r) {
 		//if to the left of, to the right of, above, or below the other rectangle then they don't intersect
 		if (getMaxX()<r.getMinX()||getMinX()>r.getMaxX()||getMinY()>r.getMaxY()||getMaxY()<r.getMinY()) {
 			return false;
@@ -134,6 +153,14 @@ public class RectangleR2 extends ShapeR2{
 	
 	public double getMinY() {
 		return center.getY()-height/2;
+	}
+	
+	public double getWidth() {
+		return width;
+	}
+	
+	public double getHeight() {
+		return height;
 	}
 	
 	@Override

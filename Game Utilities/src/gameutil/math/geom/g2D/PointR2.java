@@ -5,6 +5,7 @@ import java.awt.geom.Point2D;
 import gameutil.math.geom.g2D.FigureR2;
 import gameutil.math.geom.g2D.PointR2;
 import gameutil.math.geom.g2D.VectorR2;
+import gameutil.math.geom.Point;
 import gameutil.math.geom.Vector;
 import gameutil.math.geom.g1D.Vector1D;
 
@@ -69,6 +70,10 @@ public class PointR2 extends FigureR2{
 	
 	public PointR2 clone() {
 		return new PointR2(x,y);
+	}
+	
+	public static PointR2 lerp(PointR2 p1,PointR2 p2,double t) {
+		return new PointR2(p1.x*(1-t)+p2.x*t,p1.y*(1-t)+p2.y*t);
 	}
 	
 	@Override

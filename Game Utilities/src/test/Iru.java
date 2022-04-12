@@ -7,7 +7,9 @@ import java.util.Scanner;
 
 import javax.swing.JTextArea;
 
+import gameutil.text.Iru.Int;
 import gameutil.text.Iru.IruConsole;
+import gameutil.text.Iru.Letter;
 
 public class Iru {
 	
@@ -15,6 +17,7 @@ public class Iru {
 	
 	public static void main(String[] unicorns) {
 		IruConsole c=new IruConsole();
+		c.setAutoScroll(true);
 		c.setTitle("Números en "+"ī".toUpperCase()+"rū");
 		c.printLine("0   1   2   3   4   5   6   7   8   9   /1   /2   /3   /4   /5   /6   /7");
 		c.printLine("10  11  12  13  14  15  16  17  18  19  1/1  1/2  1/3  1/4  1/5  1/6  1/7");
@@ -34,9 +37,14 @@ public class Iru {
 		c.printLine("/60  /61  /62  /63  /64  /65  /66  /67  /68  /69  /6/1  /6/2  /6/3  /6/4  /6/5  /6/6  /6/7");
 		c.printLine("/70  /71  /72  /73  /74  /75  /76  /77  /78  /79  /7/1  /7/2  /7/3  /7/4  /7/5  /7/6  /7/7");
 		c.printLine("/100 101 102 103 104 105 106 107 108 109 10/1 10/2 10/3 10/4 10/5 10/6 10/7");
-		/*while (true) {
-			c.readLine();
-		}*/
+		while (true) {
+			c.print(">>");
+			Int num1=c.readLineInt();
+			Int num2=c.readLineInt();
+			Int prod=num1.$X$(num2);
+			c.printLine(num1.toStr().cat(" * ").cat(num2.toStr()).cat(" = ").cat(prod.toStr()));
+			
+		}
 	}
 	
 	

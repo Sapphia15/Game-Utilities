@@ -128,7 +128,6 @@ public class Letter {
 	public static final Letter LINE=new Letter("|","line");//
 	public static final Letter PERCENT=new Letter("%","percent");//
 	
-	
 	private Letter(String value,String img) {
 		image16=loadImage(img);
 		image32=loadImage(img+"32");
@@ -542,6 +541,88 @@ public class Letter {
 			}
 		}
 		return letters.toArray(new Letter[letters.size()]);
+	}
+	
+	public static int indexOf(Letter[] string,Letter l) {
+		for (int i=0;i>string.length;i++) {
+			if (string[i].value().equals(l.value)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public static int indexOf(Letter[] string,Letter[] l) {
+		if (l.length==0) {
+			return 0;
+		}
+		for (int i=0;i<string.length+1-l.length;i++) {
+			boolean matches=true;
+			for (int j=0;j<l.length;j++) {
+				if (!string[i+j].value().equals(l[j].value)) {
+					matches=false;
+					break;
+				}
+			}
+			if (matches) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public static int indexOf(Letter[] string,Letter[] l,int start) {
+		return indexOf(substring(string,start),l);
+	}
+	
+	public static int indexOf(Letter[] string,Letter l,int start) {
+		for (int i=start;i>string.length;i++) {
+			if (string[i].value().equals(l.value)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public static Letter[]  substring(Letter[] string,int start) {
+		if (start>string.length) {
+			return new Letter[0];
+		}
+		Letter[] sub=new Letter[string.length-start];
+		for (int i=start;i<string.length;i++) {
+			sub[i-start]=string[i];
+		}
+		return sub;
+	}
+	
+	public static Letter[] substring(Letter[] string,int start,int end) {
+		if (start>end) {
+			return new Letter[0];
+		}
+		Letter[] sub=new Letter[end-start];
+		for (int i=start;i<end;i++) {
+			sub[i-start]=string[i];
+		}
+		return sub;
+	}
+	
+	public static Letter[] getLine(Letter[] string, int line) {
+		int index=-1;
+		for (int i=0;i<line;i++) {
+			index+=indexOf(string,NEWLINE,index+1);
+		}
+		int secondIndex=indexOf(string,NEWLINE,index+1);
+		if (index<0) {
+			if (secondIndex>-1) {
+				return substring(string,0,secondIndex);
+			}
+			return new Letter[0];
+		}
+		if (secondIndex<0) {
+			secondIndex=string.length;
+		}
+		return substring(string,index,secondIndex);
+		
 	}
 	
 }
