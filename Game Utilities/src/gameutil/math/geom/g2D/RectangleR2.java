@@ -96,7 +96,7 @@ public class RectangleR2 extends ShapeR2{
 	}
 	
 	public boolean setUpperLeftPos(double x,double y) {
-		center.move(x+width/2, y+height/2);
+		center.move(x+width/2, y-height/2);
 		return true;
 	}
 	
@@ -116,7 +116,7 @@ public class RectangleR2 extends ShapeR2{
 	 */
 	public boolean intersects(Rectangle r) {
 		//if to the left of, to the right of, above, or below the other rectangle then they don't intersect
-		if (getMaxX()<=r.getMinX()||getMinX()>=r.getMaxX()||getMinY()>=r.getMaxY()||getMaxY()<=r.getMinY()) {
+		if (getMaxX()<r.getMinX()||getMinX()>r.getMaxX()||getMinY()>r.getMaxY()||getMaxY()<r.getMinY()) {
 			return false;
 		}
 		//otherwise they do.
