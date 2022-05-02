@@ -121,9 +121,14 @@ public class Quaternion  implements Cloneable,Serializable {
 		return new Quaternion(v.$X$(-1));
 	}
 	
-	public Quaternion rotate(Quaternion p,Quaternion axis,double angle) {
+	public static Quaternion rotate(Quaternion p,Quaternion axis,double angle) {
 		Quaternion q=new Quaternion(Math.cos(angle/2),axis.Im().$X$(Math.sin(angle/2)));
 		return q.$X$(p).$X$(q.complement());
+	}
+	
+	public Quaternion rotate(Quaternion axis,double angle) {
+		Quaternion q=new Quaternion(Math.cos(angle/2),axis.Im().$X$(Math.sin(angle/2)));
+		return q.$X$(this).$X$(q.complement());
 	}
 	
 	public boolean equals(double d) {
