@@ -1,13 +1,15 @@
 package graphics;
 
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Panel;
-import java.awt.image.BufferStrategy;
+
 import java.util.concurrent.atomic.AtomicBoolean;
+import com.jogamp.opengl.GLCapabilities;
+import com.jogamp.opengl.GLProfile;
+import com.jogamp.opengl.awt.GLCanvas;
 
 public class KPanel extends Canvas{
 	Frame observer;
@@ -32,6 +34,7 @@ public class KPanel extends Canvas{
 	}
 	
 	public void paint(Graphics g) {
+			super.paint(g);
 			drawFrame(g);
 	}
 	

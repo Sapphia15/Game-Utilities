@@ -2,6 +2,8 @@ package test.screen;
 
 import java.awt.Frame;
 
+import com.jogamp.opengl.GLCapabilities;
+
 import graphics.screen.SPanel;
 import graphics.screen.VideoScreen;
 

@@ -1,6 +1,9 @@
 package graphics.screen;
 import javax.swing.*;
 
+import com.jogamp.opengl.GLCapabilities;
+import com.jogamp.opengl.GLProfile;
+
 import gameutil.math.geom.g2D.PointR2;
 import graphics.KPanel;
 
@@ -19,8 +22,7 @@ public class SPanel extends KPanel{
 	    protected Hashtable<String,Screen>screens;
 	    protected Screen currentScreen;
 	    protected TAdapter keyAdapter;
-	     
-
+	    
 	    public SPanel(Frame observer){
 	    	super(observer);
 	        setFocusable(true);

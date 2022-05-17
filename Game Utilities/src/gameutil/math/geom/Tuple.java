@@ -203,7 +203,7 @@ public class Tuple implements Cloneable,Serializable{
 	
 	/**subtracts a tuple <code>(t)</code> from this tuple. If the tuples are different sizes a tuple the size of the larger will be returned.
 	 * 
-	 * @param t
+	 * @param d
 	 * @return
 	 */
 	public Tuple $S$(double d){
@@ -218,7 +218,7 @@ public class Tuple implements Cloneable,Serializable{
 	
 	/**Multiplies two tuples. If the tuples are different sizes a tuple the size of the larger will be returned.
 	 * 
-	 * @param t
+	 * @param d
 	 * @return
 	 */
 	public Tuple $X$(double d){
@@ -232,7 +232,7 @@ public class Tuple implements Cloneable,Serializable{
 	
 	/**Divides two tuples. If the tuples are different sizes a tuple the size of the larger will be returned.
 	 * 
-	 * @param t
+	 * @param d
 	 * @return
 	 */
 	public Tuple $D$(double d){
