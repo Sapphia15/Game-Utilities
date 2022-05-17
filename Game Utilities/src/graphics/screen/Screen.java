@@ -3,6 +3,7 @@ package graphics.screen;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.awt.image.ImageObserver;
 
 /**
@@ -61,6 +62,10 @@ public abstract class Screen {
     public void keyPressed(KeyEvent e){
 
     }
+    
+    public void mouseScrolled(MouseWheelEvent e) {
+    	
+    }
 
     /**Called when a key is released
      *
@@ -110,4 +115,8 @@ public abstract class Screen {
 	}
 
 	protected abstract void keyDown(int key);
+	
+	protected void keyTyped(KeyEvent e) {
+		
+	}
 }

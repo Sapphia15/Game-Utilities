@@ -146,6 +146,9 @@ public class Int {
 				str.add(0,Letter.lettersFromString("/"+String.valueOf(digit-9))[0]);
 			}
 		}
+		if (str.size()==0) {
+			str.add(Letter.ZERO);
+		}
 		Letter[] letters=new Letter[str.size()];
 		for (int i=0;i<str.size();i++) {
 			letters[i]=str.get(i);

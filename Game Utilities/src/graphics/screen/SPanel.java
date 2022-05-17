@@ -29,6 +29,7 @@ public class SPanel extends KPanel{
 	        MAdapter mAdapter=new MAdapter();
 	        addMouseListener(mAdapter);
 	        addMouseMotionListener(mAdapter);
+	        addMouseWheelListener(new MWAdapter());
 	        keyAdapter=new TAdapter();
 	    	addKeyListener(keyAdapter);
 	    }
@@ -90,6 +91,10 @@ public class SPanel extends KPanel{
 	            	keysDown.remove((Integer)e.getKeyCode());
 	            }
 	        }
+	        
+	        public void keyTyped(KeyEvent e) {
+	        	currentScreen.keyTyped(e);
+	        }
 	    }
 
 	    protected class MAdapter extends MouseAdapter{
@@ -110,6 +115,15 @@ public class SPanel extends KPanel{
 	        }
 
 	    }
+	    
+	    public class MWAdapter implements MouseWheelListener{
+
+			@Override
+			public void mouseWheelMoved(MouseWheelEvent e) {
+				currentScreen.mouseScrolled(e);
+				
+			}
+		}
 	    
 	    public boolean isKeyDown(int key) {
 	    	return keyAdapter.isKeyDown(key);

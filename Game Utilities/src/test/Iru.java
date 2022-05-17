@@ -1,5 +1,7 @@
 package test;
 
+import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.NoSuchElementException;
@@ -9,16 +11,39 @@ import javax.swing.JTextArea;
 
 import gameutil.text.Iru.Int;
 import gameutil.text.Iru.IruConsole;
+import gameutil.text.Iru.IruScreen;
 import gameutil.text.Iru.Letter;
+import graphics.screen.SPanel;
 
 public class Iru {
 	
 	
 	
 	public static void main(String[] unicorns) {
-		IruConsole c=new IruConsole();
+		//IruConsole c=new IruConsole();
+		
+		Frame f=new Frame();
+		SPanel s=new SPanel(f);
+		f.setPreferredSize(new Dimension(500,200));
+		f.add(s);
+		f.pack();
+		
+		s.closeOnExit();
+		IruScreen c=new IruScreen(s);
+		
+		f.setTitle("Números en "+"ī".toUpperCase()+"rū");
+		
+		
+		
+		s.addScreen(c, "iru");
+		s.setScreen("iru");
+		f.setVisible(true);
+		s.setDoubleBuffered(true);
+		//s.setTargetFPS(30,1);
+		s.start();
+		
 		c.setAutoScroll(true);
-		c.setTitle("Números en "+"ī".toUpperCase()+"rū");
+		
 		c.printLine("0   1   2   3   4   5   6   7   8   9   /1   /2   /3   /4   /5   /6   /7");
 		c.printLine("10  11  12  13  14  15  16  17  18  19  1/1  1/2  1/3  1/4  1/5  1/6  1/7");
 		c.printLine("20  21  22  23  24  25  26  27  28  29  2/1  2/2  2/3  2/4  2/5  2/6  2/7");
@@ -37,6 +62,7 @@ public class Iru {
 		c.printLine("/60  /61  /62  /63  /64  /65  /66  /67  /68  /69  /6/1  /6/2  /6/3  /6/4  /6/5  /6/6  /6/7");
 		c.printLine("/70  /71  /72  /73  /74  /75  /76  /77  /78  /79  /7/1  /7/2  /7/3  /7/4  /7/5  /7/6  /7/7");
 		c.printLine("/100 101 102 103 104 105 106 107 108 109 10/1 10/2 10/3 10/4 10/5 10/6 10/7");
+		c.readLine();
 		while (true) {
 			c.print(">>");
 			Int num1=c.readLineInt();
