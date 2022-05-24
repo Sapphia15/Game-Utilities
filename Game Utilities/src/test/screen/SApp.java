@@ -3,12 +3,6 @@ package test.screen;
 import java.awt.Dimension;
 import java.awt.Frame;
 
-import com.jogamp.opengl.GLAutoDrawable;
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.GLEventListener;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.awt.GLCanvas;
-
 
 
 public class SApp {
@@ -18,49 +12,19 @@ public class SApp {
 	public static void main(String[] unicorns) {
 		
 		f.setPreferredSize(new Dimension(1000,800));
-		final GLProfile profile = GLProfile.get(GLProfile.GL2);
-	      GLCapabilities capabilities = new GLCapabilities(profile);
+		
 		//create panel and store it in a static variable for later reference
-	      final GLCanvas glcanvas = new GLCanvas(capabilities);       
+	         
 	      
-		//p=new Panel(f,capabilities);
+		p=new Panel(f);
 		//set target frames per second (The panel runs a P loop on a separate thread to attempt to maintain the frame rate)
-		//p.setTargetFPS(40);
-		GLEventListener b = new GLEventListener() {
-
-			@Override
-			public void display(GLAutoDrawable arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void dispose(GLAutoDrawable arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void init(GLAutoDrawable arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void reshape(GLAutoDrawable arg0, int arg1, int arg2, int arg3, int arg4) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		};
-		glcanvas.addGLEventListener(b);
-		glcanvas.setSize(400, 400);
-		/*p.addGLEventListener(b);        
-      	p.setSize(400, 400);*/
+		p.setTargetFPS(40);
+		
+	      
+      	p.setSize(400, 400);
 		//add the panel to the frame so that it will be visible in the window
-      	//f.pack();
-      	//f.add(p);
-		f.add(glcanvas);
+      	f.pack();
+      	f.add(p);
 		f.setSize(new Dimension(500,500));
 		//this centers the window
 		//f.setLocationRelativeTo(null);

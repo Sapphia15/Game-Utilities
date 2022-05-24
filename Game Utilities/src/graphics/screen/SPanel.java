@@ -1,9 +1,6 @@
 package graphics.screen;
 import javax.swing.*;
 
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.GLProfile;
-
 import gameutil.math.geom.g2D.PointR2;
 import graphics.KPanel;
 

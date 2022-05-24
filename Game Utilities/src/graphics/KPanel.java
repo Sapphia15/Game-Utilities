@@ -7,9 +7,6 @@ import java.awt.Frame;
 import java.awt.Graphics;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.awt.GLCanvas;
 
 public class KPanel extends Canvas{
 	Frame observer;
