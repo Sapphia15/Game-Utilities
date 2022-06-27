@@ -5,35 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0db1d510-da57-48e1-b12f-60ab19c4e692" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Game-Utilities.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/.classpath" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/assets/letters/lbrace.png" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/assets/letters/lbrace.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/assets/letters/rbrace.png" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/assets/letters/rbrace.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Game Utilities/bin/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/bin/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/ComplexDouble.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/ComplexDouble.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/Function.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/Function.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/geom/Figure.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/geom/Figure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/geom/LineSeg.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/geom/LineSeg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/geom/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/geom/Point.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/geom/Tuple.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/geom/Tuple.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/geom/g2D/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/geom/g2D/Circle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/geom/g2D/PointR2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/geom/g2D/PointR2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/geom/g2D/RectangleR2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/gameutil/math/geom/g2D/RectangleR2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/gameutil/text/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/gameutil/text/Console.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/gameutil/text/Iru/IruConsole.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/gameutil/text/Iru/IruConsole.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/gameutil/text/Iru/Letter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/gameutil/text/Iru/Letter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/graphics/screen/SPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/graphics/screen/SPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/graphics/screen/Screen.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/graphics/screen/Screen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/net/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/net/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/net/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/net/Request.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/net/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/net/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/test/ConsoleApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/test/ConsoleApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/test/Iru.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/test/Iru.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Utilities/src/test/paneltest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/test/paneltest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game Utilities/src/graphics/gl/GLPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/graphics/gl/GLPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game Utilities/src/test/screen/GtPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game Utilities/src/test/screen/GtPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +191,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../MarioYoutube" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />

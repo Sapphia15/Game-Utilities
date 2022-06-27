@@ -6,12 +6,18 @@ import org.lwjgl.BufferUtils;
 import javax.print.DocFlavor;
 import java.io.IOException;
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import org.lwjgl.opengl.ARBVertexArrayObject;
+import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL30;
+import org.lwjgl.BufferUtils;
 
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL20.glGetShaderInfoLog;
+
 
 public class Shader {
 
@@ -21,7 +27,11 @@ public class Shader {
     private String vertexSource;
     private String fragmentSource;
     private String filepath;
-
+    
+    private int vaoID, vboID, eboID;
+    private int[] edgeArray;
+    private float[] vertexArray;
+    
     public Shader(String filepath) {
         this.filepath = filepath;
         try {
@@ -180,5 +190,92 @@ public class Shader {
         int varLocation = glGetUniformLocation(shaderProgramID, varName);
         use();
         glUniform1iv(varLocation, array);
+    }
+    
+    public void uploadFlags(float[] vertexArray,int[] edgeArray) {
+    	this.vertexArray=vertexArray;
+    	this.edgeArray=edgeArray;
+    	//vertex flags
+    	
+    	//make vertex buffer
+    	vaoID=ARBVertexArrayObject.glGenVertexArrays();
+    	GL30.glBindVertexArray(vaoID);
+    	FloatBuffer vertexBuffer=BufferUtils.createFloatBuffer(vertexArray.length);
+    	vertexBuffer.put(vertexArray).flip();//why does it flip them?
+    	
+    	vboID=GL30.glGenBuffers();
+    	GL30.glBindBuffer(GL30.GL_ARRAY_BUFFER, vboID);
+    	GL30.glBufferData(GL30.GL_ARRAY_BUFFER, vertexBuffer, GL30.GL_STATIC_DRAW);
+    	
+    	//edge flags
+    	
+    	//make edge buffer
+    	IntBuffer edgeBuffer=BufferUtils.createIntBuffer(edgeArray.length);
+    	edgeBuffer.put(edgeArray).flip();
+    	
+    	eboID=GL30.glGenBuffers();
+    	GL30.glBindBuffer(GL30.GL_ELEMENT_ARRAY_BUFFER, eboID);
+    	GL30.glBufferData(GL30.GL_ELEMENT_ARRAY_BUFFER, edgeBuffer, GL30.GL_STATIC_DRAW);
+    	
+    	int posSize=3;
+    	int colorSize=4;
+    	int floatSizeBytes=4;
+    	int vertexSizeBytes=(posSize+colorSize)*floatSizeBytes;
+    	GL30.glVertexAttribPointer(0, posSize, GL30.GL_FLOAT, false, vertexSizeBytes,0);
+    	GL30.glEnableVertexAttribArray(0);
+    	GL30.glVertexAttribPointer(1, colorSize, GL30.GL_FLOAT, false, vertexSizeBytes,posSize*floatSizeBytes);
+    	GL30.glEnableVertexAttribArray(1);
+    }
+    
+    public void uploadFlags4D(float[] vertexArray,int[] edgeArray) {
+    	this.vertexArray=vertexArray;
+    	this.edgeArray=edgeArray;
+    	//vertex flags
+    	
+    	//make vertex buffer
+    	vaoID=ARBVertexArrayObject.glGenVertexArrays();
+    	GL30.glBindVertexArray(vaoID);
+    	FloatBuffer vertexBuffer=BufferUtils.createFloatBuffer(vertexArray.length);
+    	vertexBuffer.put(vertexArray).flip();//why does it flip them?
+    	
+    	vboID=GL30.glGenBuffers();
+    	GL30.glBindBuffer(GL30.GL_ARRAY_BUFFER, vboID);
+    	GL30.glBufferData(GL30.GL_ARRAY_BUFFER, vertexBuffer, GL30.GL_STATIC_DRAW);
+    	
+    	//edge flags
+    	
+    	//make edge buffer
+    	IntBuffer edgeBuffer=BufferUtils.createIntBuffer(edgeArray.length);
+    	edgeBuffer.put(edgeArray).flip();
+    	
+    	eboID=GL30.glGenBuffers();
+    	GL30.glBindBuffer(GL30.GL_ELEMENT_ARRAY_BUFFER, eboID);
+    	GL30.glBufferData(GL30.GL_ELEMENT_ARRAY_BUFFER, edgeBuffer, GL30.GL_STATIC_DRAW);
+    	
+    	int posSize=4;
+    	int colorSize=4;
+    	int floatSizeBytes=4;
+    	int vertexSizeBytes=(posSize+colorSize)*floatSizeBytes;
+    	GL30.glVertexAttribPointer(0, posSize, GL30.GL_FLOAT, false, vertexSizeBytes,0);
+    	GL30.glEnableVertexAttribArray(0);
+    	GL30.glVertexAttribPointer(1, colorSize, GL30.GL_FLOAT, false, vertexSizeBytes,posSize*floatSizeBytes);
+    	GL30.glEnableVertexAttribArray(1);
+    }
+    
+    public void updatePolygon() {
+    	use();
+    	GL30.glBindVertexArray(vaoID);
+    	GL30.glEnableVertexAttribArray(0);
+    	GL30.glEnableVertexAttribArray(1);
+    	
+    	GL20.glDrawElements(GL30.GL_TRIANGLES, edgeArray.length,GL30.GL_UNSIGNED_INT,0);
+    	
+    	//GL20.glDrawElements(GL30.GL_LINES, edgeArray.length,GL30.GL_UNSIGNED_INT,0);
+    	
+    	
+    	GL20.glDisableVertexAttribArray(0);
+    	GL20.glDisableVertexAttribArray(1);
+    	GL30.glBindVertexArray(0);
+    	detach();
     }
 }

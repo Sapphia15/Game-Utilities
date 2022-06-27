@@ -14,6 +14,7 @@ public class GLPanel {
 	int height=1080;
 	String title="Unicorn Window";
 	long lastFrame;
+	protected int dt;
 	
 	
 	public GLPanel(String title) {
@@ -61,27 +62,40 @@ public class GLPanel {
       GLFW.glfwSetKeyCallback(window, KeyListener::keyCallback);
       
       GLFW.glfwMakeContextCurrent(window);
-      //enable vsync?
+      //enable vsync
       GLFW.glfwSwapInterval(1);
       
       GLFW.glfwShowWindow(window);
+      
       GL.createCapabilities();
+      shaderInit();
       lastFrame=System.currentTimeMillis();
+      
 	}
 
+	public void shaderInit() {
+		
+	}
+	
 	private void loop() {
 		float g=0f;
 		float dg=.01f;
 		float b=0f;
 		// TODO Auto-generated method stub
 		while (!GLFW.glfwWindowShouldClose(window)) {
-			GLFW.glfwPollEvents();
-			GL11.glClearColor(1f, g, b, 1f);
-			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-			GLFW.glfwSwapBuffers(window);
 			long currentFrame=System.currentTimeMillis();
+			dt=(int)(currentFrame-lastFrame);
+			GLFW.glfwPollEvents();
+			
+			paint();
+			//GL11.glClearColor(1f, g, b, 1f);
+			//GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+			GLFW.glfwSwapBuffers(window);
+			
 			System.out.println(60000/(currentFrame-lastFrame+1));
 			lastFrame=currentFrame;
+			update();
+			/*
 			if (KeyListener.keyPressed(GLFW.GLFW_KEY_SPACE)) {
 				b=1f-b;    
 			}
@@ -92,11 +106,23 @@ public class GLPanel {
 			} else if (g<0) {
 				dg=.01f;
 				g+=dg;
-			}
+			}*/
 		}
+	}
+	
+	public void update() {
+		
 	}
 	
 	public void paint() {
 		
+	}
+	
+	public void clear() {
+		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+	}
+	
+	public void setClearColor(float r,float g,float b,float a) {
+		GL11.glClearColor(r, g, b, a);
 	}
 }
