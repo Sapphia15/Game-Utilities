@@ -8,10 +8,8 @@ gameutil.math.geom.g3D
 gameutil.text
 gameutil.text.Iru
 graphics
+graphics.gl
 graphics.screen
 map
 net
 Sprite
-test
-test.mandelbrot
-test.screen
