@@ -8,7 +8,7 @@ public class OptionE<T,S> extends Monad<T,S>{
 	}
 	
 	public S r(S m,ClosedMap<S> map) {
-		if (m == null) {
+		if (((OptionE)m).value == null) {
 			return m;
 		} else {
 			return map.map(m);

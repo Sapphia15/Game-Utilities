@@ -27,11 +27,21 @@ public class Point extends Brane{
 		tuple=getCenter().tuple;
 	}
 	
+	public Point(String s) {
+		this(new Tuple(s));
+	}
+	
+	
 	public Point(double[] coords) {
 		super(0,0,new Tuple(coords));
 		tuple=getCenter().tuple;
 	}
 
+	public String stringify() {
+		return tuple.stringify();
+	}
+	
+	
 	/**Returns the distance between this point and a point <code>p</code>
 	 * 
 	 * @param p

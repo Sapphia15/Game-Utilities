@@ -8,10 +8,23 @@ public class ComplexDouble {
 	private double a;
 	private double b;
 	private static double ln2=Math.log(2);
+	public static final ComplexDouble i=new ComplexDouble(0,1);
+	
+	
 	
 	public ComplexDouble(double real,double imaginary) {
 		this.a=real;
 		this.b=imaginary;
+	}
+	
+	public ComplexDouble(String s) {
+		String[] split=s.split("i");
+		this.a=Double.parseDouble(split[0]);
+		this.b=Double.parseDouble(split[1]);
+	}
+	
+	public ComplexDouble complement(){
+		return new ComplexDouble(a,-b);
 	}
 	
 	public ComplexDouble $A$(ComplexDouble d) {
@@ -72,6 +85,23 @@ public class ComplexDouble {
 		return new ComplexDouble(Math.log(a*a+b*b)/2,Math.atan(b/a));
 	}
 	
+	public boolean isPrime() {
+		if (a!=Math.floor(a)||b!=Math.floor(b)) {
+			return false;
+		}
+		int a=(int)	this.a;
+		int b=(int) this.b;
+		if (a==0||b==0) {
+			int c=a+b;
+			if (c%4==3) {
+				return Primes.prime(c);
+			} else {
+				return false;
+			}
+		}
+		return Primes.prime(a*a+b*b);
+	}
+	
 	public ComplexDouble exp() {
 		double mag=Math.exp(a);
 		return new ComplexDouble(Math.cos(b)*mag,Math.sin(b)*mag);
@@ -111,6 +141,10 @@ public class ComplexDouble {
 	
 	public double I() {
 		return b;
+	}
+	
+	public String stringify() {
+		return a+"i"+b;
 	}
 	
 	public PointR2 getPoint() {

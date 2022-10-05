@@ -55,6 +55,40 @@ public class Tuple implements Cloneable,Serializable{
 		set(val);
 	}
 	
+	public Tuple(String s) {
+		String[] split=s.split("([ ,\\(\\)\\[\\]])+");
+		if (split.length>1) {
+			if (split[0].equals("")) {
+				String[] newSplit=new String[split.length-1];
+				for (int i=0;i<split.length-1;i++) {
+					newSplit[i]=split[i+1];
+				}
+				split=newSplit;
+			}
+			n=split.length;
+			tuple=new double[n];
+			for (int i=0;i<n;i++) {
+				tuple[i]=Double.parseDouble(split[i]);
+			}
+		} else {
+			n=0;
+			tuple=new double[0];
+		}
+		
+		
+	}
+	
+	public String stringify() {
+		String s="";
+		for (int i=0;i<n;i++) {
+			s=s+" "+tuple[i];
+		}
+		if (s.startsWith(" ")) {
+			s=s.substring(1);
+		}
+		return s;
+	}
+	
 	/**Adds together two tuples. If the tuples are different sizes a tuple the size of the larger will be returned.
 	 * 
 	 * @param t

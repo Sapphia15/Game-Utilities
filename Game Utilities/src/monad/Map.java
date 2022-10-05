@@ -1,5 +1,7 @@
 package monad;
 
-public interface Map <I,O>{
+import java.io.Serializable;
+
+public interface Map <I,O> extends Serializable{
 	abstract O map(I input);
 }

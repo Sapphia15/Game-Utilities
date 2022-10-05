@@ -1,6 +1,7 @@
 package gameutil.math.geom;
 
 import gameutil.math.geom.g2D.PointR2;
+import gameutil.text.Console;
 import gameutil.math.geom.g1D.*;
 
 public class Orthotope extends Figure{
@@ -14,16 +15,18 @@ public class Orthotope extends Figure{
 	 */
 	public Orthotope(Point p1, Point p2) {
 		int dims=p1.tuple.n();
-		Vector v1=new Vector(Tuple.origin(1));
-		Vector v2=new Vector(Tuple.origin(1));
+		
 		if (p2.tuple.n()>dims) {
 			dims=p2.tuple.n();
 		}
+		Vector v1=new Vector(Tuple.origin(dims));
+		Vector v2=new Vector(Tuple.origin(dims));
 		for (int i=0;i<dims;i++) {
-			Tuple t1=new Tuple(i);
-			Tuple t2=new Tuple(i);
+			Tuple t1=new Tuple(i+1);
+			Tuple t2=new Tuple(i+1);
 			double p1val=p1.tuple.i(i);
 			double p2val=p2.tuple.i(i);
+			
 			if (p1val<p2val) {
 				//if p1 is has the lowest value in the i dimension use it for the lowest value vector
 				//(the tuples will be added to the appropriate vectors later)
@@ -39,9 +42,13 @@ public class Orthotope extends Figure{
 			}
 			//add tuples to vectors so that v1 eventually becomes a vector with minimum x,y,z,w,... values
 			//and v2 eventually becomes a vector with the maximum x,y,z,w,... values of the hypervoxel
-			v1.$A$(new Vector(t1));
-			v2.$A$(new Vector(t2));
+			
+			v1=v1.$A$(new Vector(t1));
+			v2=v2.$A$(new Vector(t2));
+			
+			
 		}
+		
 		//set p1 to the most left, most low, most inner, most kata, etc. point on the hypercube (also a vertex)
 		this.p1=new Point(v1);
 		//set p2 to the most right, most high, most outer, most ana, etc. point on the hypercube (which is also a vertex)

@@ -131,6 +131,10 @@ public class Quaternion  implements Cloneable,Serializable {
 		return q.$X$(this).$X$(q.complement());
 	}
 	
+	public double abs() {
+		return v.magnitude();
+	}
+	
 	public boolean equals(double d) {
 		return (Re()==d)&&(i()+j()+k()==0);
 	}

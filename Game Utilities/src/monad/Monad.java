@@ -1,9 +1,10 @@
 package monad;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
 
-public class Monad<T,S>{
+public class Monad<T,S> implements Serializable{
 	
 	protected T value;
 	
@@ -19,7 +20,7 @@ public class Monad<T,S>{
 	}
 	
 	public S r(ClosedMap<S> map) {
-		return map.map((S)this);
+		return r((S)this,map);
 	}
 	
 	public T v() {

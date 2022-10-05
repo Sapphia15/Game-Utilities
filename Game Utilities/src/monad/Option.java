@@ -5,5 +5,9 @@ public class Option<T> extends OptionE<T,Option<T>> {
 	public Option(T value) {
 		super(value);
 	}
+	
+	public Option() {
+		super(null);
+	}
 
 }

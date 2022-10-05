@@ -2,10 +2,30 @@ package gameutil;
 
 import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentHashMap.KeySetView;
 
 public class ConcurrentBidirectionalMap<T,O> {
 	ConcurrentHashMap<T,O> to=new ConcurrentHashMap<>();
 	ConcurrentHashMap<O,T> ot=new ConcurrentHashMap<>();
+	
+	public ConcurrentBidirectionalMap() {
+		
+	}
+	
+	
+	
+	public ConcurrentBidirectionalMap(int initialCapacity) {
+		to=new ConcurrentHashMap<>(initialCapacity);
+		ot=new ConcurrentHashMap<>(initialCapacity);
+	}
+	
+	public ConcurrentBidirectionalMap(ConcurrentHashMap<T,O> mapping) {
+		to=mapping;
+		ot=new ConcurrentHashMap<>(to.keySet().size());
+		for (T key:to.keySet()) {
+			ot.put(to.get(key), key);
+		}
+	}
 	
 	public void set(T t,O o) {
 		if(containsFirst(t)) {
@@ -42,12 +62,12 @@ public class ConcurrentBidirectionalMap<T,O> {
 		return ot.get(key);
 	}
 	
-	public Enumeration<T> getFirstKeys(){
-		return to.keys();
+	public KeySetView<T, O> getFirstKeys(){
+		return to.keySet();
 	}
 	
-	public Enumeration<O> getSecondKeys(){
-		return ot.keys();
+	public KeySetView<O, T> getSecondKeys(){
+		return ot.keySet();
 	}
 	
 	

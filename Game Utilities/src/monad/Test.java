@@ -39,6 +39,7 @@ public class Test {
 		Console.s.println(num.getLogs());
 		Console.s.println(num.v());
 		*/
+		/*
 		Sync<String> a1=new Sync<String>("2");
 		Sync<String> a2=new Sync<String>("4");
 		ConcurrentBidirectionalMap<Sync<String>,String> table=new ConcurrentBidirectionalMap<Sync<String>,String>();
@@ -54,7 +55,12 @@ public class Test {
 		Console.s.println("Get a1 after setting a2 to value 2:" + table.getSecond(a1));
 		Console.s.println("Get a2 after setting a2 to value 2:" + table.getSecond(a2));
 		Console.s.println("Get new Sync with value 2 after setting a2 to value 2:" + table.getSecond(new Sync<String>("2")));
-		Console.s.println("a1.equals(a2): " + a1.equals(a2));
+		Console.s.println("a1.equals(a2): " + a1.equals(a2));*/
+		Map<Integer,String> whatNumber = (i) -> {
+			i=i+2;
+			return "The number plus 2 is "+i;
+		};
+		Console.s.println(whatNumber.map(2));
 	}
 	
 	private static class Multiply extends WriteMap<Write<Integer>>{

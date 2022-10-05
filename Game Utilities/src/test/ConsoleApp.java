@@ -1,17 +1,23 @@
 package test;
 
+import gameutil.ByteUtil;
+import gameutil.math.Primes;
 import gameutil.math.geom.Figure;
 import gameutil.math.geom.Line;
 import gameutil.math.geom.LineSeg;
 import gameutil.math.geom.Matrix;
+import gameutil.math.geom.Orthotope;
 import gameutil.math.geom.Point;
 import gameutil.math.geom.Ray;
 import gameutil.math.geom.Tuple;
 import gameutil.math.geom.Vector;
 import gameutil.math.geom.g2D.LineSegR2;
 import gameutil.text.Console;
+import graphics.Raster3D;
+
 import static gameutil.text.Console.theme;
 
+import java.awt.Color;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -22,6 +28,25 @@ class ConsoleApp {
 		Console.s.setTitle("Geometry Tester");
 		Console.s.setVisible(true);
 		Console.s.rememberCommand(true);
+		/*Tuple t=new Tuple("[(1, 2), (2, 3), 4)]");
+		Orthotope o=new Orthotope(new Point(t),new Point(t.$A$(8)));
+		//o.setPos(new Point(t));
+		Console.s.println(o.getPos().stringify());
+		*/
+		Color c=Color.blue;
+		int color=c.getRed()|c.getGreen()<<8|c.getBlue()<<16|c.getAlpha()<<24;
+		//color=ByteUtil.setByte(color,(byte)0xff, (byte)1);
+		//color=ByteUtil.setByte(color,(byte)0xff, (byte)2);
+		//color=ByteUtil.setByte(color,(byte)0xff, (byte)3);
+		//Console.s.println((color&Raster3D.B_FILTER)>>16);
+		//Console.s.println((color&Raster3D.A_FILTER)>>>(3*8));
+		//Console.s.println((0xff000000&0xff000000)>>>(8*3));
+		//Console.s.println(ByteUtil.getByte(0xff000000,(byte)3));
+		Console.s.println(ByteUtil.getUnsignedByte(color,(byte)0));
+		Console.s.println(ByteUtil.getUnsignedByte(color,(byte)1));
+		Console.s.println(ByteUtil.getUnsignedByte(color,(byte)2));
+		Console.s.println(ByteUtil.getUnsignedByte(color,(byte)3));
+		/*
 		//not working for some reason....
 		double radius=10000;
 		//generate a population
